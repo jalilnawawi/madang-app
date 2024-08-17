@@ -1,6 +1,6 @@
 # Madang-App
 ## Authentication
-### `POST` Register
+### `POST` Register User
 
 * Description : Register to Application
 * URL : api/v1/auth/user/register
@@ -37,7 +37,7 @@
 }
 ````
 ---
-### `POST` Login
+### `POST` Login User
 * Description : Register to Application
 * URL : api/v1/auth/user/register
 * Auth Required : No
