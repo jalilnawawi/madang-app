@@ -39,7 +39,7 @@
 ---
 ### `POST` Login User
 * Description : Register to Application
-* URL : api/v1/auth/user/register
+* URL : api/v1/auth/user/login
 * Auth Required : No
 
 **Request Body** :
