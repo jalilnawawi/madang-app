@@ -1,5 +1,5 @@
 # Madang-App
-## Authentication
+## Authentication Service
 ### `POST` Register
 
 * Description : Register to Application
