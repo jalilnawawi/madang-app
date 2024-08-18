@@ -1,6 +1,6 @@
 # Madang-App
-## Authentication Service
-### `POST` Register
+## Authentication
+### `POST` Register User
 
 * Description : Register to Application
 * URL : api/v1/auth/user/register
@@ -18,7 +18,7 @@
 
 **Response Body** :
 
-* **<span style="color: green;">200 OK</span>**
+* **✅ 200 OK**
 ````json
 {
   "data" : {
@@ -29,7 +29,7 @@
   "message" : "Register success"
 }
 ````
-* **<span style="color: red;">400 Bad Request</span>**
+* **❌ 400 Bad Request**
 ````json
 {
   "data" : null,
@@ -37,9 +37,9 @@
 }
 ````
 ---
-### `POST` Login
+### `POST` Login User
 * Description : Register to Application
-* URL : api/v1/auth/user/register
+* URL : api/v1/auth/user/login
 * Auth Required : No
 
 **Request Body** :
@@ -51,7 +51,7 @@
 ````
 
 **Response Body** :
-* **<span style="color: green;">200 OK</span>**
+* **✅ 200 OK**
 ````json
 {
   "data" : {
@@ -64,7 +64,7 @@
 }
 ````
 
-* **<span style="color: red;">400 Bad Request</span>**
+* **❌ 400 Bad Request**
 ````json
 {
   "data" : null,
