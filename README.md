@@ -36,7 +36,6 @@
   "message" : "Password not matched"
 }
 ````
----
 ### `POST` Login User
 * Description : Register to Application
 * URL : api/v1/auth/user/login
@@ -71,3 +70,124 @@
   "message" : "email or password is invalid"
 }
 ````
+---
+## Restaurant Service
+### `POST` Create Restaurant
+
+* Description : Create a new Restaurant
+* URL : api/v1/restaurant
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "name" : "string",
+  "description" : "string",
+  "pictureId" : "UUID",
+  "address" : "string",
+  "category" : "enum"
+}
+````
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "restaurantId" : "UUID",
+    "name" : "string",
+    "description" : "string",
+    "pictureId" : "UUID",
+    "address" : "string"
+  },
+  "message" : "success"
+}
+````
+
+* **❌ 404 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "image already used"
+}
+````
+
+### `GET` All Restaurant
+
+* Description : Get list of restaurant
+* URL : api/v1/restaurant
+* Auth Required : Yes
+
+**Response Body : ✅ 200 OK**
+
+````json
+{
+  "data" : [
+    {
+      "restaurantId" : "UUID",
+      "name" : "string",
+      "description" : "string",
+      "pictureLink" : "string",
+      "address" : "string",
+      "category" : "enum",
+      "rating" : "float"
+    },
+    {
+      "restaurantId" : "UUID",
+      "name" : "string",
+      "description" : "string",
+      "pictureLink" : "string",
+      "address" : "string",
+      "category" : "enum",
+      "rating" : "float"
+    }
+  ],
+  "message" : "success"
+}
+````
+### `GET` Get Detail Restaurant by Id
+
+* Description : Get Detail of Restaurant
+* URL  : api/v1/restaurant/{id}
+* Auth Required : Yes
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "restaurantId" : "UUID",
+    "name" : "string",
+    "description" : "string",
+    "pictureLink" : "string",
+    "address" : "string",
+    "category" : "enum",
+    "product" : {
+      "name" : "string",
+      "price" : "double",
+      "type" : "enum"
+    },
+    "rating" : "float",
+    "customerReviews" : [
+      {
+        "name" : "string",
+        "review" : "string",
+        "date" : "timestamp"
+      },
+      {
+        "name" : "string",
+        "review" : "string",
+        "date" : "timestamp"
+      }
+    ]
+  }
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "restaurantId not found"
+}
+````
+
