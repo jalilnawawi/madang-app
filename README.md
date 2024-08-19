@@ -191,3 +191,38 @@
 }
 ````
 
+### `POST` Create Restaurant Image
+* Description : Insert restaurant image to database
+* URL : api/v1/restaurant/images
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "restaurantId" : "UUID",
+  "imageLink" : "string",
+  "imageSize" : "enum"
+}
+````
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "restaurantId" : "UUID",
+    "imageLink" : "string",
+    "imageSize" : "enum"
+  },
+  "message" : "success"
+}
+````
+
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "restaurantId not found"
+}
+````
+
