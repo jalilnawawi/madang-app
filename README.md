@@ -210,7 +210,8 @@
 ````json
 {
   "data" : {
-    "restaurantId" : "UUID",
+    "restaurantId" : "UUID"
+    "imageId" : "UUID",
     "imageLink" : "string",
     "imageSize" : "enum"
   },
@@ -223,6 +224,43 @@
 {
   "data" : null,
   "message" : "restaurantId not found"
+}
+````
+
+### `GET` Get Restaurant Image
+* Description : Get Restaurant image by imageId
+* URL : api/v1/restaurant/images/{imageId}
+* Auth Required : Yes
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : [
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "small"
+    },
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "medium"
+    },
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "large"
+    }
+  ]
+}
+````
+
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "imageId not found"
 }
 ````
 
