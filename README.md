@@ -9,7 +9,7 @@
 **Request Body** : 
 ````json
 {
-  "name" : "string",
+  "username" : "string",
   "email" : "string",
   "password" : "string",
   "confirmPassword" : "string"
@@ -22,7 +22,7 @@
 ````json
 {
   "data" : {
-    "name" : "string",
+    "username" : "string",
     "email" : "string",
     "userStatus" : "enum"
   },
@@ -79,28 +79,30 @@
 * Auth Required : Yes
 
 **Request Body** :
+
 ````json
 {
-  "name" : "string",
-  "description" : "string",
-  "pictureId" : "UUID",
-  "address" : "string",
-  "category" : "enum"
+  "name": "string",
+  "description": "string",
+  "imageId": "UUID",
+  "address": "string",
+  "category": "enum"
 }
 ````
 
 **Response Body** :
 * **✅ 200 OK**
+
 ````json
 {
-  "data" : {
-    "restaurantId" : "UUID",
-    "name" : "string",
-    "description" : "string",
-    "pictureId" : "UUID",
-    "address" : "string"
+  "data": {
+    "restaurantId": "UUID",
+    "name": "string",
+    "description": "string",
+    "imageId": "UUID",
+    "address": "string"
   },
-  "message" : "success"
+  "message": "success"
 }
 ````
 
@@ -122,27 +124,27 @@
 
 ````json
 {
-  "data" : [
+  "data": [
     {
-      "restaurantId" : "UUID",
-      "name" : "string",
-      "description" : "string",
-      "pictureLink" : "string",
-      "address" : "string",
-      "category" : "enum",
-      "rating" : "float"
+      "restaurantId": "UUID",
+      "name": "string",
+      "description": "string",
+      "imageLink": "string",
+      "address": "string",
+      "category": "enum",
+      "rating": "float"
     },
     {
-      "restaurantId" : "UUID",
-      "name" : "string",
-      "description" : "string",
-      "pictureLink" : "string",
-      "address" : "string",
-      "category" : "enum",
-      "rating" : "float"
+      "restaurantId": "UUID",
+      "name": "string",
+      "description": "string",
+      "imageLink": "string",
+      "address": "string",
+      "category": "enum",
+      "rating": "float"
     }
   ],
-  "message" : "success"
+  "message": "success"
 }
 ````
 ### `GET` Get Detail Restaurant by Id
@@ -153,31 +155,32 @@
 
 **Response Body** :
 * **✅ 200 OK**
+
 ````json
 {
-  "data" : {
-    "restaurantId" : "UUID",
-    "name" : "string",
-    "description" : "string",
-    "pictureLink" : "string",
-    "address" : "string",
-    "category" : "enum",
-    "product" : {
-      "name" : "string",
-      "price" : "double",
-      "type" : "enum"
+  "data": {
+    "restaurantId": "UUID",
+    "name": "string",
+    "description": "string",
+    "imageLink": "string",
+    "address": "string",
+    "category": "enum",
+    "product": {
+      "name": "string",
+      "price": "double",
+      "type": "enum"
     },
-    "restaurantRating" : "float",
-    "customerReviews" : [
+    "restaurantRating": "float",
+    "customerReviews": [
       {
-        "name" : "string",
-        "review" : "string",
-        "date" : "timestamp"
+        "name": "string",
+        "review": "string",
+        "date": "timestamp"
       },
       {
-        "name" : "string",
-        "review" : "string",
-        "date" : "timestamp"
+        "name": "string",
+        "review": "string",
+        "date": "timestamp"
       }
     ]
   }
@@ -188,80 +191,6 @@
 {
   "data" : null,
   "message" : "restaurantId not found"
-}
-````
-
-### `POST` Create Restaurant Image
-* Description : Insert restaurant image to database
-* URL : api/v1/restaurant/images
-* Auth Required : Yes
-
-**Request Body** :
-````json
-{
-  "restaurantId" : "UUID",
-  "imageLink" : "string",
-  "imageSize" : "enum"
-}
-````
-
-**Response Body** :
-* **✅ 200 OK**
-````json
-{
-  "data" : {
-    "restaurantId" : "UUID"
-    "imageId" : "UUID",
-    "imageLink" : "string",
-    "imageSize" : "enum"
-  },
-  "message" : "success"
-}
-````
-
-* **❌ 400 Bad Request**
-````json
-{
-  "data" : null,
-  "message" : "restaurantId not found"
-}
-````
-
-### `GET` Get Restaurant Image
-* Description : Get Restaurant image by imageId
-* URL : api/v1/restaurant/images/{imageId}
-* Auth Required : Yes
-
-**Response Body** :
-* **✅ 200 OK**
-````json
-{
-  "data" : [
-    {
-      "imageId" : "UUID",
-      "imageLink" : "string",
-      "size" : "small"
-    },
-    {
-      "imageId" : "UUID",
-      "imageLink" : "string",
-      "size" : "medium"
-    },
-    {
-      "imageId" : "UUID",
-      "imageLink" : "string",
-      "size" : "large"
-    }
-  ],
-  "message" : "success"
-}
-````
-
-* **❌ 400 Bad Request**
-````json
-{
-  "data" : null,
-  "message" : "imageId not found"
 }
 ````
 ---
@@ -293,7 +222,7 @@
     "category" : "enum",
     "productImageLink" : "string",
     "restaurantId" : "UUID"
-  }
+  },
   "message" : "success"
 }
 ````
@@ -383,7 +312,7 @@
   "data" : {
     "productName" : "string",
     "price" : "double"
-  }
+  },
   "message" : "success"
 }
 ````
@@ -392,5 +321,75 @@
 {
   "data" : null,
   "message" : "productId not found"
+}
+````
+---
+## Images Service
+### `POST` Create Image
+* Description : Insert image to database
+* URL : api/v1/restaurant/images
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "imageLink" : "string",
+  "imageSize" : "enum",
+  "category" : "enum"
+}
+````
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "imageId" : "UUID",
+    "imageLink" : "string",
+    "imageSize" : "enum",
+    "category" : "enum"
+  },
+  "message" : "success"
+}
+````
+
+### `GET` Get Image by imageId
+* Description : Get detail image
+* URL : api/v1/restaurant/images/{imageId}
+* Auth Required : Yes
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : [
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "small",
+      "category" : "product_image"
+    },
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "medium",
+      "category" : "restaurant_image"
+    },
+    {
+      "imageId" : "UUID",
+      "imageLink" : "string",
+      "size" : "large",
+      "category" : "restaurant_image"
+    }
+  ],
+  "message" : "success"
+}
+````
+
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "imageId not found"
 }
 ````
