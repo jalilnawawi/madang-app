@@ -148,7 +148,7 @@
 ### `GET` Get Detail Restaurant by Id
 
 * Description : Get Detail of Restaurant
-* URL  : api/v1/restaurant/{id}
+* URL  : api/v1/restaurant/{restaurantId}
 * Auth Required : Yes
 
 **Response Body** :
@@ -167,7 +167,7 @@
       "price" : "double",
       "type" : "enum"
     },
-    "rating" : "float",
+    "restaurantRating" : "float",
     "customerReviews" : [
       {
         "name" : "string",
@@ -252,7 +252,8 @@
       "imageLink" : "string",
       "size" : "large"
     }
-  ]
+  ],
+  "message" : "success"
 }
 ````
 
@@ -263,4 +264,103 @@
   "message" : "imageId not found"
 }
 ````
+---
+## Product Service
+### `POST` Create Product
 
+* Description : Create a new product
+* URL : api/v1/product
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "productName" : "string",
+  "price" : "double",
+  "category" : "enum",
+  "productImageLink" : "string",
+  "restaurantId" : "UUID"
+}
+````
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "productId" : "UUID",
+    "productName" : "string",
+    "price" : "double",
+    "category" : "enum",
+    "productImageLink" : "string",
+    "restaurantId" : "UUID"
+  }
+  "message" : "success"
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "restaurantId not found"
+}
+````
+
+### `GET` Get All Product
+
+* Description : Get list of product
+* URL : api/v1/product
+* Auth Required : Yes
+
+**Response Body : ✅ 200 OK**
+````json
+{
+  "data" : [
+    {
+      "productId" : "UUID",
+      "productName" : "string",
+      "price" : "double",
+      "category" : "enum",
+      "productImageLink" : "string",
+      "restaurantId" : "UUID"
+    },
+    {
+      "productId" : "UUID",
+      "productName" : "string",
+      "price" : "double",
+      "category" : "enum",
+      "productImageLink" : "string",
+      "restaurantId" : "UUID"
+    }
+  ],
+  "message" : "success"
+}
+````
+
+### `GET` Get Product by Id
+* Description : Get detail of product
+* URL : api/v1/product/{productId}
+* Auth Required : Yes
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "productId" : "UUID",
+    "productName" : "string",
+    "price" : "double",
+    "category" : "enum",
+    "productImageLink" : "string",
+    "productRating" : "float",
+    "restaurantId" : "UUID"
+  },
+  "message" : "success"
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "productId not found"
+}
+````
