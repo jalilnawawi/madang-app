@@ -364,3 +364,33 @@
   "message" : "productId not found"
 }
 ````
+
+### `PUT` Update Product Price
+* Description : Update product price
+* URL : api/v1/product/{productId}
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "price" : "double"
+}
+````
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "productName" : "string",
+    "price" : "double"
+  }
+  "message" : "success"
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "productId not found"
+}
+````
