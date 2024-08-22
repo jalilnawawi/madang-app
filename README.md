@@ -324,13 +324,13 @@
 }
 ````
 ---
-## Images Service
+## Image Service
 ### `POST` Create Image
 * Description : Insert image to database
-* URL : api/v1/restaurant/images
+* URL : api/v1/images
 * Auth Required : Yes
 
-**Request Body** :
+**Request Body** : 
 ````json
 {
   "imageLink" : "string",
@@ -339,8 +339,7 @@
 }
 ````
 
-**Response Body** :
-* **✅ 200 OK**
+**Response Body : ✅ 200 OK**
 ````json
 {
   "data" : {
@@ -391,5 +390,114 @@
 {
   "data" : null,
   "message" : "imageId not found"
+}
+````
+---
+## Seat Service
+### `POST` Create Seat
+* Description : Insert seat to database
+* URL : api/v1/seat
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "seatName" : "string",
+  "countTables" : "integer",
+  "countChairs" : "integer",
+  "countFlowers" : "integer",
+  "price" : "double",
+  "category" : "enum"
+}
+````
+
+**Response Body : ✅ 200 OK**
+````json
+{
+  "data" : {
+    "seatId" : "UUID",
+    "seatName : "string"
+    "countTables" : "integer",
+    "countChairs" : "integer",
+    "countFlowers" : "integer",
+    "price" : "double",
+    "category" : "enum"
+  },
+  "message" : "success"
+}
+````
+### `GET` Get Seat
+* Description : Get list of all seat
+* URL : api/v1/seat
+* Auth Required : Yes
+
+**Response Body : ✅ 200 OK**
+````json
+{
+  "data" : [
+    {
+      "seatName" : "chair",
+      "countTables" : 0,
+      "countChairs" : 1,
+      "countFlowers" : 0,
+      "price" : 0,
+      "category" : chair
+    },
+    {
+      "seatName" : "table",
+      "countTables" : 1,
+      "countChairs" : 0,
+      "countFlowers" : 0,
+      "price" : 0,
+      "category" : table
+    },
+    {
+      "seatName" : "flower",
+      "countTables" : 0,
+      "countChairs" : 0,
+      "countFlowers" : 1,
+      "price" : 25000,
+      "category" : flower
+    },
+    {
+      "seatName" : "work table",
+      "countTables" : 1,
+      "countChairs" : 1,
+      "countFlowers" : 0,
+      "price" : 10000,
+      "category" : work_table
+    }
+  ],
+  "message" : "success"
+}
+````
+
+### Get Seat by Id
+* Description : Get Seat by seatId
+* URL : api/v1/seat/{seatId}
+* Auth Required : Yes
+
+**Response Body** :
+* **✅ 200 OK**
+````json
+{
+  "data" : {
+    "seatId" : "UUID",
+    "seatName" : "flower",
+    "countTables" : 0,
+    "countChairs" : 0,
+    "countFlowers" : 1,
+    "price" : 25000,
+    "category" : flower
+  },
+  "message" : "success"
+}
+````
+
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "seatId not found"
 }
 ````
