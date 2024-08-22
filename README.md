@@ -501,3 +501,35 @@
   "message" : "seatId not found"
 }
 ````
+---
+## Transaction Service
+### `POST` Create Transaction
+* Description : Create transaction user to app
+* URL : api/v1/transaction
+* Auth Required : Yes
+
+**Request Body** :
+````json
+{
+  "productName" : "string",
+  "seatName" : "string",
+  "price" : "double"
+  "paymentMethod" : "enum"
+}
+````
+
+**Response Body : ✅ 200 OK**
+````json
+{
+  "data" : {
+    "transactionId" : "UUID",
+    "transactionNum" : "string",
+    "transactionDate" : "timestamp",
+    "productName" : "string",
+    "seatName" : "string",
+    "price" : "double"
+    "paymentMethod" : "enum"
+  },
+  "message" : "success"
+}
+````
