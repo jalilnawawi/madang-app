@@ -159,28 +159,28 @@
 ````json
 {
   "data": {
-    "restaurantId": "UUID",
-    "name": "string",
-    "description": "string",
-    "imageLink": "string",
-    "address": "string",
-    "category": "enum",
-    "product": {
-      "name": "string",
-      "price": "double",
-      "type": "enum"
+    "restaurantId" : "UUID",
+    "name" : "string",
+    "description" : "string",
+    "imageLink" : "string",
+    "address" : "string",
+    "category" : "enum",
+    "product" : {
+      "name" : "string",
+      "price" : "double",
+      "type" : "enum"
     },
     "restaurantRating": "float",
     "customerReviews": [
       {
-        "name": "string",
-        "review": "string",
-        "date": "timestamp"
+        "name" : "string",
+        "review" : "string",
+        "date" : "timestamp"
       },
       {
-        "name": "string",
-        "review": "string",
-        "date": "timestamp"
+        "name" : "string",
+        "review" : "string",
+        "date" : "timestamp"
       }
     ]
   }
@@ -416,7 +416,7 @@
 {
   "data" : {
     "seatId" : "UUID",
-    "seatName : "string"
+    "seatName" : "string"
     "countTables" : "integer",
     "countChairs" : "integer",
     "countFlowers" : "integer",
@@ -441,7 +441,7 @@
       "countChairs" : 1,
       "countFlowers" : 0,
       "price" : 0,
-      "category" : chair
+      "category" : "chair"
     },
     {
       "seatName" : "table",
@@ -449,7 +449,7 @@
       "countChairs" : 0,
       "countFlowers" : 0,
       "price" : 0,
-      "category" : table
+      "category" : "table"
     },
     {
       "seatName" : "flower",
@@ -457,7 +457,7 @@
       "countChairs" : 0,
       "countFlowers" : 1,
       "price" : 25000,
-      "category" : flower
+      "category" : "flower"
     },
     {
       "seatName" : "work table",
@@ -465,7 +465,7 @@
       "countChairs" : 1,
       "countFlowers" : 0,
       "price" : 10000,
-      "category" : work_table
+      "category" : "work_table"
     }
   ],
   "message" : "success"
@@ -488,7 +488,7 @@
     "countChairs" : 0,
     "countFlowers" : 1,
     "price" : 25000,
-    "category" : flower
+    "category" : "flower"
   },
   "message" : "success"
 }
