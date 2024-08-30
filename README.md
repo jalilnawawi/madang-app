@@ -416,7 +416,7 @@
 {
   "data" : {
     "seatId" : "UUID",
-    "seatName" : "string"
+    "seatName" : "string",
     "countTables" : "integer",
     "countChairs" : "integer",
     "countFlowers" : "integer",
@@ -513,7 +513,7 @@
 {
   "productName" : "string",
   "seatName" : "string",
-  "price" : "double"
+  "price" : "double",
   "paymentMethod" : "enum"
 }
 ````
@@ -527,7 +527,7 @@
     "transactionDate" : "timestamp",
     "productName" : "string",
     "seatName" : "string",
-    "price" : "double"
+    "price" : "double",
     "paymentMethod" : "enum"
   },
   "message" : "success"
