@@ -2,10 +2,16 @@ package com.jalil_be_app.madang_app.model.entity;
 
 import com.jalil_be_app.madang_app.model.enums.PaymentMethod;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.UUID;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "transaction")
 public class Transaction extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
