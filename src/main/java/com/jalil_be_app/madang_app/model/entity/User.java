@@ -45,6 +45,18 @@ public class User extends BaseModel implements UserDetails {
     @Column(nullable = false)
     private UserStatus status;
 
+    public User(UUID id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public static UserDetails build(User user){
+        return new User(
+                user.getId(), user.getUsername(), user.getPassword()
+        );
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
