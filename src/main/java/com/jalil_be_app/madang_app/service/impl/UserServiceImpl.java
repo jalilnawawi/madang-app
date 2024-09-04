@@ -78,25 +78,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(loginUserRequestDto.getEmail()).orElseThrow(
+        if (loginUserRequestDto.getUsername() == null || loginUserRequestDto.getPassword() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username or password can't null");
+        }
+
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(loginUserRequestDto.getUsername()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         ));
 
         User user = userOptional.get();
 
-        if (loginUserRequestDto.getEmail() == null || loginUserRequestDto.getPassword() == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email or password can't null");
-        }
         if (!passwordEncoder.matches(loginUserRequestDto.getPassword(), user.getPassword())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your email or password is invalid");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your username or password is invalid");
         } else if (user.getStatus() == UserStatus.INACTIVE) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your account is inactive");
         } else {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUserRequestDto.getEmail(),
-                        loginUserRequestDto.getPassword()
-                ));
+                    new UsernamePasswordAuthenticationToken(
+                            loginUserRequestDto.getUsername(),
+                            loginUserRequestDto.getPassword()
+                    )
+            );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtService.generateToken(authentication);
             User userDetails = (User) authentication.getPrincipal();

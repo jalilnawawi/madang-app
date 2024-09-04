@@ -79,6 +79,15 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
+    public String getUsername(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignInKey()).build()
+                .parseClaimsJws(jwt)
+                .getBody()
+                .getSubject();
+    }
+
+    @Override
     public long getExpirationTime() {
         return jwtExpiration;
     }

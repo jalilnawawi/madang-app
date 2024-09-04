@@ -16,4 +16,5 @@ public interface JwtService {
     public String generateToken(Authentication authentication);
     public long getExpirationTime();
     public boolean isTokenValid(String token, UserDetails userDetails);
+    public String getUsername(String jwt);
 }
