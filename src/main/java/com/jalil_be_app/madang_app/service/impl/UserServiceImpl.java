@@ -7,6 +7,7 @@ import com.jalil_be_app.madang_app.model.entity.User;
 import com.jalil_be_app.madang_app.model.enums.Gender;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
+import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.UserService;
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(registerUserRequestDto.getUsername());
         user.setEmail(registerUserRequestDto.getEmail());
         user.setPassword(registerUserRequestDto.getPassword());
+        user.setStatus(UserStatus.INACTIVE);
 
 //        Image image = new Image();
 //        image.setImageLink(registerUserRequestDto.getImageLink());
