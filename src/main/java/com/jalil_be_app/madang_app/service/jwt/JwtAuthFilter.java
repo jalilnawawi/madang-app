@@ -21,10 +21,9 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
-    HandlerExceptionResolver handlerExceptionResolver;
-
-    @Autowired
     JwtService jwtService;
+    @Autowired
+    HandlerExceptionResolver handlerExceptionResolver;
 
     @Autowired
     UserDetailsService userDetailsService;
