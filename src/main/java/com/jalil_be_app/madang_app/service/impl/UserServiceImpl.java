@@ -4,8 +4,11 @@ import com.jalil_be_app.madang_app.dto.userDto.LoginUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.LoginUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.RegisterUserResponseDto;
+import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.User;
 import com.jalil_be_app.madang_app.model.enums.Gender;
+import com.jalil_be_app.madang_app.model.enums.ImageCategory;
+import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
@@ -58,10 +61,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
         user.setStatus(UserStatus.INACTIVE);
 
+        //TODO fix add image
 //        Image image = new Image();
 //        image.setImageLink(registerUserRequestDto.getImageLink());
-//        image.setCategory(ImageCategory.USER_IMAGE);
-//        image.setSize(ImageSize.SMALL);
+//        image.setCategory(ImageCategory.USER);
+//        image.setSize(ImageSize.S);
 //        imageRepository.save(image);
 //
 //        user.setImage(image);
@@ -72,21 +76,20 @@ public class UserServiceImpl implements UserService {
         responseDto.setGender(registerUserRequestDto.getGender());
         responseDto.setUsername(registerUserRequestDto.getUsername());
         responseDto.setEmail(registerUserRequestDto.getEmail());
-//        responseDto.setImageLink(registerUserRequestDto.getImageLink());
+        responseDto.setImageLink(registerUserRequestDto.getImageLink());
         return responseDto;
     }
 
     @Override
     public LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(loginUserRequestDto.getUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
-        ));
-
-        User user = userOptional.get();
-
         if (loginUserRequestDto.getUsername() == null || loginUserRequestDto.getPassword() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username or password can't null");
         }
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(loginUserRequestDto.getUsername()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        ));
+        User user = userOptional.get();
+
         if (!passwordEncoder.matches(loginUserRequestDto.getPassword(), user.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your username or password is invalid");
         } else {

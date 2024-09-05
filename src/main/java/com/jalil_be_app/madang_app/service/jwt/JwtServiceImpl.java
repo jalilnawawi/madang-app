@@ -88,7 +88,7 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-//                .setSubject(username)
+                .setSubject(username)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtExpiration))

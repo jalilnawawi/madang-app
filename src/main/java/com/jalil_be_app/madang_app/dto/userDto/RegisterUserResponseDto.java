@@ -9,5 +9,5 @@ public class RegisterUserResponseDto {
     private String gender;
     private String username;
     private String email;
-//    private String imageLink;
+    private String imageLink;
 }

@@ -23,10 +23,6 @@ public class Image extends BaseModel {
 
     @Column(name = "image_link")
     private String imageLink;
-
-    @Enumerated(EnumType.STRING)
-    private ImageSize size;
-
-    @Enumerated(EnumType.STRING)
     private ImageCategory category;
+    private ImageSize size;
 }

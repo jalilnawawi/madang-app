@@ -1,10 +1,15 @@
 package com.jalil_be_app.madang_app.service.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jalil_be_app.madang_app.dto.base.BaseResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +27,15 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     JwtService jwtService;
+
     @Autowired
     HandlerExceptionResolver handlerExceptionResolver;
 
     @Autowired
     UserDetailsService userDetailsService;
+
+    @Autowired
+    ObjectMapper mapper;
 
     @Override
     protected void doFilterInternal(
@@ -44,10 +53,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-        } catch (Exception e){
-            handlerExceptionResolver.resolveException(request, response, null, e);
+        } catch (ExpiredJwtException e){
+            handleExpiredJwtException(e, request, response);
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void handleExpiredJwtException(ExpiredJwtException e, HttpServletRequest request,
+                                           HttpServletResponse response) throws IOException{
+
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        mapper.writeValue(response.getWriter(), BaseResponse.failure(401, "JWT Token is expired"));
     }
 
     private String parseJwt(HttpServletRequest request){
