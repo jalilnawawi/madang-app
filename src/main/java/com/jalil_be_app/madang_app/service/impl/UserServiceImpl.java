@@ -1,9 +1,13 @@
 package com.jalil_be_app.madang_app.service.impl;
 
-import com.jalil_be_app.madang_app.dto.userDto.LoginUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.LoginUserResponseDto;
-import com.jalil_be_app.madang_app.dto.userDto.RegisterUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.RegisterUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.User;
 import com.jalil_be_app.madang_app.model.enums.Gender;
@@ -26,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -117,5 +122,45 @@ public class UserServiceImpl implements UserService {
             return responseDto;
         }
 
+    }
+
+    @Override
+    public UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto) {
+        //TODO how to get data by UUID from token
+        //TODO create exception when jwt token not matches
+        String jwtToken = token.substring("Bearer ".length());
+        String username = jwtService.getUsername(jwtToken);
+
+        User existingUser = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        );
+
+        existingUser.setPassword(passwordEncoder.encode(updatePasswordRequestDto.getPassword()));
+        userRepository.save(existingUser);
+
+        UpdatePasswordResponseDto responseDto = new UpdatePasswordResponseDto();
+        responseDto.setUsername(existingUser.getUsername());
+        return responseDto;
+    }
+
+    @Override
+    public UpdateImageResponseDto updateImage(String token, UpdateImageRequestDto updateImageRequestDto) {
+        String jwtToken = token.substring("Bearer ".length());
+        String username = jwtService.getUsername(jwtToken);
+
+        User existingUser = userRepository.findByUsername(username).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        );
+
+        Image existingImage = imageRepository.findById(existingUser.getImage().getId()).get();
+        existingImage.setImageLink(updateImageRequestDto.getImageLink());
+        imageRepository.save(existingImage);
+
+        userRepository.save(existingUser);
+
+        UpdateImageResponseDto responseDto = new UpdateImageResponseDto();
+        responseDto.setUsername(existingUser.getUsername());
+        responseDto.setImageLink(existingImage.getImageLink());
+        return responseDto;
     }
 }

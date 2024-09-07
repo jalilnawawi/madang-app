@@ -1,9 +1,9 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.userDto.LoginUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.LoginUserResponseDto;
-import com.jalil_be_app.madang_app.dto.userDto.RegisterUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.RegisterUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -32,6 +33,27 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
         response.put("data", userService.login(loginUserRequestDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-profile/password")
+    public ResponseEntity<Map<String, Object>> updatePassword(
+            @RequestHeader("Authorization") String token,
+            @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Update password is success!");
+        response.put("data", userService.updatePassword(token, updatePasswordRequestDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-profile/image")
+    public ResponseEntity<Map<String, Object>> updateImage(
+            @RequestHeader("Authorization") String token,
+            @RequestBody UpdateImageRequestDto updateImageRequestDto
+            ){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Update image is success!");
+        response.put("data", userService.updateImage(token, updateImageRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
