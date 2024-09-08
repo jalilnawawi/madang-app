@@ -12,6 +12,7 @@ import java.util.UUID;
 @Getter
 public class LoginUserResponseDto {
     private String accessToken;
+    private String refreshToken;
     private UUID userId;
     private UserStatus userStatus;
 }

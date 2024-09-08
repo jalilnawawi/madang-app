@@ -97,6 +97,34 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
+    public String generateRefreshToken(Authentication authentication) {
+        String username;
+        UUID userId;
+        User user = new User();
+
+        if (authentication.getPrincipal() instanceof User){
+            User userPrincipal = (User) authentication.getPrincipal();
+            username = userPrincipal.getUsername();
+            userId = userPrincipal.getId();
+
+            user.setUsername(username);
+            user.setId(userId);
+            log.info("Generating token for user : {}", userId);
+        } else {
+            throw new IllegalArgumentException("Unsupported principal type");
+        }
+
+        Date now = new Date();
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setSubject(username)
+                .claim("userId", user.getId())
+                .setIssuedAt(now)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    @Override
     public String generateTokenFromUsername(String username) {
         User user = userRepository.findByUsername(username).get();
 

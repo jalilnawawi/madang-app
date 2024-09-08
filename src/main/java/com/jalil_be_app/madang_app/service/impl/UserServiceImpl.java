@@ -2,6 +2,8 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.RefreshTokenRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.RefreshTokenResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
@@ -111,17 +113,35 @@ public class UserServiceImpl implements UserService {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtService.generateToken(authentication);
+            String refreshToken = jwtService.generateRefreshToken(authentication);
             User userDetails = (User) authentication.getPrincipal();
             user.setStatus(UserStatus.ACTIVE);
             userRepository.save(user);
 
             LoginUserResponseDto responseDto = new LoginUserResponseDto();
             responseDto.setAccessToken(token);
+            responseDto.setRefreshToken(refreshToken);
             responseDto.setUserId(userDetails.getId());
             responseDto.setUserStatus(user.getStatus());
             return responseDto;
         }
 
+    }
+
+    @Override
+    public RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto) {
+        String username = jwtService.getUsername(refreshTokenRequestDto.getRefreshToken());
+        String token = jwtService.generateTokenFromUsername(username);
+
+        Optional<User> userOptional = userRepository.findByUsername(username);
+
+        if (userOptional.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
+        } else {
+            RefreshTokenResponseDto responseDto = new RefreshTokenResponseDto();
+            responseDto.setAccessToken(token);
+            return responseDto;
+        }
     }
 
     @Override

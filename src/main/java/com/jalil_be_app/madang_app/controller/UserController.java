@@ -1,6 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
 import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.RefreshTokenRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
@@ -33,6 +34,14 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
         response.put("data", userService.login(loginUserRequestDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/auth/refresh-token")
+    public ResponseEntity<Map<String, Object>> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", userService.refreshToken(refreshTokenRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
