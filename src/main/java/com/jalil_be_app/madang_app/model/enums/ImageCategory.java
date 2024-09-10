@@ -5,5 +5,6 @@ public enum ImageCategory {
     DRINK,
     CHAIR,
     TABLE,
-    USER
+    USER,
+    RESTAURANT
 }
