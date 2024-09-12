@@ -11,6 +11,7 @@ import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateI
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
+import com.jalil_be_app.madang_app.model.entity.account.Role;
 import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.model.enums.Gender;
@@ -18,6 +19,7 @@ import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
+import com.jalil_be_app.madang_app.repository.RoleRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.UserService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
@@ -32,12 +34,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     ImageRepository imageRepository;
@@ -73,13 +80,22 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
             user.setStatus(UserStatus.INACTIVE);
 
-//            if (registerUserRequestDto.getRole().equalsIgnoreCase("user")){
-//                user.setRole(UserRole.ROLE_USER);
-//            } else if (registerUserRequestDto.getRole().equalsIgnoreCase("merchant")) {
-//                user.setRole(UserRole.ROLE_MERCHANT);
-//            } else if (registerUserRequestDto.getRole().equalsIgnoreCase("admin")) {
-//                user.setRole(UserRole.ROLE_ADMIN);
-//            }
+            Set<String> strRoles = registerUserRequestDto.getRole();
+            Set<Role> roles = new HashSet<>();
+            Role userRole = roleRepository.findByName(UserRole.ROLE_USER);
+            Role merchantRole = roleRepository.findByName(UserRole.ROLE_MERCHANT);
+
+            if (strRoles == null || strRoles.isEmpty()){
+                roles.add(userRole);
+            } else {
+                strRoles.forEach(role -> {
+                    if ("merchant".equals(role)){
+                        roles.add(merchantRole);
+                    } else {
+                        roles.add(userRole);
+                    }
+                });
+            }
 
             Image image = new Image();
             image.setImageLink(registerUserRequestDto.getImageLink());
@@ -95,7 +111,7 @@ public class UserServiceImpl implements UserService {
             responseDto.setGender(registerUserRequestDto.getGender());
             responseDto.setUsername(registerUserRequestDto.getUsername());
             responseDto.setEmail(registerUserRequestDto.getEmail());
-            responseDto.setRole(registerUserRequestDto.getRole());
+//            responseDto.setRole(registerUserRequestDto.getRole());
             responseDto.setImageLink(registerUserRequestDto.getImageLink());
             return responseDto;
         }
