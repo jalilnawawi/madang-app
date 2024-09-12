@@ -68,10 +68,10 @@ public class JwtServiceImpl implements JwtService {
     public String generateToken(Authentication authentication) {
         String username;
         UUID userId;
-        User user = new User();
+        MyUserDetails user = new MyUserDetails();
 
-        if (authentication.getPrincipal() instanceof User){
-            User userPrincipal = (User) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof MyUserDetails){
+            MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
             username = userPrincipal.getUsername();
             userId = userPrincipal.getId();
 
@@ -97,10 +97,10 @@ public class JwtServiceImpl implements JwtService {
     public String generateRefreshToken(Authentication authentication) {
         String username;
         UUID userId;
-        User user = new User();
+        MyUserDetails user = new MyUserDetails();
 
-        if (authentication.getPrincipal() instanceof User){
-            User userPrincipal = (User) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof MyUserDetails){
+            MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
             username = userPrincipal.getUsername();
             userId = userPrincipal.getId();
 

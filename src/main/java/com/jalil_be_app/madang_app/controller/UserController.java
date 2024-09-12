@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/hello")
-    @RolesAllowed("ROLE_USER")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String hello(){
         return "hello world";
     }

@@ -23,6 +23,7 @@ import com.jalil_be_app.madang_app.repository.RoleRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.UserService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
+import com.jalil_be_app.madang_app.service.jwt.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -96,6 +97,7 @@ public class UserServiceImpl implements UserService {
                     }
                 });
             }
+            user.setRoles(roles);
 
             Image image = new Image();
             image.setImageLink(registerUserRequestDto.getImageLink());
@@ -111,7 +113,7 @@ public class UserServiceImpl implements UserService {
             responseDto.setGender(registerUserRequestDto.getGender());
             responseDto.setUsername(registerUserRequestDto.getUsername());
             responseDto.setEmail(registerUserRequestDto.getEmail());
-//            responseDto.setRole(registerUserRequestDto.getRole());
+            responseDto.setRole(roles);
             responseDto.setImageLink(registerUserRequestDto.getImageLink());
             return responseDto;
         }
@@ -139,7 +141,7 @@ public class UserServiceImpl implements UserService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtService.generateToken(authentication);
             String refreshToken = jwtService.generateRefreshToken(authentication);
-            User userDetails = (User) authentication.getPrincipal();
+            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
             user.setStatus(UserStatus.ACTIVE);
             userRepository.save(user);
 

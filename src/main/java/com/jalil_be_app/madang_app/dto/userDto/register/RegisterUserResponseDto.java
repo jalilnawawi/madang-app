@@ -1,6 +1,10 @@
 package com.jalil_be_app.madang_app.dto.userDto.register;
 
+import com.jalil_be_app.madang_app.model.entity.account.Role;
+import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class RegisterUserResponseDto {
@@ -8,6 +12,6 @@ public class RegisterUserResponseDto {
     private String gender;
     private String username;
     private String email;
-    private String role;
+    private Set<Role> role;
     private String imageLink;
 }

@@ -1,7 +1,9 @@
 package com.jalil_be_app.madang_app.service.jwt;
 
 import com.jalil_be_app.madang_app.model.entity.account.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class MyUserDetails implements UserDetails {
     private UUID id;
     private String username;

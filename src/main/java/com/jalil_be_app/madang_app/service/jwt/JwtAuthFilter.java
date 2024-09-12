@@ -32,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     HandlerExceptionResolver handlerExceptionResolver;
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     ObjectMapper mapper;
