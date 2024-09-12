@@ -19,6 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         "Username not found " + username
                 ));
-        return User.build(user);
+        return MyUserDetails.build(user);
     }
 }

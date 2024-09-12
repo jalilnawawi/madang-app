@@ -7,12 +7,14 @@ import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends BaseModel implements UserDetails {
+public class User extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -58,40 +60,4 @@ public class User extends BaseModel implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    public User(UUID id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public static UserDetails build(User user){
-        return new User(
-                user.getId(), user.getUsername(), user.getPassword()
-        );
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
