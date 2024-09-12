@@ -6,9 +6,11 @@ import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -67,6 +69,7 @@ public class UserController {
     }
 
     @GetMapping("/hello")
+    @RolesAllowed("ROLE_USER")
     public String hello(){
         return "hello world";
     }

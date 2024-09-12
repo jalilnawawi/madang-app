@@ -8,5 +8,6 @@ public class RegisterUserResponseDto {
     private String gender;
     private String username;
     private String email;
+    private String role;
     private String imageLink;
 }

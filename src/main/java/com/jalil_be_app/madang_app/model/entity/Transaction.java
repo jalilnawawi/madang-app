@@ -1,5 +1,6 @@
 package com.jalil_be_app.madang_app.model.entity;
 
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;

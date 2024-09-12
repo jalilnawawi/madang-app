@@ -1,6 +1,6 @@
 package com.jalil_be_app.madang_app.service.jwt;
 
-import com.jalil_be_app.madang_app.model.entity.User;
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

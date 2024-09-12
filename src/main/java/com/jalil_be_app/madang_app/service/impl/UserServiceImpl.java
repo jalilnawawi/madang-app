@@ -11,7 +11,8 @@ import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateI
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
-import com.jalil_be_app.madang_app.model.entity.User;
+import com.jalil_be_app.madang_app.model.entity.account.UserRole;
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.model.enums.Gender;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
@@ -32,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,6 +73,14 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(registerUserRequestDto.getPassword()));
             user.setStatus(UserStatus.INACTIVE);
 
+//            if (registerUserRequestDto.getRole().equalsIgnoreCase("user")){
+//                user.setRole(UserRole.ROLE_USER);
+//            } else if (registerUserRequestDto.getRole().equalsIgnoreCase("merchant")) {
+//                user.setRole(UserRole.ROLE_MERCHANT);
+//            } else if (registerUserRequestDto.getRole().equalsIgnoreCase("admin")) {
+//                user.setRole(UserRole.ROLE_ADMIN);
+//            }
+
             Image image = new Image();
             image.setImageLink(registerUserRequestDto.getImageLink());
             image.setCategory(ImageCategory.USER);
@@ -87,6 +95,7 @@ public class UserServiceImpl implements UserService {
             responseDto.setGender(registerUserRequestDto.getGender());
             responseDto.setUsername(registerUserRequestDto.getUsername());
             responseDto.setEmail(registerUserRequestDto.getEmail());
+            responseDto.setRole(registerUserRequestDto.getRole());
             responseDto.setImageLink(registerUserRequestDto.getImageLink());
             return responseDto;
         }

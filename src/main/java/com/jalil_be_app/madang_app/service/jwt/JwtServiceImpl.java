@@ -1,11 +1,10 @@
 package com.jalil_be_app.madang_app.service.jwt;
 
-import com.jalil_be_app.madang_app.model.entity.User;
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 
