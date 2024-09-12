@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
             Set<Role> roles = new HashSet<>();
             Role userRole = roleRepository.findByName(UserRole.ROLE_USER);
             Role merchantRole = roleRepository.findByName(UserRole.ROLE_MERCHANT);
-
+            //TODO for admin role perlu ditaruh di API ?
             if (strRoles == null || strRoles.isEmpty()){
                 roles.add(userRole);
             } else {
