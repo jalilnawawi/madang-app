@@ -150,11 +150,12 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public UUID getId(String jwt) {
+    public String getId(String jwt) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey()).build()
                 .parseClaimsJws(jwt)
                 .getBody()
-                .get("userId", UUID.class);
+                .get("userId", String.class);
     }
+
 }

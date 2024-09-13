@@ -29,15 +29,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -142,6 +141,9 @@ public class UserServiceImpl implements UserService {
             String token = jwtService.generateToken(authentication);
             String refreshToken = jwtService.generateRefreshToken(authentication);
             MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .toList();
             user.setStatus(UserStatus.ACTIVE);
             userRepository.save(user);
 
@@ -150,6 +152,7 @@ public class UserServiceImpl implements UserService {
             responseDto.setRefreshToken(refreshToken);
             responseDto.setUserId(userDetails.getId());
             responseDto.setUserStatus(user.getStatus());
+            responseDto.setRoles(roles);
             return responseDto;
         }
 
@@ -173,12 +176,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto) {
-        //TODO how to get data by UUID from token
-        //TODO create exception when jwt token not matches
         String jwtToken = token.substring("Bearer ".length());
-        String username = jwtService.getUsername(jwtToken);
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
 
-        User existingUser = userRepository.findByUsername(username).orElseThrow(
+        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
@@ -193,9 +195,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdateImageResponseDto updateImage(String token, UpdateImageRequestDto updateImageRequestDto) {
         String jwtToken = token.substring("Bearer ".length());
-        String username = jwtService.getUsername(jwtToken);
-
-        User existingUser = userRepository.findByUsername(username).orElseThrow(
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 

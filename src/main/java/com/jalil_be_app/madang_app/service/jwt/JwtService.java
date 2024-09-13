@@ -4,9 +4,6 @@ import io.jsonwebtoken.Claims;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Function;
 
 public interface JwtService {
@@ -17,5 +14,5 @@ public interface JwtService {
     public String generateRefreshToken(Authentication authentication);
     public String generateTokenFromUsername(String username);
     public String getUsername(String jwt);
-    public UUID getId(String jwt);
+    public String getId(String jwt);
 }

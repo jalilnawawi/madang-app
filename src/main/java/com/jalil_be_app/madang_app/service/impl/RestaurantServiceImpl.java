@@ -6,21 +6,27 @@ import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import com.jalil_be_app.madang_app.model.enums.RestaurantCategory;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.RestaurantRepository;
+import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.RestaurantService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     RestaurantRepository restaurantRepository;
 
@@ -32,7 +38,15 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Transactional
     @Override
-    public CreateRestaurantResponseDto create(CreateRestaurantRequestDto createRestaurantRequestDto) {
+    public CreateRestaurantResponseDto create(String token, CreateRestaurantRequestDto createRestaurantRequestDto) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+
+        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        );
+
         Restaurant restaurant = new Restaurant();
         restaurant.setName(createRestaurantRequestDto.getName());
         restaurant.setDescription(createRestaurantRequestDto.getDescription());
@@ -53,6 +67,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         imageRepository.save(image);
 
         restaurant.setImage(image);
+
+        restaurant.setUser(existingUser);
         restaurantRepository.save(restaurant);
 
         CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
@@ -67,8 +83,22 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public UpdateRestaurantResponseDto update(String token, UpdateRestaurantRequestDto updateRestaurantRequestDto) {
         String jwtToken = token.substring("Bearer ".length());
-        String username = jwtService.getUsername(jwtToken);
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
 
-        return null;
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+        );
+
+        existingRestaurant.setName(updateRestaurantRequestDto.getName());
+        existingRestaurant.setDescription(updateRestaurantRequestDto.getDescription());
+        existingRestaurant.setAddress(updateRestaurantRequestDto.getAddress());
+        restaurantRepository.save(existingRestaurant);
+
+        UpdateRestaurantResponseDto responseDto = new UpdateRestaurantResponseDto();
+        responseDto.setName(updateRestaurantRequestDto.getName());
+        responseDto.setDescription(updateRestaurantRequestDto.getDescription());
+        responseDto.setAddress(updateRestaurantRequestDto.getAddress());
+        return responseDto;
     }
 }

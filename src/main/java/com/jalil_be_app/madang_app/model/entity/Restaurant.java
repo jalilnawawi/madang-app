@@ -1,5 +1,6 @@
 package com.jalil_be_app.madang_app.model.entity;
 
+import com.jalil_be_app.madang_app.model.entity.account.User;
 import com.jalil_be_app.madang_app.model.enums.RestaurantCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "restaurant")
-public class Restaurant {
+public class Restaurant extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -36,4 +37,8 @@ public class Restaurant {
     private RestaurantCategory category;
 
     private Float rating;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
