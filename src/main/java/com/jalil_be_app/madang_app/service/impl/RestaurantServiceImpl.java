@@ -2,8 +2,8 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.restaurantDto.CreateRestaurantRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.CreateRestaurantResponseDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantAddressRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantAddressResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.entity.account.User;
@@ -81,24 +81,21 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public UpdateRestaurantResponseDto update(String token, UpdateRestaurantRequestDto updateRestaurantRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
-
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+    public UpdateRestaurantAddressResponseDto update(UUID restaurantId, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
+        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
-        existingRestaurant.setName(updateRestaurantRequestDto.getName());
-        existingRestaurant.setDescription(updateRestaurantRequestDto.getDescription());
-        existingRestaurant.setAddress(updateRestaurantRequestDto.getAddress());
+        existingRestaurant.setAddress(updateRestaurantAddressRequestDto.getAddress());
         restaurantRepository.save(existingRestaurant);
 
-        UpdateRestaurantResponseDto responseDto = new UpdateRestaurantResponseDto();
-        responseDto.setName(updateRestaurantRequestDto.getName());
-        responseDto.setDescription(updateRestaurantRequestDto.getDescription());
-        responseDto.setAddress(updateRestaurantRequestDto.getAddress());
+        UpdateRestaurantAddressResponseDto responseDto = new UpdateRestaurantAddressResponseDto();
+        responseDto.setAddress(updateRestaurantAddressRequestDto.getAddress());
         return responseDto;
+    }
+
+    @Override
+    public void delete(UUID restaurantId) {
+        restaurantRepository.deleteById(restaurantId);
     }
 }
