@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -47,42 +48,52 @@ public class RestaurantServiceImpl implements RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
-        Restaurant restaurant = new Restaurant();
-        restaurant.setName(createRestaurantRequestDto.getName());
-        restaurant.setDescription(createRestaurantRequestDto.getDescription());
-        restaurant.setAddress(createRestaurantRequestDto.getAddress());
+        Optional<Restaurant> existingRestaurant = restaurantRepository.findByUserId(userIdFromString);
+        if (existingRestaurant.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User only can have 1 Restaurant");
+        } else {
+            Restaurant restaurant = new Restaurant();
+            restaurant.setName(createRestaurantRequestDto.getName());
+            restaurant.setDescription(createRestaurantRequestDto.getDescription());
+            restaurant.setAddress(createRestaurantRequestDto.getAddress());
 
-        if (createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffee shop") ||
-            createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffeeshop")
-        ){
-            restaurant.setCategory(RestaurantCategory.COFFEE_SHOP);
-        } else if (createRestaurantRequestDto.getCategory().equalsIgnoreCase("western")) {
-            restaurant.setCategory(RestaurantCategory.WESTERN);
+            if (createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffee shop") ||
+                    createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffeeshop")
+            ){
+                restaurant.setCategory(RestaurantCategory.COFFEE_SHOP);
+            } else if (createRestaurantRequestDto.getCategory().equalsIgnoreCase("western")) {
+                restaurant.setCategory(RestaurantCategory.WESTERN);
+            }
+
+            Image image = new Image();
+            image.setImageLink(createRestaurantRequestDto.getImageLink());
+            image.setSize(ImageSize.L);
+            image.setCategory(ImageCategory.RESTAURANT);
+            imageRepository.save(image);
+
+            restaurant.setImage(image);
+
+            restaurant.setUser(existingUser);
+            restaurantRepository.save(restaurant);
+
+            CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
+            responseDto.setName(createRestaurantRequestDto.getName());
+            responseDto.setDescription(createRestaurantRequestDto.getDescription());
+            responseDto.setAddress(createRestaurantRequestDto.getAddress());
+            responseDto.setCategory(createRestaurantRequestDto.getCategory());
+            responseDto.setImageLink(createRestaurantRequestDto.getImageLink());
+            return responseDto;
         }
 
-        Image image = new Image();
-        image.setImageLink(createRestaurantRequestDto.getImageLink());
-        image.setSize(ImageSize.L);
-        image.setCategory(ImageCategory.RESTAURANT);
-        imageRepository.save(image);
-
-        restaurant.setImage(image);
-
-        restaurant.setUser(existingUser);
-        restaurantRepository.save(restaurant);
-
-        CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
-        responseDto.setName(createRestaurantRequestDto.getName());
-        responseDto.setDescription(createRestaurantRequestDto.getDescription());
-        responseDto.setAddress(createRestaurantRequestDto.getAddress());
-        responseDto.setCategory(createRestaurantRequestDto.getCategory());
-        responseDto.setImageLink(createRestaurantRequestDto.getImageLink());
-        return responseDto;
     }
 
     @Override
-    public UpdateRestaurantAddressResponseDto update(UUID restaurantId, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
-        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+    public UpdateRestaurantAddressResponseDto update(String token, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -95,7 +106,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void delete(UUID restaurantId) {
-        restaurantRepository.deleteById(restaurantId);
+    public void delete(String token) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+        );
+
+        restaurantRepository.delete(existingRestaurant);
     }
 }

@@ -31,21 +31,21 @@ public class RestaurantController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("update-address/{id}")
+    @PutMapping("update-address")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
     public ResponseEntity<Map<String, Object>> update(
-            @PathVariable UUID id,
+            @RequestHeader("Authorization") String token,
             @RequestBody UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto
     ){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
-        response.put("data", restaurantService.update(id, updateRestaurantAddressRequestDto));
+        response.put("data", restaurantService.update(token, updateRestaurantAddressRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("delete")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
-    public void delete(@PathVariable UUID id){
-        restaurantService.delete(id);
+    public void delete(@RequestHeader("Authorization") String token){
+        restaurantService.delete(token);
     }
 }
