@@ -5,6 +5,7 @@ import com.jalil_be_app.madang_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping("create")
+    @PreAuthorize("hasRole('ROLE_MERCHANT')")
     public ResponseEntity<Map<String, Object>> create(
             @RequestHeader("Authorization") String token,
             @RequestBody CreateProductRequestDto createProductRequestDto

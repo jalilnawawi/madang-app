@@ -5,12 +5,15 @@ import com.jalil_be_app.madang_app.dto.productDto.CreateProductResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
+import com.jalil_be_app.madang_app.model.entity.account.User;
+import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import com.jalil_be_app.madang_app.model.enums.ProductCategory;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.ProductRepository;
 import com.jalil_be_app.madang_app.repository.RestaurantRepository;
+import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.ProductService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -30,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ImageRepository imageRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     JwtService jwtService;
