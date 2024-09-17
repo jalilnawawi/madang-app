@@ -89,10 +89,29 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
+        if (updateRestaurantRequestDto.getName().isEmpty() &&
+            updateRestaurantRequestDto.getDescription().isEmpty()
+        ) {
+            existingRestaurant.setName(existingRestaurant.getName());
+            existingRestaurant.setDescription(existingRestaurant.getDescription());
+            existingRestaurant.setAddress(updateRestaurantRequestDto.getAddress());
+        } else if (updateRestaurantRequestDto.getDescription().isEmpty() &&
+            updateRestaurantRequestDto.getAddress().isEmpty()
+        ) {
+            existingRestaurant.setName(updateRestaurantRequestDto.getName());
+            existingRestaurant.setDescription(existingRestaurant.getDescription());
+            existingRestaurant.setAddress(existingRestaurant.getAddress());
+        } else if (updateRestaurantRequestDto.getName().isEmpty() &&
+            updateRestaurantRequestDto.getAddress().isEmpty()
+        ){
+            existingRestaurant.setName(existingRestaurant.getName());
+            existingRestaurant.setDescription(updateRestaurantRequestDto.getDescription());
+            existingRestaurant.setAddress(existingRestaurant.getAddress());
+        }
 
-        existingRestaurant.setName(updateRestaurantRequestDto.getName());
-        existingRestaurant.setDescription(updateRestaurantRequestDto.getDescription());
-        existingRestaurant.setAddress(updateRestaurantRequestDto.getAddress());
+//        existingRestaurant.setName(updateRestaurantRequestDto.getName());
+//        existingRestaurant.setDescription(updateRestaurantRequestDto.getDescription());
+//        existingRestaurant.setAddress(updateRestaurantRequestDto.getAddress());
         restaurantRepository.save(existingRestaurant);
 
         UpdateRestaurantResponseDto responseDto = new UpdateRestaurantResponseDto();
