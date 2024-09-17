@@ -2,6 +2,8 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.productDto.CreateProductRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.CreateProductResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.UpdateProductPriceRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.UpdateProductPriceResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -77,6 +79,31 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setImageLink(createProductRequestDto.getImageLink());
         responseDto.setRestaurantName(existingRestaurant.getName());
 
+        return responseDto;
+    }
+
+    @Override
+    public UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+        );
+
+        Product existingProduct = productRepository.findById(productId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
+        );
+
+        existingProduct.setPrice(updateProductPriceRequestDto.getPrice());
+        productRepository.save(existingProduct);
+
+        UpdateProductPriceResponseDto responseDto = new UpdateProductPriceResponseDto();
+        responseDto.setName(existingProduct.getName());
+        responseDto.setPrice(existingProduct.getPrice());
+        responseDto.setCategory(existingProduct.getCategory().toString());
+        responseDto.setRestaurantName(existingRestaurant.getName());
         return responseDto;
     }
 }
