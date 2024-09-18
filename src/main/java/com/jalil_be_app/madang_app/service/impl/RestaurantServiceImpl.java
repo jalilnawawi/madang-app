@@ -106,7 +106,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void delete(String token) {
+    public void delete(String token, UUID restaurantId) {
         String jwtToken = token.substring("Bearer ".length());
         String userId = jwtService.getId(jwtToken);
         UUID userIdFromString = UUID.fromString(userId);
@@ -114,6 +114,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
-        restaurantRepository.delete(existingRestaurant);
+        restaurantRepository.deleteById(restaurantId);
     }
 }

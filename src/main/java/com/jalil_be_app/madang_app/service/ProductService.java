@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface ProductService {
     CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto);
     UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto);
+    void delete(String token, UUID productId);
 }

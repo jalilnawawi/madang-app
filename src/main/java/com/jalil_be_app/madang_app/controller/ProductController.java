@@ -43,4 +43,10 @@ public class ProductController {
         response.put("data", productService.update(token, productId, updateProductPriceRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("delete/{id}")
+    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID productId){
+        productService.delete(token, productId);
+    }
 }

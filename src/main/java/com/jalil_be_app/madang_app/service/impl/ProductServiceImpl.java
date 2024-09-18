@@ -18,6 +18,7 @@ import com.jalil_be_app.madang_app.repository.RestaurantRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
 import com.jalil_be_app.madang_app.service.ProductService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto) {
         String jwtToken = token.substring("Bearer ".length());
         String userId = jwtService.getId(jwtToken);
@@ -105,5 +107,26 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setCategory(existingProduct.getCategory().toString());
         responseDto.setRestaurantName(existingRestaurant.getName());
         return responseDto;
+    }
+
+    @Override
+    public void delete(String token, UUID productId) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = jwtService.getId(jwtToken);
+        UUID userIdFromString = UUID.fromString(userId);
+
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+        );
+
+        Product existingProduct = productRepository.findById(productId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
+        );
+
+        if (!existingProduct.getRestaurant().getId().equals(existingRestaurant.getId())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorize to action");
+        }
+
+        productRepository.deleteById(productId);
     }
 }

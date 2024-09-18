@@ -43,9 +43,9 @@ public class RestaurantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
-    public void delete(@RequestHeader("Authorization") String token){
-        restaurantService.delete(token);
+    public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID restaurantId){
+        restaurantService.delete(token, restaurantId);
     }
 }
