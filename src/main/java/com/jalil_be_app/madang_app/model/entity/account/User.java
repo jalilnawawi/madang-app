@@ -42,7 +42,7 @@ public class User extends BaseModel {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Image.class)
     @JoinColumn(name = "image_id")
     private Image image;
 

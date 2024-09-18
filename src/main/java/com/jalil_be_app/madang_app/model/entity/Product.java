@@ -29,13 +29,13 @@ public class Product extends BaseModel{
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Image.class, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "image_id")
     private Image image;
 
     private Float rating;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 }
