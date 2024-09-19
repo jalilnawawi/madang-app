@@ -1,12 +1,11 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.userDto.login.LoginUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.login.RefreshTokenRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.register.RegisterUserRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.UpdateImageRequestDto;
-import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.UpdatePasswordRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.request.LoginUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request.UpdateImageRequestDto;
+import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.service.UserService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/user")

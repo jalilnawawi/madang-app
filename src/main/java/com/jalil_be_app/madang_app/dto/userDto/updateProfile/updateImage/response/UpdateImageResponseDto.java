@@ -1,4 +1,4 @@
-package com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage;
+package com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.response;
 
 import lombok.Data;
 

@@ -1,9 +1,9 @@
 package com.jalil_be_app.madang_app.service.impl;
 
-import com.jalil_be_app.madang_app.dto.restaurantDto.CreateRestaurantRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.CreateRestaurantResponseDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantAddressRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantAddressResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.CreateRestaurantResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.UpdateRestaurantAddressResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.entity.account.User;

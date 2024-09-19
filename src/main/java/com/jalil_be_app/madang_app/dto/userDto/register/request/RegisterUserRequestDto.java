@@ -1,4 +1,4 @@
-package com.jalil_be_app.madang_app.dto.userDto.register;
+package com.jalil_be_app.madang_app.dto.userDto.register.request;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.productDto.CreateProductRequestDto;
-import com.jalil_be_app.madang_app.dto.productDto.UpdateProductPriceRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
 import com.jalil_be_app.madang_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

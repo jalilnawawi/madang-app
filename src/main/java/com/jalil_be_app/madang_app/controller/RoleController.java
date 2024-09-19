@@ -1,10 +1,9 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.roleDto.CreateRoleRequestDto;
+import com.jalil_be_app.madang_app.dto.roleDto.request.CreateRoleRequestDto;
 import com.jalil_be_app.madang_app.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

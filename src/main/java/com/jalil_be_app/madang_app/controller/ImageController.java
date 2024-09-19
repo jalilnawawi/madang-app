@@ -1,7 +1,6 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.base.BaseResponse;
-import com.jalil_be_app.madang_app.dto.imageDto.ImageAddRequestDto;
+import com.jalil_be_app.madang_app.dto.imageDto.request.ImageAddRequestDto;
 import com.jalil_be_app.madang_app.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

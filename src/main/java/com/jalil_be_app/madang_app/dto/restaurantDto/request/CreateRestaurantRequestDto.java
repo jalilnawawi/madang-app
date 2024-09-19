@@ -1,9 +1,10 @@
-package com.jalil_be_app.madang_app.dto.restaurantDto;
+package com.jalil_be_app.madang_app.dto.restaurantDto.request;
 
+import com.jalil_be_app.madang_app.model.enums.RestaurantCategory;
 import lombok.Data;
 
 @Data
-public class CreateRestaurantResponseDto {
+public class CreateRestaurantRequestDto {
     private String name;
     private String description;
     private String address;

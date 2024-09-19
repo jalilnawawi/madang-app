@@ -1,7 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.restaurantDto.CreateRestaurantRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.UpdateRestaurantAddressRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
 import com.jalil_be_app.madang_app.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

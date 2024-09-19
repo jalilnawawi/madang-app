@@ -1,4 +1,4 @@
-package com.jalil_be_app.madang_app.dto.userDto.login;
+package com.jalil_be_app.madang_app.dto.userDto.login.response;
 
 import com.jalil_be_app.madang_app.model.entity.account.Role;
 import com.jalil_be_app.madang_app.model.enums.UserStatus;

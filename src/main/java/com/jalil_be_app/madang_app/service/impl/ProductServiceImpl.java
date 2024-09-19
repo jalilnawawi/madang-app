@@ -1,14 +1,12 @@
 package com.jalil_be_app.madang_app.service.impl;
 
-import com.jalil_be_app.madang_app.dto.productDto.CreateProductRequestDto;
-import com.jalil_be_app.madang_app.dto.productDto.CreateProductResponseDto;
-import com.jalil_be_app.madang_app.dto.productDto.UpdateProductPriceRequestDto;
-import com.jalil_be_app.madang_app.dto.productDto.UpdateProductPriceResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.CreateProductResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.UpdateProductPriceResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
-import com.jalil_be_app.madang_app.model.entity.account.User;
-import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import com.jalil_be_app.madang_app.model.enums.ProductCategory;
@@ -24,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

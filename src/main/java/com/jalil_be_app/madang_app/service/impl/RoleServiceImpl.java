@@ -1,7 +1,7 @@
 package com.jalil_be_app.madang_app.service.impl;
 
-import com.jalil_be_app.madang_app.dto.roleDto.CreateRoleRequestDto;
-import com.jalil_be_app.madang_app.dto.roleDto.CreateRoleResponseDto;
+import com.jalil_be_app.madang_app.dto.roleDto.request.CreateRoleRequestDto;
+import com.jalil_be_app.madang_app.dto.roleDto.response.CreateRoleResponseDto;
 import com.jalil_be_app.madang_app.model.entity.account.Role;
 import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import com.jalil_be_app.madang_app.repository.RoleRepository;

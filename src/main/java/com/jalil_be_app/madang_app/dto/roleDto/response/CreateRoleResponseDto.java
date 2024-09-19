@@ -1,4 +1,4 @@
-package com.jalil_be_app.madang_app.dto.roleDto;
+package com.jalil_be_app.madang_app.dto.roleDto.response;
 
 import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import lombok.Data;
