@@ -47,7 +47,7 @@ public class TransactionServiceImpl implements TransactionService {
         );
 
         Transaction transaction = new Transaction();
-        transaction.setSeat(seatService.findByCategory(createTransactionRequestDto.getSeatCategory()));
+        transaction.setSeat(seatService.findByCategory(createTransactionRequestDto.getSeat()));
         transaction.setUser(existingUser);
 
         Product existingProduct = productRepository.findById(createTransactionRequestDto.getProductId()).orElseThrow(
@@ -55,6 +55,7 @@ public class TransactionServiceImpl implements TransactionService {
         );
         transaction.setProduct(existingProduct);
 
+        //TODO set for count of product and calculate for total Price
         transaction.setTotalPrice(existingProduct.getPrice());
 
         transaction.setPaymentMethod(selectPaymentMethod(createTransactionRequestDto.getPaymentMethod()));

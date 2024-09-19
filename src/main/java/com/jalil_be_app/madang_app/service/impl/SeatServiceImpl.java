@@ -1,5 +1,6 @@
 package com.jalil_be_app.madang_app.service.impl;
 
+import com.jalil_be_app.madang_app.dto.seatDto.CheckSeatReq;
 import com.jalil_be_app.madang_app.dto.seatDto.request.CreateSeatRequestDto;
 import com.jalil_be_app.madang_app.dto.seatDto.response.CreateSeatResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Seat;
@@ -61,16 +62,19 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public Seat findByCategory(String category) {
-        if (category.equalsIgnoreCase("family")){
-            Seat familySeat = seatRepository.findByCategory(SeatCategory.FAMILY);
-            return familySeat;
-        } else if (category.equalsIgnoreCase("work")) {
-            Seat workSeat = seatRepository.findByCategory(SeatCategory.WORK);
-            return workSeat;
+    public Seat findByCategory(CheckSeatReq checkSeatReq) {
+        Seat seat = null;
+
+        if (checkSeatReq.getCategory().equalsIgnoreCase("family")){
+            seat = seatRepository.findByCategory(SeatCategory.FAMILY);
+        } else if (checkSeatReq.getCategory().equalsIgnoreCase("work")) {
+            seat = seatRepository.findByCategory(SeatCategory.WORK);
         } else {
-            Seat customSeat = seatRepository.findByCategory(SeatCategory.CUSTOM);
-            return customSeat;
+            seat = seatRepository.findByCategory(SeatCategory.CUSTOM);
         }
+        if (seat == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "seat not found");
+        }
+        return seat;
     }
 }

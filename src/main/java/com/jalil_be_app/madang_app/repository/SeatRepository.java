@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
     Seat findByCategory(SeatCategory category);
+    Seat findByName(String name);
 }
