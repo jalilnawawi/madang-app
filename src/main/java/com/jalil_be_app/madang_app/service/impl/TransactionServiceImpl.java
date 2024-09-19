@@ -47,10 +47,6 @@ public class TransactionServiceImpl implements TransactionService {
         );
 
         Transaction transaction = new Transaction();
-
-        String transactionNumber = GenerateTransactionNumber.generateTransactionNumber(transaction.getSeat().getCategory());
-        transaction.setTransactionNumber(transactionNumber);
-
         transaction.setSeat(seatService.findByCategory(createTransactionRequestDto.getSeatCategory()));
         transaction.setUser(existingUser);
 
@@ -62,6 +58,8 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTotalPrice(existingProduct.getPrice());
 
         transaction.setPaymentMethod(selectPaymentMethod(createTransactionRequestDto.getPaymentMethod()));
+        String transactionNumber = GenerateTransactionNumber.generateTransactionNumber(transaction.getSeat().getCategory());
+        transaction.setTransactionNumber(transactionNumber);
         transactionRepository.save(transaction);
 
         CreateTransactionResponseDto responseDto = new CreateTransactionResponseDto();

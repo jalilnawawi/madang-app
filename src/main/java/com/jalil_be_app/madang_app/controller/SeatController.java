@@ -28,4 +28,12 @@ public class SeatController {
         response.put("data", seatService.create(token, createSeatRequestDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("check-seat")
+    public ResponseEntity<Map<String, Object>> check(@RequestBody String category){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", seatService.findByCategory(category));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
