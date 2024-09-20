@@ -40,13 +40,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     JwtService jwtService;
-    @Override
-    public CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
 
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+
+    @Override
+    @Transactional
+    public CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto) {
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -83,13 +84,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
+
+        if (userIdFromToken != existingRestaurant.getUser().getId()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to change");
+        }
 
         Product existingProduct = productRepository.findById(productId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
@@ -108,11 +111,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String token, UUID productId) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 

@@ -158,4 +158,11 @@ public class JwtServiceImpl implements JwtService {
                 .get("userId", String.class);
     }
 
+    @Override
+    public UUID getUserIdfromToken(String token) {
+        String jwtToken = token.substring("Bearer ".length());
+        String userId = getId(jwtToken);
+        return UUID.fromString(userId);
+    }
+
 }

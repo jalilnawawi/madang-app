@@ -19,6 +19,7 @@ import com.jalil_be_app.madang_app.utils.GenerateTransactionNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
@@ -37,12 +38,11 @@ public class TransactionServiceImpl implements TransactionService {
     JwtService jwtService;
 
     @Override
+    @Transactional
     public CreateTransactionResponseDto create(String token, CreateTransactionRequestDto createTransactionRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 

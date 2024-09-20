@@ -37,18 +37,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     JwtService jwtService;
 
-    @Transactional
     @Override
+    @Transactional
     public CreateRestaurantResponseDto create(String token, CreateRestaurantRequestDto createRestaurantRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
-        Optional<Restaurant> existingRestaurant = restaurantRepository.findByUserId(userIdFromString);
+        Optional<Restaurant> existingRestaurant = restaurantRepository.findByUserId(userIdFromToken);
         if (existingRestaurant.isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User only can have 1 Restaurant");
         } else {
@@ -88,12 +86,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Transactional
     public UpdateRestaurantAddressResponseDto update(String token, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -106,11 +103,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Transactional
     public void delete(String token, UUID restaurantId) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromString).orElseThrow(
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 

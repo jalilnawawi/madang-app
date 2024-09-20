@@ -175,12 +175,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
@@ -193,11 +192,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UpdateImageResponseDto updateImage(String token, UpdateImageRequestDto updateImageRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
-        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 

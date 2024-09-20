@@ -13,6 +13,7 @@ import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
@@ -25,13 +26,13 @@ public class SeatServiceImpl implements SeatService {
     UserRepository userRepository;
     @Autowired
     JwtService jwtService;
-    @Override
-    public CreateSeatResponseDto create(String token, CreateSeatRequestDto createSeatRequestDto) {
-        String jwtToken = token.substring("Bearer ".length());
-        String userId = jwtService.getId(jwtToken);
-        UUID userIdFromString = UUID.fromString(userId);
 
-        User existingUser = userRepository.findById(userIdFromString).orElseThrow(
+    @Override
+    @Transactional
+    public CreateSeatResponseDto create(String token, CreateSeatRequestDto createSeatRequestDto) {
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+
+        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
