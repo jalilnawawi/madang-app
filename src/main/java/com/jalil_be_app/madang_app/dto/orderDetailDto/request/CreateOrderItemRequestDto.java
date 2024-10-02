@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class OrderItemRequestDto {
-    private UUID orderId;
-    private UUID productId;
+public class CreateOrderItemRequestDto {
+    private String orderId;
+    private String productId;
     private int quantity;
 }

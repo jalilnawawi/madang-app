@@ -7,8 +7,7 @@ import java.util.UUID;
 @Data
 public class CreateOrderResponseDto {
     private UUID orderId;
-    private UUID userId;
+    private String username;
     private String restaurantName;
-    private Double totalPrice;
     private boolean completed;
 }

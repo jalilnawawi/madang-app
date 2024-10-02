@@ -5,9 +5,11 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class OrderItemResponseDto {
+public class CreateOrderItemResponseDto {
     private UUID orderItemId;
     private UUID orderId;
     private String productName;
+    private Double price;
     private int quantity;
+    private Double totalPrice;
 }

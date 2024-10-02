@@ -2,6 +2,8 @@ package com.jalil_be_app.madang_app.controller;
 
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
+import com.jalil_be_app.madang_app.model.entity.Order;
+import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,6 +32,12 @@ public class ProductController {
         response.put("message", "new Product added to your Restaurant!");
         response.put("data", productService.create(token, createProductRequestDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("get-product-list")
+    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    public List<Product> getAll(){
+        return productService.getProductList();
     }
 
     @PutMapping("update-price/{id}")

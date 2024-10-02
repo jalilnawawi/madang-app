@@ -6,5 +6,5 @@ import java.util.UUID;
 
 @Data
 public class CreateOrderRequestDto {
-    private UUID restaurantId;
+    private String restaurantId;
 }

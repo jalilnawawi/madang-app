@@ -28,4 +28,5 @@ public class OrderItem extends BaseModel {
     private Product product;
 
     private int quantity;
+    private Double totalPrice;
 }

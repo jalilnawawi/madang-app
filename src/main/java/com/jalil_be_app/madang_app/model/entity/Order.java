@@ -28,9 +28,6 @@ public class Order extends BaseModel {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @Column(name = "total_price")
-    private Double totalPrice;
-
     private boolean completed;
 
 }
