@@ -1,7 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
-import com.jalil_be_app.madang_app.dto.orderDetailDto.request.CreateOrderItemRequestDto;
 import com.jalil_be_app.madang_app.dto.orderDto.request.CreateOrderRequestDto;
+import com.jalil_be_app.madang_app.dto.orderDto.response.GetOrderByUserIdResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/order")
@@ -32,9 +33,11 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("get-order-list")
-    @PreAuthorize("hasRole('USER_ROLE')")
-    public List<Order> getAll(){
-        return orderService.getOrderList();
+    @GetMapping("get-order/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<GetOrderByUserIdResponseDto>> getOrderByUserId(
+            @PathVariable("id") UUID userId
+    ){
+        return new ResponseEntity<>(orderService.getOrderByUserId(userId), HttpStatus.OK);
     }
 }
