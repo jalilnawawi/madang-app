@@ -60,7 +60,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderList() {
-        return orderRepository.findAll();
+    public List<Order> getAllOrderByUserId(UUID userId) {
+        List<Order> getOrderList = orderRepository.findOrderByUserId(userId);
+        return getOrderList;
     }
 }
