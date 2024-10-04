@@ -9,6 +9,7 @@ import com.jalil_be_app.madang_app.repository.OrderItemRepository;
 import com.jalil_be_app.madang_app.repository.OrderRepository;
 import com.jalil_be_app.madang_app.repository.ProductRepository;
 import com.jalil_be_app.madang_app.service.OrderItemService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     ProductRepository productRepository;
 
+    @Transactional
     @Override
     public CreateOrderItemResponseDto createOrderItem(CreateOrderItemRequestDto createOrderItemRequestDto) {
         Order existingOrder = orderRepository.findById(UUID.fromString(createOrderItemRequestDto.getOrderId()))
@@ -53,8 +55,8 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemRepository.save(orderItem);
 
         CreateOrderItemResponseDto responseDto = new CreateOrderItemResponseDto();
-        responseDto.setOrderItemId(orderItem.getId());
         responseDto.setOrderId(existingOrder.getId());
+        responseDto.setOrderItemId(orderItem.getId());
         responseDto.setProductName(existingProduct.getName());
         responseDto.setPrice(existingProduct.getPrice());
         responseDto.setQuantity(orderItem.getQuantity());

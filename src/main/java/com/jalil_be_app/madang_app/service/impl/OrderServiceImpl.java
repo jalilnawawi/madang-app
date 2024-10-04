@@ -2,6 +2,7 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.orderDto.request.CreateOrderRequestDto;
 import com.jalil_be_app.madang_app.dto.orderDto.response.CreateOrderResponseDto;
+import com.jalil_be_app.madang_app.dto.orderDto.response.GetOrderByUserIdResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.entity.account.User;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -60,8 +62,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrderByUserId(UUID userId) {
-        List<Order> getOrderList = orderRepository.findOrderByUserId(userId);
-        return getOrderList;
+    public List<GetOrderByUserIdResponseDto> getOrderByUserId(UUID userId) {
+        List<Order> getOrderByUserId = orderRepository.findByUserId(userId);
+        return getOrderByUserId.stream()
+                .map(order -> new GetOrderByUserIdResponseDto(
+                        order.getId(),
+                        order.getUser().getUsername(),
+                        order.getRestaurant().getName(),
+                        order.isCompleted()
+                )).collect(Collectors.toList());
     }
 }
