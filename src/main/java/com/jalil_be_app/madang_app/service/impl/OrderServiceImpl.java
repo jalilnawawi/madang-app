@@ -60,16 +60,4 @@ public class OrderServiceImpl implements OrderService {
 
         return responseDto;
     }
-
-    @Override
-    public List<GetOrderByUserIdResponseDto> getOrderByUserId(UUID userId) {
-        List<Order> getOrderByUserId = orderRepository.findByUserId(userId);
-        return getOrderByUserId.stream()
-                .map(order -> new GetOrderByUserIdResponseDto(
-                        order.getId(),
-                        order.getUser().getUsername(),
-                        order.getRestaurant().getName(),
-                        order.isCompleted()
-                )).collect(Collectors.toList());
-    }
 }

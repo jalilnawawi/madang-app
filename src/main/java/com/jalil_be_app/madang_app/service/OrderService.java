@@ -9,5 +9,4 @@ import java.util.UUID;
 
 public interface OrderService {
     CreateOrderResponseDto createOrder(String token, CreateOrderRequestDto createOrderRequestDto);
-    List<GetOrderByUserIdResponseDto> getOrderByUserId(UUID userId);
 }

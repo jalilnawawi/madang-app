@@ -2,7 +2,9 @@ package com.jalil_be_app.madang_app.controller;
 
 import com.jalil_be_app.madang_app.dto.orderDto.request.CreateOrderRequestDto;
 import com.jalil_be_app.madang_app.dto.orderDto.response.GetOrderByUserIdResponseDto;
+import com.jalil_be_app.madang_app.dto.orderFacadeDto.request.ConfirmOrderRequestDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
+import com.jalil_be_app.madang_app.service.OrderFacade;
 import com.jalil_be_app.madang_app.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    OrderFacade orderFacade;
+
     @PostMapping("create")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Map<String, Object>> create(
@@ -33,11 +38,16 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("get-order/{id}")
+    @PostMapping("confirm-order")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<GetOrderByUserIdResponseDto>> getOrderByUserId(
-            @PathVariable("id") UUID userId
+    public ResponseEntity<Map<String, Object>> confirm(
+            @RequestHeader("Authorization") String token,
+            @RequestBody ConfirmOrderRequestDto confirmOrderRequestDto
     ){
-        return new ResponseEntity<>(orderService.getOrderByUserId(userId), HttpStatus.OK);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", orderFacade.confirm(token, confirmOrderRequestDto));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }
