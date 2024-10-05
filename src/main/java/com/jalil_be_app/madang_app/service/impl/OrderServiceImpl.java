@@ -61,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
         return responseDto;
     }
 
-    @Override
     public List<GetOrderByUserIdResponseDto> getOrderByUserId(UUID userId) {
         List<Order> getOrderByUserId = orderRepository.findByUserId(userId);
         return getOrderByUserId.stream()
