@@ -4,6 +4,4 @@ public enum PaymentMethod {
     CASH,
     TRANSFER_BANK,
     SHOPEEPAY,
-    GOPAY,
-    DANA
 }

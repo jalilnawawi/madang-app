@@ -49,10 +49,10 @@ public class OrderItemServiceImpl implements OrderItemService {
         }
         orderItem.setQuantity(createOrderItemRequestDto.getQuantity());
 
-        Double totalPrice = existingProduct.getPrice() * createOrderItemRequestDto.getQuantity();
-        orderItem.setTotalPrice(totalPrice);
+        orderItem.setPrice(existingProduct.getPrice());
 
         orderItemRepository.save(orderItem);
+        Double totalPrice = orderItem.getProduct().getPrice() * orderItem.getQuantity();
 
         CreateOrderItemResponseDto responseDto = new CreateOrderItemResponseDto();
         responseDto.setOrderId(existingOrder.getId());
@@ -60,7 +60,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         responseDto.setProductName(existingProduct.getName());
         responseDto.setPrice(existingProduct.getPrice());
         responseDto.setQuantity(orderItem.getQuantity());
-        responseDto.setTotalPrice(orderItem.getTotalPrice());
+        responseDto.setTotalPrice(totalPrice);
         return responseDto;
     }
 }
