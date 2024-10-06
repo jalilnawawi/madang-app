@@ -35,6 +35,10 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
         );
 
+        if (existingOrder.isCompleted()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please create a new order, last order has been closed");
+        }
+
         Product existingProduct = productRepository.findById(UUID.fromString(createOrderItemRequestDto.getProductId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
         );
