@@ -53,8 +53,17 @@ public class ProductServiceImpl implements ProductService {
         );
 
         Product product = new Product();
-        product.setName(createProductRequestDto.getName());
-        product.setPrice(createProductRequestDto.getPrice());
+        if (createProductRequestDto.getName() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product name can't empty");
+        } else {
+            product.setName(createProductRequestDto.getName());
+        }
+
+        if (createProductRequestDto.getPrice() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product price can't empty");
+        } else {
+            product.setPrice(createProductRequestDto.getPrice());
+        }
 
         Image image = new Image();
         if (createProductRequestDto.getCategory().equalsIgnoreCase("food")){
