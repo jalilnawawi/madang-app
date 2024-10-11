@@ -3,5 +3,6 @@ import lombok.Data;
 
 @Data
 public class ConfirmOrderRequestDto {
+    private String orderId;
     private String paymentMethod;
 }

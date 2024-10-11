@@ -9,12 +9,17 @@ import com.jalil_be_app.madang_app.repository.OrderItemRepository;
 import com.jalil_be_app.madang_app.repository.OrderRepository;
 import com.jalil_be_app.madang_app.service.OrderFacade;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
+import jakarta.transaction.Transactional;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 public class OrderFacadeImpl implements OrderFacade {
@@ -27,25 +32,32 @@ public class OrderFacadeImpl implements OrderFacade {
     @Autowired
     JwtService jwtService;
 
+    @Transactional
     @Override
     public ConfirmOrderResponseDto confirm(String token, ConfirmOrderRequestDto confirmOrderRequestDto) {
         UUID userId = jwtService.getUserIdfromToken(token);
 
-        Order order = orderRepository.findByUserId(userId);
-        List<OrderItem> orderItemList = orderItemRepository.findByOrderId(order.getId());
+        List<Order> orderList = orderRepository.findByUserId(userId);
+        Order existingOrder = orderList.stream().filter(order -> order.getId().equals(UUID.fromString(
+                confirmOrderRequestDto.getOrderId()
+        ))).findFirst().orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order Id not found")
+        );
+
+        List<OrderItem> orderItemList = orderItemRepository.findByOrderId(existingOrder.getId());
 
         double grandTotal = 0;
         for (OrderItem orderItem : orderItemList){
             double totalPrice = orderItem.getProduct().getPrice() * orderItem.getQuantity();
             grandTotal += totalPrice;
-            order.setTotalPrice(grandTotal);
+            existingOrder.setTotalPrice(grandTotal);
         }
-        order.setCompleted(true);
-        orderRepository.save(order);
+        existingOrder.setCompleted(true);
+        orderRepository.save(existingOrder);
 
         ConfirmOrderResponseDto responseDto = new ConfirmOrderResponseDto();
-        responseDto.setRestaurantName(order.getRestaurant().getName());
-        responseDto.setCustomerName(order.getUser().getFullname());
+        responseDto.setRestaurantName(existingOrder.getRestaurant().getName());
+        responseDto.setCustomerName(existingOrder.getUser().getFullname());
         responseDto.setTotalPrice(grandTotal);
 
         if (confirmOrderRequestDto.getPaymentMethod().equalsIgnoreCase("shopeepay")){
@@ -57,7 +69,7 @@ public class OrderFacadeImpl implements OrderFacade {
         } else {
             responseDto.setPaymentMethod(PaymentMethod.CASH);
         }
-        responseDto.setCompleted(order.isCompleted());
+        responseDto.setCompleted(existingOrder.isCompleted());
 
         return responseDto;
     }

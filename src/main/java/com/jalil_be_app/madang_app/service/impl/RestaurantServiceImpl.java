@@ -51,9 +51,18 @@ public class RestaurantServiceImpl implements RestaurantService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User only can have 1 Restaurant");
         } else {
             Restaurant restaurant = new Restaurant();
-            restaurant.setName(createRestaurantRequestDto.getName());
+            if(createRestaurantRequestDto.getName() == null){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant name can't empty");
+            } else {
+                restaurant.setName(createRestaurantRequestDto.getName());
+            }
             restaurant.setDescription(createRestaurantRequestDto.getDescription());
-            restaurant.setAddress(createRestaurantRequestDto.getAddress());
+
+            if (createRestaurantRequestDto.getAddress() == null){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant address can't empty");
+            } else {
+                restaurant.setAddress(createRestaurantRequestDto.getAddress());
+            }
 
             if (createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffee shop") ||
                     createRestaurantRequestDto.getCategory().equalsIgnoreCase("coffeeshop")
