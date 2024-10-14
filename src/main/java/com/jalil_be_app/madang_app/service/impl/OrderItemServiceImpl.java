@@ -67,4 +67,9 @@ public class OrderItemServiceImpl implements OrderItemService {
         responseDto.setTotalPrice(totalPrice);
         return responseDto;
     }
+
+    @Override
+    public void deleteOrderItem(UUID orderItemId) {
+        orderItemRepository.deleteById(orderItemId);
+    }
 }

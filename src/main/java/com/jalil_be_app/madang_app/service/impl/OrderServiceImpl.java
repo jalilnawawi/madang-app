@@ -60,4 +60,13 @@ public class OrderServiceImpl implements OrderService {
 
         return responseDto;
     }
+
+    @Override
+    public void deleteOrder(String token, UUID orderId) {
+        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
+        );
+        orderRepository.deleteById(orderId);
+    }
 }
