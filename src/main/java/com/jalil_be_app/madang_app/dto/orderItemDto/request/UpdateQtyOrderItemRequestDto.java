@@ -1,4 +1,4 @@
-package com.jalil_be_app.madang_app.dto.orderDetailDto.request;
+package com.jalil_be_app.madang_app.dto.orderItemDto.request;
 
 import lombok.Data;
 

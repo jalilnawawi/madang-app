@@ -1,9 +1,10 @@
 package com.jalil_be_app.madang_app.service.impl;
 
-import com.jalil_be_app.madang_app.dto.orderDetailDto.request.CreateOrderItemRequestDto;
-import com.jalil_be_app.madang_app.dto.orderDetailDto.request.UpdateQtyOrderItemRequestDto;
-import com.jalil_be_app.madang_app.dto.orderDetailDto.response.CreateOrderItemResponseDto;
-import com.jalil_be_app.madang_app.dto.orderDetailDto.response.UpdateQtyOrderItemResponseDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.request.CreateOrderItemRequestDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.request.UpdateQtyOrderItemRequestDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.response.CreateOrderItemResponseDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.response.GetOrderItemResponseDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.response.UpdateQtyOrderItemResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.model.entity.OrderItem;
 import com.jalil_be_app.madang_app.model.entity.Product;
@@ -20,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
@@ -39,14 +41,20 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public CreateOrderItemResponseDto createOrderItem(String token, CreateOrderItemRequestDto createOrderItemRequestDto) {
         UUID userId = jwtService.getUserIdfromToken(token);
-        Order existingOrder = orderRepository.findByUserId(userId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
+        Order existingOrder = orderRepository.findFirstByUserIdAndCompletedFalse(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Active order not found")
         );
 
-        if (existingOrder.isCompleted()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please create a new order, last order has been closed");
+        if (!existingOrder.getId().equals(createOrderItemRequestDto.getOrderId())
+            ||
+            existingOrder.isCompleted()
+        ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found or Order has closed");
         }
 
+//        if (existingOrder.isCompleted()){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please create a new order, last order has been closed");
+//        }
         Product existingProduct = productRepository.findById(UUID.fromString(createOrderItemRequestDto.getProductId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
                 );
@@ -111,7 +119,15 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItem> getAllbyOrderId(UUID orderId) {
-        return orderItemRepository.findByOrderId(orderId);
+    public List<GetOrderItemResponseDto> getAllbyOrderId(UUID orderId) {
+        List<OrderItem> orderItemList = orderItemRepository.findByOrderId(orderId);
+        return orderItemList.stream().map(
+                orderItem -> new GetOrderItemResponseDto(
+                        orderItem.getOrder().getRestaurant().getName(),
+                        orderItem.getProduct().getName(),
+                        orderItem.getProduct().getPrice(),
+                        orderItem.getQuantity(),
+                        orderItem.getPrice()
+                )).collect(Collectors.toList());
     }
 }

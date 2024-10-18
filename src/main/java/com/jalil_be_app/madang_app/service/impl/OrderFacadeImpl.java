@@ -10,16 +10,13 @@ import com.jalil_be_app.madang_app.repository.OrderRepository;
 import com.jalil_be_app.madang_app.service.OrderFacade;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import jakarta.transaction.Transactional;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 public class OrderFacadeImpl implements OrderFacade {
@@ -37,7 +34,7 @@ public class OrderFacadeImpl implements OrderFacade {
     public ConfirmOrderResponseDto confirm(String token, ConfirmOrderRequestDto confirmOrderRequestDto) {
         UUID userId = jwtService.getUserIdfromToken(token);
 
-        Order existingOrder = orderRepository.findByUserId(userId).orElseThrow(
+        Order existingOrder = orderRepository.findFirstByUserIdAndCompletedFalse(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
         );
 
