@@ -50,4 +50,12 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("get-all-order")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Map<String, Object>> getAll(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", orderService.getAllOrderbyOrderId());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
