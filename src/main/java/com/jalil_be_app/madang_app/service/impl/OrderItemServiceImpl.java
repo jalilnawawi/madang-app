@@ -41,9 +41,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public CreateOrderItemResponseDto createOrderItem(String token, CreateOrderItemRequestDto createOrderItemRequestDto) {
         UUID userId = jwtService.getUserIdfromToken(token);
-        Order existingOrder = orderRepository.findFirstByUserIdAndCompletedFalse(userId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Active order not found")
-        );
+//        Order existingOrder = orderRepository.findFirstByUserIdAndCompletedFalse(userId).orElseThrow(
+//                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Active order not found")
+//        );
+
+        Order existingOrder = orderRepository.findExistingOrder(
+                UUID.fromString(createOrderItemRequestDto.getOrderId()), userId
+        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Active order not found"));
 
         if (!existingOrder.getId().equals(createOrderItemRequestDto.getOrderId())
             ||
@@ -52,9 +56,9 @@ public class OrderItemServiceImpl implements OrderItemService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found or Order has closed");
         }
 
-//        if (existingOrder.isCompleted()){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please create a new order, last order has been closed");
-//        }
+        if (existingOrder.isCompleted()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please create a new order, last order has been closed");
+        }
         Product existingProduct = productRepository.findById(UUID.fromString(createOrderItemRequestDto.getProductId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
                 );

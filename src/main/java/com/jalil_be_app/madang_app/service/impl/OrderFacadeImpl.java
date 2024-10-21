@@ -34,9 +34,13 @@ public class OrderFacadeImpl implements OrderFacade {
     public ConfirmOrderResponseDto confirm(String token, ConfirmOrderRequestDto confirmOrderRequestDto) {
         UUID userId = jwtService.getUserIdfromToken(token);
 
-        Order existingOrder = orderRepository.findFirstByUserIdAndCompletedFalse(userId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
-        );
+        Order existingOrder = orderRepository.findExistingOrder(
+                UUID.fromString(confirmOrderRequestDto.getOrderId()), userId
+        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found"));
+
+        if (existingOrder.isCompleted()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order has closed");
+        }
 
         List<OrderItem> orderItemList = orderItemRepository.findByOrderId(existingOrder.getId());
 
