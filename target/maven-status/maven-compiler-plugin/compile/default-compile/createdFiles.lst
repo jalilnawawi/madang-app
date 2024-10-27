@@ -40,6 +40,7 @@ com\jalil_be_app\madang_app\exception\GlobalExceptionHandlers.class
 com\jalil_be_app\madang_app\dto\orderDto\response\CreateOrderResponseDto.class
 com\jalil_be_app\madang_app\model\enums\Gender.class
 com\jalil_be_app\madang_app\model\enums\ImageSize.class
+com\jalil_be_app\madang_app\dto\userDto\GetUserResponseDto.class
 com\jalil_be_app\madang_app\dto\userDto\register\request\RegisterUserRequestDto.class
 com\jalil_be_app\madang_app\model\entity\Restaurant.class
 com\jalil_be_app\madang_app\dto\productDto\response\CreateProductResponseDto.class
@@ -51,6 +52,7 @@ com\jalil_be_app\madang_app\dto\orderItemDto\request\UpdateQtyOrderItemRequestDt
 com\jalil_be_app\madang_app\dto\userDto\login\response\RefreshTokenResponseDto.class
 com\jalil_be_app\madang_app\service\impl\UserServiceImpl.class
 com\jalil_be_app\madang_app\config\SecurityConfig.class
+com\jalil_be_app\madang_app\dto\userDto\GetAllUserResponseDto.class
 com\jalil_be_app\madang_app\controller\RestaurantController.class
 com\jalil_be_app\madang_app\service\RoleService.class
 com\jalil_be_app\madang_app\service\ImageService.class

@@ -30,6 +30,8 @@ D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\restaurantDto\response\UpdateRestaurantAddressResponseDto.java
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\roleDto\request\CreateRoleRequestDto.java
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\roleDto\response\CreateRoleResponseDto.java
+D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\userDto\GetAllUserResponseDto.java
+D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\userDto\GetUserResponseDto.java
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\userDto\login\request\LoginUserRequestDto.java
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\userDto\login\request\RefreshTokenRequestDto.java
 D:\Jalil-Spring-Project\madang-app\src\main\java\com\jalil_be_app\madang_app\dto\userDto\login\response\LoginUserResponseDto.java
