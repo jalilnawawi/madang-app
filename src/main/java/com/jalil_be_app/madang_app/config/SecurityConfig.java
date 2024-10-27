@@ -43,7 +43,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "api/v1/role/**")
                                 .permitAll();
                         auth.requestMatchers(
-                                "api/v1/user/get-all-user")
+                                "/api/v1/user/get-all-user")
                                 .permitAll();
                         auth.anyRequest().authenticated();
                 })
