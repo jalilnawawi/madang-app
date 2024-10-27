@@ -1,5 +1,7 @@
 package com.jalil_be_app.madang_app.service.impl;
 
+import com.jalil_be_app.madang_app.dto.userDto.GetAllUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.GetUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.LoginUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.response.LoginUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequestDto;
@@ -37,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -145,6 +148,8 @@ public class UserServiceImpl implements UserService {
                             .map(GrantedAuthority::getAuthority)
                             .toList();
             user.setStatus(UserStatus.ACTIVE);
+
+//            user.setRefreshToken(UUID.fromString(refreshToken));
             userRepository.save(user);
 
             LoginUserResponseDto responseDto = new LoginUserResponseDto();
@@ -210,4 +215,54 @@ public class UserServiceImpl implements UserService {
         responseDto.setImageLink(existingImage.getImageLink());
         return responseDto;
     }
+
+    @Override
+    public GetUserResponseDto getUserByToken(String token) {
+        UUID userId = jwtService.getUserIdfromToken(token);
+
+        User getUser = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        );
+
+        GetUserResponseDto responseDto = new GetUserResponseDto();
+        responseDto.setFullname(getUser.getFullname());
+        responseDto.setGender(getUser.getGender().name());
+        responseDto.setUsername(getUser.getUsername());
+        responseDto.setEmail(getUser.getEmail());
+        responseDto.setRole(getUser.getRoles());
+        responseDto.setImageLink(getUser.getImage().getImageLink());
+        return responseDto;
+    }
+
+    @Override
+    public GetUserResponseDto getUserById(UUID userId) {
+        User getUser = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+        );
+
+        GetUserResponseDto responseDto = new GetUserResponseDto();
+        responseDto.setFullname(getUser.getFullname());
+        responseDto.setGender(getUser.getGender().name());
+        responseDto.setUsername(getUser.getUsername());
+        responseDto.setEmail(getUser.getEmail());
+        responseDto.setRole(getUser.getRoles());
+        responseDto.setImageLink(getUser.getImage().getImageLink());
+        return responseDto;
+    }
+
+    @Override
+    public List<GetAllUserResponseDto> getAllUser() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream().map(
+                user -> new GetAllUserResponseDto(
+                        user.getFullname(),
+                        user.getGender().name(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getRoles(),
+                        user.getImage().getImageLink()
+                )
+        ).collect(Collectors.toList());
+    }
+
 }

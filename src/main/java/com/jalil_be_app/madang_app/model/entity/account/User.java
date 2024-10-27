@@ -60,4 +60,7 @@ public class User extends BaseModel {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    //TODO add "refresh_token" column
+//    @Column(name = "refresh_token")
+//    private UUID refreshToken;
 }

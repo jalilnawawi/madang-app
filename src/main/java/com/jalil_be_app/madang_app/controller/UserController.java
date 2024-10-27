@@ -1,5 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
+import com.jalil_be_app.madang_app.dto.userDto.GetAllUserResponseDto;
+import com.jalil_be_app.madang_app.dto.userDto.GetUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.LoginUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequestDto;
@@ -13,7 +15,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -70,5 +74,29 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public String hello(){
         return "hello world";
+    }
+
+    @GetMapping("/get-all-user")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public List<GetAllUserResponseDto> getAllUser(){
+        return userService.getAllUser();
+    }
+
+    @PostMapping("/get-user-by-token")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Map<String, Object>> getUserByToken(@RequestHeader("Authorization") String token){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", userService.getUserByToken(token));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/get-user-by-id/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable("id") UUID id){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", userService.getUserById(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
