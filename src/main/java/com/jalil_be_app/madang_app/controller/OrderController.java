@@ -47,7 +47,7 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
         response.put("data", orderFacade.confirm(token, confirmOrderRequestDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("get-all-order")
