@@ -256,7 +256,7 @@ public class UserServiceImpl implements UserService {
         return userList.stream().map(
                 user -> new GetAllUserResponseDto(
                         user.getFullname(),
-                        user.getGender().name(),
+                        user.getGender(),
                         user.getUsername(),
                         user.getEmail(),
                         user.getRoles(),

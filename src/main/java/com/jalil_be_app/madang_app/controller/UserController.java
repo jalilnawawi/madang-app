@@ -77,7 +77,6 @@ public class UserController {
     }
 
     @GetMapping("/get-all-user")
-//    @PreAuthorize("hasRole('ROLE_USER')")
     public List<GetAllUserResponseDto> getAllUser(){
         return userService.getAllUser();
     }
