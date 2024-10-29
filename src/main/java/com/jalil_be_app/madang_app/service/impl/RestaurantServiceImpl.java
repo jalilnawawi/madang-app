@@ -3,6 +3,7 @@ package com.jalil_be_app.madang_app.service.impl;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.response.CreateRestaurantResponseDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetAllRestaurantResponseDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.response.UpdateRestaurantAddressResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -21,8 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -120,5 +123,19 @@ public class RestaurantServiceImpl implements RestaurantService {
         );
 
         restaurantRepository.deleteById(restaurantId);
+    }
+
+    @Override
+    public List<GetAllRestaurantResponseDto> getAllRestaurant() {
+        List<Restaurant> getAllRestaurant = restaurantRepository.findAll();
+        return getAllRestaurant.stream().map(
+                restaurant -> new GetAllRestaurantResponseDto(
+                        restaurant.getName(),
+                        restaurant.getDescription(),
+                        restaurant.getAddress(),
+                        restaurant.getCategory(),
+                        restaurant.getImage()
+                )
+        ).collect(Collectors.toList());
     }
 }
