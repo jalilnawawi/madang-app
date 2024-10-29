@@ -38,7 +38,7 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
         response.put("data", userService.login(loginUserRequestDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/auth/refresh-token")
