@@ -2,7 +2,10 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.orderDto.request.CreateOrderRequestDto;
 import com.jalil_be_app.madang_app.dto.orderDto.response.CreateOrderResponseDto;
-import com.jalil_be_app.madang_app.dto.orderDto.response.GetOrderByUserIdResponseDto;
+import com.jalil_be_app.madang_app.dto.orderDto.response.GetAllOrderResponseDto;
+import com.jalil_be_app.madang_app.dto.orderDto.response.GetOrderResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.entity.account.User;
@@ -71,7 +74,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrderbyOrderId() {
-        return orderRepository.findAll();
+    public List<GetAllOrderResponseDto> getAll() {
+        List<Order> orderList = orderRepository.findAll();
+        return orderList.stream().map(
+                order -> new GetAllOrderResponseDto(
+                        order.getId(),
+                        order.getUser().getUsername(),
+                        order.getRestaurant().getName(),
+                        order.getTotalPrice(),
+                        order.isCompleted()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public GetOrderResponseDto getOrderById(UUID orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order not found")
+        );
+
+        GetOrderResponseDto responseDto = new GetOrderResponseDto();
+        responseDto.setOrderId(order.getId());
+        responseDto.setUsername(order.getUser().getUsername());
+        responseDto.setRestaurantName(order.getRestaurant().getName());
+        responseDto.setTotalPrice(order.getTotalPrice());
+        responseDto.setCompleted(order.isCompleted());
+        return responseDto;
     }
 }

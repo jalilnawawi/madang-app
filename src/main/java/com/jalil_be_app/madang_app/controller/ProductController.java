@@ -2,7 +2,6 @@ package com.jalil_be_app.madang_app.controller;
 
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
-import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +33,22 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("get-product-list")
+    @GetMapping("get-all-product")
+//    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    public ResponseEntity<Map<String, Object>> getAll(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", productService.getAllProduct());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("get-product-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
-    public List<Product> getAll(){
-        return productService.getProductList();
+    public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", productService.getProductById(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("update-price/{id}")

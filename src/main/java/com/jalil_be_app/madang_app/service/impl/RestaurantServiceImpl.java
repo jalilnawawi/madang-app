@@ -4,6 +4,7 @@ import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantReq
 import com.jalil_be_app.madang_app.dto.restaurantDto.response.CreateRestaurantResponseDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetAllRestaurantResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetRestaurantResponseDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.response.UpdateRestaurantAddressResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -137,5 +138,20 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getImage()
                 )
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public GetRestaurantResponseDto getRestaurantById(UUID restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+        );
+
+        GetRestaurantResponseDto responseDto = new GetRestaurantResponseDto();
+        responseDto.setName(restaurant.getName());
+        responseDto.setAddress(restaurant.getAddress());
+        responseDto.setDescription(restaurant.getDescription());
+        responseDto.setCategory(responseDto.getCategory());
+        responseDto.setImage(responseDto.getImage());
+        return responseDto;
     }
 }

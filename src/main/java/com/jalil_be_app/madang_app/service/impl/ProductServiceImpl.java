@@ -3,7 +3,10 @@ package com.jalil_be_app.madang_app.service.impl;
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.CreateProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.UpdateProductPriceResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetAllRestaurantResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -22,8 +25,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -76,9 +81,10 @@ public class ProductServiceImpl implements ProductService {
 
         image.setSize(ImageSize.S);
         image.setImageLink(createProductRequestDto.getImageLink());
+        imageRepository.save(image);
 
         product.setRestaurant(existingRestaurant);
-        imageRepository.save(image);
+        product.setImage(image);
         productRepository.save(product);
 
         CreateProductResponseDto responseDto = new CreateProductResponseDto();
@@ -92,8 +98,37 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductList() {
-        return productRepository.findAll();
+    public List<GetAllProductResponseDto> getAllProduct() {
+        List<Product> productList = productRepository.findAll();
+        return productList
+                .stream().map(
+                        product -> new GetAllProductResponseDto(
+                                product.getId(),
+                                product.getName(),
+                                product.getPrice(),
+                                product.getCategory(),
+                                product.getImage().getImageLink(),
+                                product.getRating(),
+                                product.getRestaurant().getName()
+                        )
+                ).collect(Collectors.toList());
+    }
+
+    @Override
+    public GetProductResponseDto getProductById(UUID productId) {
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
+        );
+
+        GetProductResponseDto responseDto = new GetProductResponseDto();
+        responseDto.setId(product.getId());
+        responseDto.setName(product.getName());
+        responseDto.setPrice(product.getPrice());
+        responseDto.setCategoryName(product.getCategory());
+        responseDto.setImageLink(product.getImage().getImageLink());
+        responseDto.setRating(product.getRating());
+        responseDto.setRestaurantName(product.getRestaurant().getName());
+        return responseDto;
     }
 
     @Override

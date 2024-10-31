@@ -48,4 +48,21 @@ public class RestaurantController {
     public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID restaurantId){
         restaurantService.delete(token, restaurantId);
     }
+
+    @GetMapping("get-all-restaurant")
+    public ResponseEntity<Map<String, Object>> getAll(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", restaurantService.getAllRestaurant());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("get-restaurant-by-id/{id}")
+    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", restaurantService.getRestaurantById(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

@@ -40,7 +40,15 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("get-list-orderItem/{id}")
+    @GetMapping("get-all-orderItem")
+    public ResponseEntity<Map<String, Object>> getAllOrderItem(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", orderItemService.getAllOrderItem());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("get-orderItem-by-orderId/{id}")
     public ResponseEntity<Map<String, Object>> getListOrderItemByOrderId(
             @PathVariable("id") UUID orderId
     ){

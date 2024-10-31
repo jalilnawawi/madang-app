@@ -3,6 +3,7 @@ package com.jalil_be_app.madang_app.service.impl;
 import com.jalil_be_app.madang_app.dto.orderItemDto.request.CreateOrderItemRequestDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.request.UpdateQtyOrderItemRequestDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.CreateOrderItemResponseDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.response.GetAllOrderItemResponseDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.GetOrderItemResponseDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.UpdateQtyOrderItemResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
@@ -113,6 +114,21 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    public List<GetAllOrderItemResponseDto> getAllOrderItem() {
+        List<OrderItem> orderItemList = orderItemRepository.findAll();
+        return orderItemList.stream().map(
+                orderItem -> new GetAllOrderItemResponseDto(
+                        orderItem.getId(),
+                        orderItem.getOrder().getRestaurant().getName(),
+                        orderItem.getProduct().getName(),
+                        orderItem.getProduct().getPrice(),
+                        orderItem.getQuantity(),
+                        orderItem.getPrice() * orderItem.getQuantity()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
     public List<GetOrderItemResponseDto> getAllbyOrderId(UUID orderId) {
         List<OrderItem> orderItemList = orderItemRepository.findByOrderId(orderId);
         return orderItemList.stream().map(
@@ -121,7 +137,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                         orderItem.getProduct().getName(),
                         orderItem.getProduct().getPrice(),
                         orderItem.getQuantity(),
-                        orderItem.getPrice()
+                        orderItem.getPrice() * orderItem.getQuantity()
                 )).collect(Collectors.toList());
     }
 }

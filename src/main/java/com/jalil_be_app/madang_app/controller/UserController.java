@@ -81,7 +81,7 @@ public class UserController {
         return userService.getAllUser();
     }
 
-    @PostMapping("/get-user-by-token")
+    @GetMapping("/get-user-by-token")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Map<String, Object>> getUserByToken(@RequestHeader("Authorization") String token){
         Map<String, Object> response = new HashMap<>();
@@ -90,7 +90,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/get-user-by-id/{id}")
+    @GetMapping("/get-user-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();

@@ -1,8 +1,10 @@
 package com.jalil_be_app.madang_app.service;
 
+import com.jalil_be_app.madang_app.dto.orderDto.response.GetAllOrderResponseDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.request.CreateOrderItemRequestDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.request.UpdateQtyOrderItemRequestDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.CreateOrderItemResponseDto;
+import com.jalil_be_app.madang_app.dto.orderItemDto.response.GetAllOrderItemResponseDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.GetOrderItemResponseDto;
 import com.jalil_be_app.madang_app.dto.orderItemDto.response.UpdateQtyOrderItemResponseDto;
 import com.jalil_be_app.madang_app.model.entity.OrderItem;
@@ -14,5 +16,6 @@ public interface OrderItemService {
     CreateOrderItemResponseDto createOrderItem(String token, CreateOrderItemRequestDto createOrderItemRequestDto);
     UpdateQtyOrderItemResponseDto updateQtyOrderItem(UUID orderItemId, UpdateQtyOrderItemRequestDto updateQtyOrderItemRequestDto);
     void deleteOrderItem(UUID orderItemId);
+    List<GetAllOrderItemResponseDto> getAllOrderItem();
     List<GetOrderItemResponseDto> getAllbyOrderId(UUID orderId);
 }
