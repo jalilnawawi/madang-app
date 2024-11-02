@@ -66,18 +66,15 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(Authentication authentication) {
-        String username;
         String email;
         UUID userId;
         MyUserDetails user = new MyUserDetails();
 
         if (authentication.getPrincipal() instanceof MyUserDetails){
             MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
-//            username = userPrincipal.getUsername();
             email = userPrincipal.getEmail();
             userId = userPrincipal.getId();
 
-//            user.setUsername(username);
             user.setEmail(email);
             user.setId(userId);
             log.info("Generating token for user : {}", userId);
@@ -88,7 +85,6 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-//                .setSubject(username)
                 .setSubject(email)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
@@ -99,18 +95,15 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateRefreshToken(Authentication authentication) {
-//        String username;
         String email;
         UUID userId;
         MyUserDetails user = new MyUserDetails();
 
         if (authentication.getPrincipal() instanceof MyUserDetails){
             MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
-//            username = userPrincipal.getUsername();
             email = userPrincipal.getEmail();
             userId = userPrincipal.getId();
 
-//            user.setUsername(username);
             user.setEmail(email);
             user.setId(userId);
             log.info("Generating token for user : {}", userId);
@@ -121,7 +114,6 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-//                .setSubject(username)
                 .setSubject(email)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
