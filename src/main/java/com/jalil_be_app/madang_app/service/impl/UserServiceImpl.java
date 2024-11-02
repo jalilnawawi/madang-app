@@ -123,20 +123,59 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto) {
-        if (loginUserRequestDto.getUsername() == null || loginUserRequestDto.getPassword() == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username or password can't null");
+//        if (loginUserRequestDto.getUsername() == null || loginUserRequestDto.getPassword() == null){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username or password can't null");
+//        }
+
+        if (loginUserRequestDto.getEmail() == null || loginUserRequestDto.getPassword() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email or password can't null");
         }
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(loginUserRequestDto.getUsername()).orElseThrow(
+
+//        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(loginUserRequestDto.getUsername()).orElseThrow(
+//                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+//        ));
+
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(loginUserRequestDto.getEmail()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         ));
+
         User user = userOptional.get();
 
+//        if (!passwordEncoder.matches(loginUserRequestDto.getPassword(), user.getPassword())){
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your username or password is invalid");
+//        } else {
+//            Authentication authentication = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            loginUserRequestDto.getUsername(),
+//                            loginUserRequestDto.getPassword()
+//                    )
+//            );
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            String token = jwtService.generateToken(authentication);
+//            String refreshToken = jwtService.generateRefreshToken(authentication);
+//            MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+//            List<String> roles = userDetails.getAuthorities().stream()
+//                            .map(GrantedAuthority::getAuthority)
+//                            .toList();
+//            user.setStatus(UserStatus.ACTIVE);
+//
+////            user.setRefreshToken(UUID.fromString(refreshToken));
+//            userRepository.save(user);
+//
+//            LoginUserResponseDto responseDto = new LoginUserResponseDto();
+//            responseDto.setAccessToken(token);
+//            responseDto.setRefreshToken(refreshToken);
+//            responseDto.setUserId(userDetails.getId());
+//            responseDto.setUserStatus(user.getStatus());
+//            responseDto.setRoles(roles);
+//            return responseDto;
+//        }
         if (!passwordEncoder.matches(loginUserRequestDto.getPassword(), user.getPassword())){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your username or password is invalid");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Your email or password is invalid");
         } else {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginUserRequestDto.getUsername(),
+                            loginUserRequestDto.getEmail(),
                             loginUserRequestDto.getPassword()
                     )
             );
@@ -145,8 +184,8 @@ public class UserServiceImpl implements UserService {
             String refreshToken = jwtService.generateRefreshToken(authentication);
             MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .toList();
+                    .map(GrantedAuthority::getAuthority)
+                    .toList();
             user.setStatus(UserStatus.ACTIVE);
 
 //            user.setRefreshToken(UUID.fromString(refreshToken));
@@ -163,12 +202,27 @@ public class UserServiceImpl implements UserService {
 
     }
 
+//    @Override
+//    public RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto) {
+//        String username = jwtService.getUsername(refreshTokenRequestDto.getRefreshToken());
+//        String token = jwtService.generateTokenFromUsername(username);
+//
+//        Optional<User> userOptional = userRepository.findByUsername(username);
+//
+//        if (userOptional.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
+//        } else {
+//            RefreshTokenResponseDto responseDto = new RefreshTokenResponseDto();
+//            responseDto.setAccessToken(token);
+//            return responseDto;
+//        }
+//    }
     @Override
     public RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto) {
-        String username = jwtService.getUsername(refreshTokenRequestDto.getRefreshToken());
-        String token = jwtService.generateTokenFromUsername(username);
+        String email = jwtService.getEmail(refreshTokenRequestDto.getRefreshToken());
+        String token = jwtService.generateTokenFromUsername(email);
 
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");

@@ -67,15 +67,18 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateToken(Authentication authentication) {
         String username;
+        String email;
         UUID userId;
         MyUserDetails user = new MyUserDetails();
 
         if (authentication.getPrincipal() instanceof MyUserDetails){
             MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
-            username = userPrincipal.getUsername();
+//            username = userPrincipal.getUsername();
+            email = userPrincipal.getEmail();
             userId = userPrincipal.getId();
 
-            user.setUsername(username);
+//            user.setUsername(username);
+            user.setEmail(email);
             user.setId(userId);
             log.info("Generating token for user : {}", userId);
         } else {
@@ -85,7 +88,8 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(username)
+//                .setSubject(username)
+                .setSubject(email)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + jwtExpiration))
@@ -95,16 +99,19 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateRefreshToken(Authentication authentication) {
-        String username;
+//        String username;
+        String email;
         UUID userId;
         MyUserDetails user = new MyUserDetails();
 
         if (authentication.getPrincipal() instanceof MyUserDetails){
             MyUserDetails userPrincipal = (MyUserDetails) authentication.getPrincipal();
-            username = userPrincipal.getUsername();
+//            username = userPrincipal.getUsername();
+            email = userPrincipal.getEmail();
             userId = userPrincipal.getId();
 
-            user.setUsername(username);
+//            user.setUsername(username);
+            user.setEmail(email);
             user.setId(userId);
             log.info("Generating token for user : {}", userId);
         } else {
@@ -114,7 +121,8 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(username)
+//                .setSubject(username)
+                .setSubject(email)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -136,12 +144,36 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
     }
 
+    @Override
+    public String generateTokenFromEmail(String email) {
+        User user = userRepository.findByEmail(email).get();
+
+        Date now = new Date();
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .claim("userId", user.getId())
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + jwtExpiration))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     private Key getSignInKey(){
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     @Override
     public String getUsername(String jwt) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignInKey()).build()
+                .parseClaimsJws(jwt)
+                .getBody()
+                .getSubject();
+    }
+
+    @Override
+    public String getEmail(String jwt) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey()).build()
                 .parseClaimsJws(jwt)

@@ -14,7 +14,9 @@ public interface JwtService {
     public String generateToken(Authentication authentication);
     public String generateRefreshToken(Authentication authentication);
     public String generateTokenFromUsername(String username);
+    public String generateTokenFromEmail(String email);
     public String getUsername(String jwt);
+    public String getEmail(String jwt);
     public String getId(String jwt);
     public UUID getUserIdfromToken(String token);
 }

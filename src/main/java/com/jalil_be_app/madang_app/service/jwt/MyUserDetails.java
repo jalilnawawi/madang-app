@@ -19,12 +19,21 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
     private UUID id;
     private String username;
+    private String email;
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public MyUserDetails(UUID id, String username, String password, List<GrantedAuthority> authorities) {
+//    public MyUserDetails(UUID id, String username, String password, List<GrantedAuthority> authorities) {
+//        this.id = id;
+//        this.username = username;
+//        this.password = password;
+//        this.authorities = authorities;
+//    }
+
+
+    public MyUserDetails(UUID id, String email, String password, List<GrantedAuthority> authorities) {
         this.id = id;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
@@ -33,7 +42,7 @@ public class MyUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
-        return new MyUserDetails(user.getId(), user.getUsername(), user.getPassword(), authorities);
+        return new MyUserDetails(user.getId(), user.getEmail(), user.getPassword(), authorities);
     }
 
     @Override
