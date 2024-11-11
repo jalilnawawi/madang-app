@@ -88,7 +88,7 @@ public class JwtServiceImpl implements JwtService {
                 .setSubject(email)
                 .claim("userId", user.getId())
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtExpiration))
+//                .setExpiration(new Date(now.getTime() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -131,7 +131,7 @@ public class JwtServiceImpl implements JwtService {
                 .claim("userId", user.getId())
                 .setSubject(username)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtExpiration))
+//                .setExpiration(new Date(now.getTime() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -146,7 +146,7 @@ public class JwtServiceImpl implements JwtService {
                 .claim("userId", user.getId())
                 .setSubject(email)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + jwtExpiration))
+//                .setExpiration(new Date(now.getTime() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
