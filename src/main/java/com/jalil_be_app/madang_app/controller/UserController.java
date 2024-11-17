@@ -8,6 +8,8 @@ import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequ
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request.UpdateImageRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.service.UserService;
+import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/auth/register")
+    @ApiResponseAnnotations.RegisterUserApiResponses
     public ResponseEntity<Map<String, Object>> register(@RequestBody RegisterUserRequestDto registerUserRequestDto){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

@@ -1,45 +1,70 @@
 # Madang-App
-## Authentication
-### `POST` Register User
+## 📌 Authentication Service
+### 1. Register User Endpoint
 
-* Description : Register to Application
-* URL : api/v1/auth/user/register
-* Auth Required : No
+| Metrics   | Value                 |
+|-----------|-----------------------|
+| Method    | `POST`                |
+| URL       | `api/v1/auth/user/register` |
+| Auth Required | No                    |
+ 
 
-**Request Body** : 
+#### Description 
+This endpoint is to register a new user to Madang-App
+
+#### Request Body : 
 ````json
 {
+  "fullname" : "string",
+  "gender" : "string",
   "username" : "string",
   "email" : "string",
   "password" : "string",
-  "confirmPassword" : "string"
+  "role" : [
+    "string"
+  ],
+  "imageLink" : "string"
 }
 ````
 
 **Response Body** :
 
-* **✅ 200 OK**
+**✅ 201 Created**
 ````json
 {
-  "data" : {
-    "username" : "string",
-    "email" : "string",
-    "userStatus" : "enum"
+  "data": {
+    "fullname": "kaesang pangarep",
+    "gender": "laki laki",
+    "username": "kaesangp",
+    "email": "kaesangp@gmail.com",
+    "role": [
+      {
+        "id": "d1f8abe2-f886-468d-91e1-1f3f5139a5c5",
+        "name": "ROLE_MERCHANT"
+      }
+    ],
+    "imageLink": "kaesangp_image"
   },
-  "message" : "Register success"
+  "message": "success"
 }
 ````
-* **❌ 400 Bad Request**
+**❌ 400 Bad Request**
 ````json
 {
   "data" : null,
   "message" : "Password not matched"
 }
 ````
-### `POST` Login User
-* Description : Register to Application
-* URL : api/v1/auth/user/login
-* Auth Required : No
+### 2. Login User Endpoint
+
+| Metrics   | Value                |
+|-----------|----------------------|
+| Method    | `POST`               |
+| URL       | `api/v1/auth/user/login` |
+| Auth Required | No                   |
+
+#### Description
+This endpoint is to existing user login to the Madang-App
 
 **Request Body** :
 ````json
@@ -50,7 +75,8 @@
 ````
 
 **Response Body** :
-* **✅ 200 OK**
+
+**✅ 201 Created**
 ````json
 {
   "data" : {
@@ -63,7 +89,7 @@
 }
 ````
 
-* **❌ 400 Bad Request**
+**❌ 400 Bad Request**
 ````json
 {
   "data" : null,
@@ -71,8 +97,14 @@
 }
 ````
 ---
-## Restaurant Service
-### `POST` Create Restaurant
+## 📌 Restaurant Service
+### 1. Create Restaurant Endpoint
+
+| Metrics   | Value               |
+|-----------|---------------------|
+| Method    | `POST`              |
+| URL       | `api/v1/restaurant` |
+| Auth Required | Yes                 |
 
 * Description : Create a new Restaurant
 * URL : api/v1/restaurant
