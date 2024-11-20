@@ -37,6 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
+    @ApiResponseAnnotations.LoginUserApiResponses
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginUserRequestDto loginUserRequestDto){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
