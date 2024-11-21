@@ -10,6 +10,7 @@ import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.requ
 import com.jalil_be_app.madang_app.service.UserService;
 import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,14 +47,16 @@ public class UserController {
     }
 
     @PostMapping("/auth/refresh-token")
+    @ApiResponseAnnotations.RefreshTokenApiResponses
     public ResponseEntity<Map<String, Object>> refreshToken(@RequestBody RefreshTokenRequestDto refreshTokenRequestDto){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
         response.put("data", userService.refreshToken(refreshTokenRequestDto));
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/update-profile/password")
+    @ApiResponseAnnotations.UpdatePasswordApiResponses
     public ResponseEntity<Map<String, Object>> updatePassword(
             @RequestHeader("Authorization") String token,
             @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto){
@@ -64,6 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/update-profile/image")
+    @ApiResponseAnnotations.UpdateUserImageApiResponses
     public ResponseEntity<Map<String, Object>> updateImage(
             @RequestHeader("Authorization") String token,
             @RequestBody UpdateImageRequestDto updateImageRequestDto
@@ -80,7 +84,9 @@ public class UserController {
         return "hello world";
     }
 
+
     @GetMapping("/get-all-user")
+    @ApiResponseAnnotations.GetAllUserApiResponses
     public List<GetAllUserResponseDto> getAllUser(){
         return userService.getAllUser();
     }
@@ -96,6 +102,7 @@ public class UserController {
 
     @GetMapping("/get-user-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.GetUserByIdResponses
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

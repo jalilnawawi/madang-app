@@ -1,8 +1,7 @@
 package com.jalil_be_app.madang_app.utils;
 
 
-import com.jalil_be_app.madang_app.dto.schemes.user.LoginUserExampleSwagger;
-import com.jalil_be_app.madang_app.dto.schemes.user.RegisterUserExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.user.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -70,7 +69,143 @@ public class ApiResponseAnnotations {
     public @interface LoginUserApiResponses {
     }
 
-
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "created",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = RefreshTokenExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "bad request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Refresh token invalid",
+                                                    value = "{\"data\": null, \"message\" : \"Your token is invalid\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
     public @interface RefreshTokenApiResponses {
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdatePasswordExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "bad request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed update password because user not found",
+                                                    value = "{\"data\": null, \"message\" : \"User not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdatePasswordApiResponses {
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdateUserImageExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "bad request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed update image because user not found",
+                                                    value = "{\"data\": null, \"message\" : \"User not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateUserImageApiResponses {
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllUserExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get user because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllUserApiResponses {
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetUserByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "bad request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get user because user not found",
+                                                    value = "{\"data\": null, \"message\" : \"User not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetUserByIdResponses {
     }
 }
