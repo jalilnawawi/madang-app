@@ -3,6 +3,7 @@ package com.jalil_be_app.madang_app.controller;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
 import com.jalil_be_app.madang_app.service.RestaurantService;
+import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,7 @@ public class RestaurantController {
     }
 
     @GetMapping("get-all-restaurant")
+    @ApiResponseAnnotations.GetAllRestaurantResponses
     public ResponseEntity<Map<String, Object>> getAll(){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

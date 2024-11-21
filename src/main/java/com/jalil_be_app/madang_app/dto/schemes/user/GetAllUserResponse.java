@@ -2,9 +2,17 @@ package com.jalil_be_app.madang_app.dto.schemes.user;
 
 import com.jalil_be_app.madang_app.model.entity.account.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class GetAllUserResponse {
     @Schema(name = "fullname", examples = "Gibran Rakabuming Raka")
     private String fullname;

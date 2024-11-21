@@ -1,6 +1,7 @@
 package com.jalil_be_app.madang_app.utils;
 
 
+import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.user.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -207,5 +208,34 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface GetUserByIdResponses {
+    }
+
+    // Annotations for Restaurant in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ok",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllRestaurantExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "unauthorized",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get all restaurant because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllRestaurantResponses{
     }
 }

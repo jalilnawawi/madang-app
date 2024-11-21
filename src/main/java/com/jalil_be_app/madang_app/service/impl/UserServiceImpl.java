@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
         }
 
         Optional<User> userOptional = Optional.ofNullable(userRepository.findByEmail(loginUserRequestDto.getEmail()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your email or password is invalid")
         ));
 
         User user = userOptional.get();
