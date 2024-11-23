@@ -1,7 +1,10 @@
 package com.jalil_be_app.madang_app.utils;
 
 
+import com.jalil_be_app.madang_app.dto.schemes.restaurant.CreateRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetRestaurantByIdExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.restaurant.UpdateRestaurantAddressExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.user.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -237,5 +240,139 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface GetAllRestaurantResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetRestaurantByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Restaurant Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetRestaurantByIdResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "CREATED",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateRestaurantExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "403", description = "FORBIDDEN",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Single Restaurant per User",
+                                                    value = "{\"data\": null, \"message\" : \"User only can have 1 Restaurant\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Empty Restaurant Name",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant name can't empty\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Empty Restaurant address",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant address can't empty\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateRestaurantResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdateRestaurantAddressExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Restaurant Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateRestaurantAddressResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Delete Restaurant",
+                                                    value = "{\"message\" : \"success\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Restaurant Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface DeleteRestaurantResponses{
     }
 }

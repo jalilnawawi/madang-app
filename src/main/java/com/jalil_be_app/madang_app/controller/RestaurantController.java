@@ -22,6 +22,7 @@ public class RestaurantController {
 
     @PostMapping("create")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.CreateRestaurantResponses
     public ResponseEntity<Map<String, Object>> create(
             @RequestHeader("Authorization") String token,
             @RequestBody CreateRestaurantRequestDto createRestaurantRequestDto
@@ -34,6 +35,7 @@ public class RestaurantController {
 
     @PutMapping("update-address")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.UpdateRestaurantAddressResponses
     public ResponseEntity<Map<String, Object>> update(
             @RequestHeader("Authorization") String token,
             @RequestBody UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto
@@ -46,6 +48,7 @@ public class RestaurantController {
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.DeleteRestaurantResponses
     public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID restaurantId){
         restaurantService.delete(token, restaurantId);
     }
@@ -61,6 +64,7 @@ public class RestaurantController {
 
     @GetMapping("get-restaurant-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.GetRestaurantByIdResponses
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

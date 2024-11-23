@@ -1,11 +1,14 @@
-package com.jalil_be_app.madang_app.dto.restaurantDto.request;
+package com.jalil_be_app.madang_app.dto.schemes.restaurant;
 
-import com.jalil_be_app.madang_app.model.enums.RestaurantCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class CreateRestaurantRequestDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateRestaurantExampleSwagger {
     @Schema(example = "Ayam Geprek Kumlot")
     private String name;
     @Schema(example = "Ayam Geprek murah + Free refill nasi")
