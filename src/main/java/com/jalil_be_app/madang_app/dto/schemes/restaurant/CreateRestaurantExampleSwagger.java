@@ -19,4 +19,6 @@ public class CreateRestaurantExampleSwagger {
     private String category;
     @Schema(example = "geprekKumlot_image")
     private String imageLink;
+    @Schema(name = "message", example = "success")
+    private String message;
 }

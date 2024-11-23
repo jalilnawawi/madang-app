@@ -4,6 +4,7 @@ import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDt
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.service.ProductService;
+import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class ProductController {
 
     @PostMapping("create")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.CreateProductResponses
     public ResponseEntity<Map<String, Object>> create(
             @RequestHeader("Authorization") String token,
             @RequestBody CreateProductRequestDto createProductRequestDto

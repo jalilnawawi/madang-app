@@ -1,6 +1,7 @@
 package com.jalil_be_app.madang_app.utils;
 
 
+import com.jalil_be_app.madang_app.dto.schemes.product.CreateProductExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.CreateRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetRestaurantByIdExampleSwagger;
@@ -374,5 +375,38 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface DeleteRestaurantResponses{
+    }
+
+    // Annotations for Product in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "CREATED",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateProductExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Empty Product Name",
+                                                    value = "{\"data\": null, \"message\" : \"Product name can't empty\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Empty Product Price",
+                                                    value = "{\"data\": null, \"message\" : \"Product price can't empty\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateProductResponses{
     }
 }
