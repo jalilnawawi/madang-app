@@ -21,14 +21,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Created",
+        @ApiResponse(responseCode = "201", description = "Success Register for a new user",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = RegisterUserExampleSwagger.class)
                 )
             }
         ),
-        @ApiResponse(responseCode = "400", description = "Bad Request",
+        @ApiResponse(responseCode = "400", description = "Password not Match",
             content = {
                 @Content(
                         mediaType = "application/json",
@@ -50,14 +50,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "created",
+            @ApiResponse(responseCode = "201", description = "User Login Success",
                 content = {
                     @Content(mediaType = "application/json",
                             schema = @Schema(implementation = LoginUserExampleSwagger.class)
                     )
                 }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "Unauthorized user",
                 content = {
                     @Content(
                             mediaType = "application/json",
@@ -78,14 +78,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "created",
+            @ApiResponse(responseCode = "201", description = "Success get a new access token",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = RefreshTokenExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "Wrong Refresh Token",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -106,14 +106,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Update User Password",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdatePasswordExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User not found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -134,14 +134,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Update User Image",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdateUserImageExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -162,14 +162,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get All User Data",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetAllUserExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -190,14 +190,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get User by User Id",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetUserByIdExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User Id Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -219,14 +219,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get All Restaurant Data",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetAllRestaurantExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -247,14 +247,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Get Restaurant by Restaurant Id",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetRestaurantByIdExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Id Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -275,14 +275,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "CREATED",
+            @ApiResponse(responseCode = "201", description = "Success Create New Restaurant",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = CreateRestaurantExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "403", description = "FORBIDDEN",
+            @ApiResponse(responseCode = "403", description = "User not allowed to have two Restaurant",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -320,14 +320,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Update Restaurant Address",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdateRestaurantAddressExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -348,7 +348,7 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Delete Restaurant",
                     content = {
                             @Content(mediaType = "application/json",
                                     examples = {
@@ -360,7 +360,7 @@ public class ApiResponseAnnotations {
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -382,7 +382,7 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "CREATED",
+            @ApiResponse(responseCode = "201", description = "Success Create New Product",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = CreateProductExampleSwagger.class)
