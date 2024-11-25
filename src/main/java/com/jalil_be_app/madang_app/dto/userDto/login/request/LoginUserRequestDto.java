@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class LoginUserRequestDto {
-    @Schema(name = "email", example = "user1")
+    @Schema(name = "email", example = "user1@gmail.com")
     private String email;
     @Schema(name = "password", example = "password123")
     private String password;
