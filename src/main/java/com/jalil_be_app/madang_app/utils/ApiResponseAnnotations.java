@@ -767,19 +767,6 @@ public class ApiResponseAnnotations {
                                     schema = @Schema(implementation = GetAllOrderItemExampleSwagger.class)
                             )
                     }
-            ),
-            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    examples = {
-                                            @ExampleObject(
-                                                    name = "Failed get user because token is invalid",
-                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
-                                            )
-                                    }
-                            )
-                    }
             )
     })
     public @interface GetAllOrderItemResponses{
