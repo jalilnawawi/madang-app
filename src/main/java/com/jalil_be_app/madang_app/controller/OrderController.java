@@ -4,6 +4,7 @@ import com.jalil_be_app.madang_app.dto.orderDto.request.CreateOrderRequestDto;
 import com.jalil_be_app.madang_app.dto.orderFacadeDto.request.ConfirmOrderRequestDto;
 import com.jalil_be_app.madang_app.service.OrderFacade;
 import com.jalil_be_app.madang_app.service.OrderService;
+import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class OrderController {
 
     @PostMapping("create")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.CreateOrderResponses
     public ResponseEntity<Map<String, Object>> create(
             @RequestHeader("Authorization") String token,
             @RequestBody CreateOrderRequestDto createOrderRequestDto
@@ -37,6 +39,7 @@ public class OrderController {
 
     @PostMapping("confirm-order")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.ConfirmOrderResponses
     public ResponseEntity<Map<String, Object>> confirm(
             @RequestHeader("Authorization") String token,
             @RequestBody ConfirmOrderRequestDto confirmOrderRequestDto
@@ -49,6 +52,7 @@ public class OrderController {
 
     @GetMapping("get-all-order")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.GetAllOrderResponses
     public ResponseEntity<Map<String, Object>> getAll(){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
@@ -58,6 +62,7 @@ public class OrderController {
 
     @GetMapping("get-order-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.GetOrderByIdResponses
     public ResponseEntity<Map<String, Object>> getOrderById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

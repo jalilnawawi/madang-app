@@ -8,7 +8,9 @@ import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponse
 import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Order;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
+import com.jalil_be_app.madang_app.model.entity.account.Role;
 import com.jalil_be_app.madang_app.model.entity.account.User;
+import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import com.jalil_be_app.madang_app.repository.OrderRepository;
 import com.jalil_be_app.madang_app.repository.RestaurantRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;

@@ -1,6 +1,10 @@
 package com.jalil_be_app.madang_app.utils;
 
 
+import com.jalil_be_app.madang_app.dto.schemes.order.ConfirmOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.CreateOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.GetAllOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.GetOrderByIdExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.CreateProductExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.GetAllProductExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.GetProductByIdExampleSwagger;
@@ -567,5 +571,118 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface DeleteProductResponses{
+    }
+
+    // Annotations for Order in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Create New Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Restaurant Id",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Confirm Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ConfirmOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Order Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface ConfirmOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetOrderByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Order Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetOrderByIdResponses{
     }
 }
