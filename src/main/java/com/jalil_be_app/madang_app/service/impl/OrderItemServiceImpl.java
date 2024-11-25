@@ -83,7 +83,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public UpdateQtyOrderItemResponseDto updateQtyOrderItem(UUID orderItemId, UpdateQtyOrderItemRequestDto updateQtyOrderItemRequestDto) {
         OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "OrderItem not found")
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Active Order not found")
         );
 
         if (!orderItem.getOrder().isCompleted()){

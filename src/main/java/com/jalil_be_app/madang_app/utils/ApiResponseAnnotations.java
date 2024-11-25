@@ -5,6 +5,8 @@ import com.jalil_be_app.madang_app.dto.schemes.order.ConfirmOrderExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.order.CreateOrderExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.order.GetAllOrderExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.order.GetOrderByIdExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetAllOrderItemExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetOrderItemByOrderIdExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.CreateProductExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.GetAllProductExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.GetProductByIdExampleSwagger;
@@ -684,5 +686,130 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface GetOrderByIdResponses{
+    }
+
+    // Annotations for Order Item in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Create New Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Active order not found\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Closed Order",
+                                                    value = "{\"data\": null, \"message\" : \"Please create a new order, last order has been closed\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateOrderItemResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Update Quantity Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Active order not found\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Closed Order",
+                                                    value = "{\"data\": null, \"message\" : \"Please create a new order, last order has been closed\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateOrderItemQtyResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllOrderItemExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get user because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllOrderItemResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetOrderItemByOrderIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Item Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Order Item Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Order Item Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetOrderItemByOrderIdResponses{
     }
 }
