@@ -37,6 +37,7 @@ public class ProductController {
 
     @GetMapping("get-all-product")
 //    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.GetAllProductResponses
     public ResponseEntity<Map<String, Object>> getAll(){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
@@ -46,6 +47,7 @@ public class ProductController {
 
     @GetMapping("get-product-by-id/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.GetProductByIdResponses
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
@@ -55,6 +57,7 @@ public class ProductController {
 
     @PutMapping("update-price/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.UpdateProductPriceResponses
     public ResponseEntity<Map<String, Object>> update(
             @RequestHeader("Authorization") String token,
             @PathVariable("id") UUID productId,
@@ -68,6 +71,7 @@ public class ProductController {
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.DeleteProductResponses
     public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID productId){
         productService.delete(token, productId);
     }

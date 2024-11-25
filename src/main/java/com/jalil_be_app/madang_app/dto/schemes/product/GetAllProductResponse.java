@@ -1,27 +1,28 @@
-package com.jalil_be_app.madang_app.dto.productDto.response;
+package com.jalil_be_app.madang_app.dto.schemes.product;
 
 import com.jalil_be_app.madang_app.model.enums.ProductCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class GetProductResponseDto {
+@Builder
+public class GetAllProductResponse {
     private UUID id;
-    @Schema(example = "Kopi Susu Gula Aren")
+    @Schema(example = "Americano Coffee")
     private String name;
-    @Schema(example = "15000")
+    @Schema(example = "20000")
     private Double price;
-    @Schema(example = "DRINK")
     private ProductCategory categoryName;
-    @Schema(example = "ksga_image")
+    @Schema(example = "americano_image")
     private String imageLink;
     private Float rating;
-    @Schema(example = "Almamater Coffee")
+    @Schema(example = "East Side Coffee")
     private String restaurantName;
 }

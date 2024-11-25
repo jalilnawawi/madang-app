@@ -1,7 +1,16 @@
 package com.jalil_be_app.madang_app.utils;
 
 
+import com.jalil_be_app.madang_app.dto.schemes.order.ConfirmOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.CreateOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.GetAllOrderExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.order.GetOrderByIdExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetAllOrderItemExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetOrderItemByOrderIdExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.CreateProductExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.GetAllProductExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.GetProductByIdExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.UpdateProductPriceExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.CreateRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetRestaurantByIdExampleSwagger;
@@ -21,14 +30,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Created",
+        @ApiResponse(responseCode = "201", description = "Success Register for a new user",
             content = {
                 @Content(mediaType = "application/json",
                     schema = @Schema(implementation = RegisterUserExampleSwagger.class)
                 )
             }
         ),
-        @ApiResponse(responseCode = "400", description = "Bad Request",
+        @ApiResponse(responseCode = "400", description = "Password not Match",
             content = {
                 @Content(
                         mediaType = "application/json",
@@ -50,14 +59,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "created",
+            @ApiResponse(responseCode = "201", description = "User Login Success",
                 content = {
                     @Content(mediaType = "application/json",
                             schema = @Schema(implementation = LoginUserExampleSwagger.class)
                     )
                 }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "Unauthorized user",
                 content = {
                     @Content(
                             mediaType = "application/json",
@@ -78,14 +87,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "created",
+            @ApiResponse(responseCode = "201", description = "Success get a new access token",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = RefreshTokenExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "Wrong Refresh Token",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -106,14 +115,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Update User Password",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdatePasswordExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User not found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -134,14 +143,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Update User Image",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdateUserImageExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -162,14 +171,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get All User Data",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetAllUserExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -190,14 +199,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get User by User Id",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetUserByIdExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "bad request",
+            @ApiResponse(responseCode = "400", description = "User Id Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -219,14 +228,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ok",
+            @ApiResponse(responseCode = "200", description = "Success Get All Restaurant Data",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetAllRestaurantExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "401", description = "unauthorized",
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -247,14 +256,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Get Restaurant by Restaurant Id",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = GetRestaurantByIdExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Id Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -275,14 +284,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "CREATED",
+            @ApiResponse(responseCode = "201", description = "Success Create New Restaurant",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = CreateRestaurantExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "403", description = "FORBIDDEN",
+            @ApiResponse(responseCode = "403", description = "User not allowed to have two Restaurant",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -320,14 +329,14 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Update Restaurant Address",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = UpdateRestaurantAddressExampleSwagger.class)
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -348,7 +357,7 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "200", description = "Success Delete Restaurant",
                     content = {
                             @Content(mediaType = "application/json",
                                     examples = {
@@ -360,7 +369,7 @@ public class ApiResponseAnnotations {
                             )
                     }
             ),
-            @ApiResponse(responseCode = "400", description = "Bad Request",
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -382,7 +391,7 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "CREATED",
+            @ApiResponse(responseCode = "201", description = "Success Create New Product",
                     content = {
                             @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = CreateProductExampleSwagger.class)
@@ -408,5 +417,399 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface CreateProductResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllProductExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllProductResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetProductByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetProductByIdResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Update Product Price",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdateProductPriceExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateProductPriceResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Delete Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Delete Product",
+                                                    value = "{\"message\" : \"success\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface DeleteProductResponses{
+    }
+
+    // Annotations for Order in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Create New Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Restaurant Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Restaurant Id",
+                                                    value = "{\"data\": null, \"message\" : \"Restaurant Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Confirm Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = ConfirmOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Order Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface ConfirmOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllOrderResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Order",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetOrderByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Order Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetOrderByIdResponses{
+    }
+
+    // Annotations for Order Item in below
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Success Create New Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Active order not found\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Closed Order",
+                                                    value = "{\"data\": null, \"message\" : \"Please create a new order, last order has been closed\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface CreateOrderItemResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Update Quantity Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Can't Find Order Id",
+                                                    value = "{\"data\": null, \"message\" : \"Active order not found\"}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "Closed Order",
+                                                    value = "{\"data\": null, \"message\" : \"Please create a new order, last order has been closed\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateOrderItemQtyResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllOrderItemExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get user because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllOrderItemResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Order Item",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetOrderItemByOrderIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Order Item Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Order Item Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Order Item Not Found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetOrderItemByOrderIdResponses{
     }
 }
