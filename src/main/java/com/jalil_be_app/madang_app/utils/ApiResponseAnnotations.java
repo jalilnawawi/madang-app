@@ -2,6 +2,9 @@ package com.jalil_be_app.madang_app.utils;
 
 
 import com.jalil_be_app.madang_app.dto.schemes.product.CreateProductExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.GetAllProductExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.GetProductByIdExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.product.UpdateProductPriceExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.CreateRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetRestaurantByIdExampleSwagger;
@@ -408,5 +411,161 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface CreateProductResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllProductExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllProductResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetProductByIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetProductByIdResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Update Product Price",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdateProductPriceExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateProductPriceResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Delete Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Delete Product",
+                                                    value = "{\"message\" : \"success\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Unauthorized User",
+                                                    value = "{\"data\": null, \"message\" : \"You are not authorized to access\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface DeleteProductResponses{
     }
 }
