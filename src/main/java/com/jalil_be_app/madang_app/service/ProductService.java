@@ -6,7 +6,6 @@ import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequ
 import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.UpdateProductPriceResponseDto;
-import com.jalil_be_app.madang_app.model.entity.Product;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,4 +16,5 @@ public interface ProductService {
     GetProductResponseDto getProductById(UUID productId);
     UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto);
     void delete(String token, UUID productId);
+    List<GetAllProductResponseDto> getProductBySearch(String searchText);
 }

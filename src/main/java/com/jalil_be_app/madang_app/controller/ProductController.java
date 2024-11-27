@@ -75,4 +75,13 @@ public class ProductController {
     public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID productId){
         productService.delete(token, productId);
     }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Map<String, Object>> searchProduct(@RequestParam String searchText){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Success get product related to " + searchText);
+        response.put("data", productService.getProductBySearch(searchText));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

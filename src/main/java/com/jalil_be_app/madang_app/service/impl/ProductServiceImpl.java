@@ -6,7 +6,6 @@ import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequ
 import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.UpdateProductPriceResponseDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetAllRestaurantResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -25,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -176,5 +174,21 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.deleteById(productId);
+    }
+
+    @Override
+    public List<GetAllProductResponseDto> getProductBySearch(String searchText) {
+        List<Product> productList = productRepository.searchProduct(searchText);
+        return productList.stream().map(
+                product -> new GetAllProductResponseDto(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getCategory(),
+                        product.getImage().getImageLink(),
+                        product.getRating(),
+                        product.getRestaurant().getName()
+                )
+        ).collect(Collectors.toList());
     }
 }
