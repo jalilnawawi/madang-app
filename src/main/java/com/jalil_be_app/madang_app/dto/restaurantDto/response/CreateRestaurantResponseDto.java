@@ -3,8 +3,11 @@ package com.jalil_be_app.madang_app.dto.restaurantDto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class CreateRestaurantResponseDto {
+    private UUID restaurantId;
     @Schema(example = "Ayam Geprek Kumlot")
     private String name;
     @Schema(example = "Ayam Geprek murah + Free refill nasi")

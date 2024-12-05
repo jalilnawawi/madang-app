@@ -4,6 +4,7 @@ import com.jalil_be_app.madang_app.model.entity.account.Role;
 import lombok.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,6 +12,7 @@ import java.util.Set;
 @Setter
 @Data
 public class GetUserResponseDto {
+    private UUID userId;
     private String fullname;
     private String gender;
     private String username;

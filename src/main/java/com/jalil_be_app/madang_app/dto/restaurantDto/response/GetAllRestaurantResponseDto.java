@@ -6,12 +6,15 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class GetAllRestaurantResponseDto {
+    private UUID restaurantId;
     @Schema(example = "Warteg Bahari")
     private String name;
     @Schema(example = "Warteg murah sahabat mahasiswa")

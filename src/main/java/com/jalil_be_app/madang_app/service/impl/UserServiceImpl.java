@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
 
             RegisterUserResponseDto responseDto = new RegisterUserResponseDto();
+            responseDto.setUserId(user.getId());
             responseDto.setFullname(registerUserRequestDto.getFullname());
             responseDto.setGender(registerUserRequestDto.getGender());
             responseDto.setUsername(registerUserRequestDto.getUsername());
@@ -226,6 +227,7 @@ public class UserServiceImpl implements UserService {
         );
 
         GetUserResponseDto responseDto = new GetUserResponseDto();
+        responseDto.setUserId(getUser.getId());
         responseDto.setFullname(getUser.getFullname());
         responseDto.setGender(getUser.getGender().name());
         responseDto.setUsername(getUser.getUsername());
@@ -242,6 +244,7 @@ public class UserServiceImpl implements UserService {
         );
 
         GetUserResponseDto responseDto = new GetUserResponseDto();
+        responseDto.setUserId(getUser.getId());
         responseDto.setFullname(getUser.getFullname());
         responseDto.setGender(getUser.getGender().name());
         responseDto.setUsername(getUser.getUsername());
@@ -256,6 +259,7 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userRepository.findAll();
         return userList.stream().map(
                 user -> new GetAllUserResponseDto(
+                        user.getId(),
                         user.getFullname(),
                         user.getGender(),
                         user.getUsername(),

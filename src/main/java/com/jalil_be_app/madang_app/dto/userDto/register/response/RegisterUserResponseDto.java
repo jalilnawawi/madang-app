@@ -5,9 +5,11 @@ import com.jalil_be_app.madang_app.model.entity.account.UserRole;
 import lombok.Data;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 public class RegisterUserResponseDto {
+    private UUID userId;
     private String fullname;
     private String gender;
     private String username;

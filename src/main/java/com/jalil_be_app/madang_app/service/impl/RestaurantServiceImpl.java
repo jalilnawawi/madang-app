@@ -88,6 +88,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurantRepository.save(restaurant);
 
             CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
+            responseDto.setRestaurantId(restaurant.getId());
             responseDto.setName(createRestaurantRequestDto.getName());
             responseDto.setDescription(createRestaurantRequestDto.getDescription());
             responseDto.setAddress(createRestaurantRequestDto.getAddress());
@@ -131,6 +132,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<Restaurant> getAllRestaurant = restaurantRepository.findAll();
         return getAllRestaurant.stream().map(
                 restaurant -> new GetAllRestaurantResponseDto(
+                        restaurant.getId(),
                         restaurant.getName(),
                         restaurant.getDescription(),
                         restaurant.getAddress(),
@@ -147,6 +149,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         );
 
         GetRestaurantResponseDto responseDto = new GetRestaurantResponseDto();
+        responseDto.setRestaurantId(restaurant.getId());
         responseDto.setName(restaurant.getName());
         responseDto.setAddress(restaurant.getAddress());
         responseDto.setDescription(restaurant.getDescription());

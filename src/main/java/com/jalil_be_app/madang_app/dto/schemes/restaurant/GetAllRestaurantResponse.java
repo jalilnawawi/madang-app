@@ -9,11 +9,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class GetAllRestaurantResponse {
+    private UUID restaurantId;
     @Schema(example = "East Side Coffee")
     private String name;
     @Schema(example = "Coffeeshop harga mahasiswa")
