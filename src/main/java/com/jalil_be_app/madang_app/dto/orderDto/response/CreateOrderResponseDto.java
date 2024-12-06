@@ -8,8 +8,10 @@ import java.util.UUID;
 @Data
 public class CreateOrderResponseDto {
     private UUID orderId;
+    private UUID userId;
     @Schema(example = "user1")
     private String username;
+    private UUID restaurantId;
     @Schema(example = "Arsa Coffee 2")
     private String restaurantName;
     @Schema(example = "false")

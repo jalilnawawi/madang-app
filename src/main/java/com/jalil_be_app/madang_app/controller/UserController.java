@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @GetMapping("/get-user-by-token")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Map<String, Object>> getUserByToken(@RequestHeader("Authorization") String token){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
@@ -101,7 +101,7 @@ public class UserController {
     }
 
     @GetMapping("/get-user-by-id/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetUserByIdResponses
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();

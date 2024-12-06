@@ -3,8 +3,11 @@ package com.jalil_be_app.madang_app.dto.productDto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class CreateProductResponseDto {
+    private UUID productId;
     @Schema(example = "Espresso Coffee")
     private String name;
     @Schema(example = "15000")
@@ -15,4 +18,5 @@ public class CreateProductResponseDto {
     private String imageLink;
     @Schema(example = "Arsa Coffee")
     private String restaurantName;
+    private UUID restaurantId;
 }

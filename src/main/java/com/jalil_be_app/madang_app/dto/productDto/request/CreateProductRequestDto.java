@@ -3,8 +3,11 @@ package com.jalil_be_app.madang_app.dto.productDto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class CreateProductRequestDto {
+    private UUID restaurantId;
     @Schema(example = "Espresso Coffee")
     private String name;
     @Schema(example = "15000")

@@ -50,10 +50,6 @@ public class RestaurantServiceImpl implements RestaurantService {
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
-        Optional<Restaurant> existingRestaurant = restaurantRepository.findByUserId(userIdFromToken);
-        if (existingRestaurant.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User only can have 1 Restaurant");
-        } else {
             Restaurant restaurant = new Restaurant();
             if(createRestaurantRequestDto.getName() == null){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant name can't empty");
@@ -89,13 +85,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 
             CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
             responseDto.setRestaurantId(restaurant.getId());
+            responseDto.setUserId(existingUser.getId());
             responseDto.setName(createRestaurantRequestDto.getName());
             responseDto.setDescription(createRestaurantRequestDto.getDescription());
             responseDto.setAddress(createRestaurantRequestDto.getAddress());
             responseDto.setCategory(createRestaurantRequestDto.getCategory());
             responseDto.setImageLink(createRestaurantRequestDto.getImageLink());
             return responseDto;
-        }
+
 
     }
 

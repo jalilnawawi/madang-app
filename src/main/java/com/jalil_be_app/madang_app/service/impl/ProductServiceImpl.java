@@ -1,11 +1,8 @@
 package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
-import com.jalil_be_app.madang_app.dto.productDto.response.CreateProductResponseDto;
+import com.jalil_be_app.madang_app.dto.productDto.response.*;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
-import com.jalil_be_app.madang_app.dto.productDto.response.GetAllProductResponseDto;
-import com.jalil_be_app.madang_app.dto.productDto.response.GetProductResponseDto;
-import com.jalil_be_app.madang_app.dto.productDto.response.UpdateProductPriceResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
@@ -40,18 +37,13 @@ public class ProductServiceImpl implements ProductService {
     ImageRepository imageRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     JwtService jwtService;
 
 
     @Override
     @Transactional
     public CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
-
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findById(createProductRequestDto.getRestaurantId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -86,10 +78,12 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
 
         CreateProductResponseDto responseDto = new CreateProductResponseDto();
+        responseDto.setProductId(product.getId());
         responseDto.setName(createProductRequestDto.getName());
         responseDto.setPrice(createProductRequestDto.getPrice());
         responseDto.setCategory(createProductRequestDto.getCategory());
         responseDto.setImageLink(createProductRequestDto.getImageLink());
+        responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
 
         return responseDto;
@@ -127,6 +121,23 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setRating(product.getRating());
         responseDto.setRestaurantName(product.getRestaurant().getName());
         return responseDto;
+    }
+
+    @Override
+    public List<GetAllProductByRestoIdResponseDto> getProductByRestoId(UUID restaurantId) {
+        List<Product> getAllProduct = productRepository.getProductByRestaurantId(restaurantId);
+        return getAllProduct.stream().map(
+                product -> new GetAllProductByRestoIdResponseDto(
+                        product.getRestaurant().getId(),
+                        product.getRestaurant().getName(),
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getCategory(),
+                        product.getImage().getImageLink(),
+                        product.getRating()
+                )
+        ).collect(Collectors.toList());
     }
 
     @Override

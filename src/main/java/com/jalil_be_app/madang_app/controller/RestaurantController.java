@@ -63,7 +63,7 @@ public class RestaurantController {
     }
 
     @GetMapping("get-restaurant-by-id/{id}")
-    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+//    @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.GetRestaurantByIdResponses
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();

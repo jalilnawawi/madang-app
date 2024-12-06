@@ -8,6 +8,7 @@ import java.util.UUID;
 @Data
 public class CreateRestaurantResponseDto {
     private UUID restaurantId;
+    private UUID userId;
     @Schema(example = "Ayam Geprek Kumlot")
     private String name;
     @Schema(example = "Ayam Geprek murah + Free refill nasi")

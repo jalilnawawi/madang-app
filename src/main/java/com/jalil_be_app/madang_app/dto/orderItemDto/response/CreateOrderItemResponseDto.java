@@ -11,6 +11,7 @@ public class CreateOrderItemResponseDto {
     private UUID orderItemId;
     @Schema(example = "e5186e14-18ba-4868-bf05-8c0e4e61dca2")
     private UUID orderId;
+    private UUID productId;
     @Schema(example = "Espresso Coffee")
     private String productName;
     @Schema(example = "18000")

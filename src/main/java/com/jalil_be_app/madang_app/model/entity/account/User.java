@@ -2,6 +2,7 @@ package com.jalil_be_app.madang_app.model.entity.account;
 
 import com.jalil_be_app.madang_app.model.entity.BaseModel;
 import com.jalil_be_app.madang_app.model.entity.Image;
+import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.enums.Gender;
 import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import jakarta.persistence.*;
@@ -10,10 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -59,6 +57,9 @@ public class User extends BaseModel {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Restaurant> restaurants = new ArrayList<>();
 
     //TODO add "refresh_token" column
 //    @Column(name = "refresh_token")

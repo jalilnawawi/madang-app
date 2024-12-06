@@ -73,6 +73,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         CreateOrderItemResponseDto responseDto = new CreateOrderItemResponseDto();
         responseDto.setOrderId(existingOrder.getId());
         responseDto.setOrderItemId(orderItem.getId());
+        responseDto.setProductId(existingProduct.getId());
         responseDto.setProductName(existingProduct.getName());
         responseDto.setPrice(existingProduct.getPrice());
         responseDto.setQuantity(orderItem.getQuantity());

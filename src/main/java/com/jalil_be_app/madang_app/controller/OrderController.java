@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @GetMapping("get-all-order")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetAllOrderResponses
     public ResponseEntity<Map<String, Object>> getAll(){
         Map<String, Object> response = new HashMap<>();
@@ -61,7 +61,7 @@ public class OrderController {
     }
 
     @GetMapping("get-order-by-id/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetOrderByIdResponses
     public ResponseEntity<Map<String, Object>> getOrderById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();

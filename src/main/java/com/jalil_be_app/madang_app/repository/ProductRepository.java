@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     @Query(value = "select * from product p\n" +
             "where lower(p.name) LIKE lower(concat('%', :searchText, '%'))", nativeQuery = true)
     List<Product> searchProduct(@Param("searchText") String searchText);
+
+    List<Product> getProductByRestaurantId(UUID restaurantid);
 }

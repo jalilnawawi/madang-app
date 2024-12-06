@@ -59,7 +59,9 @@ public class OrderServiceImpl implements OrderService {
 
         CreateOrderResponseDto responseDto = new CreateOrderResponseDto();
         responseDto.setOrderId(order.getId());
+        responseDto.setUserId(existingUser.getId());
         responseDto.setUsername(existingUser.getUsername());
+        responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
         responseDto.setCompleted(order.isCompleted());
 

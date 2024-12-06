@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping("get-product-by-id/{id}")
-    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+//    @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.GetProductByIdResponses
     public ResponseEntity<Map<String, Object>> getById(@PathVariable("id") UUID id){
         Map<String, Object> response = new HashMap<>();
@@ -77,11 +77,19 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Map<String, Object>> searchProduct(@RequestParam String searchText){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Success get product related to " + searchText);
         response.put("data", productService.getProductBySearch(searchText));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-product-by-resto-id/{restaurantId}")
+    public ResponseEntity<Map<String, Object>> getProduct(@PathVariable("restaurantId") UUID restaurantId){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", productService.getProductByRestoId(restaurantId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

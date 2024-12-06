@@ -47,7 +47,7 @@ public class OrderItemController {
     }
 
     @GetMapping("get-all-orderItem")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetAllOrderItemResponses
     public ResponseEntity<Map<String, Object>> getAllOrderItem(){
         Map<String, Object> response = new HashMap<>();
@@ -57,7 +57,7 @@ public class OrderItemController {
     }
 
     @GetMapping("get-orderItem-by-orderId/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetOrderItemByOrderIdResponses
     public ResponseEntity<Map<String, Object>> getListOrderItemByOrderId(
             @PathVariable("id") UUID orderId
