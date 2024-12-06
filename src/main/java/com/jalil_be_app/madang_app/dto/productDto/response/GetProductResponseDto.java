@@ -12,9 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class GetProductResponseDto {
-    private UUID id;
+    private UUID productId;
     @Schema(example = "Kopi Susu Gula Aren")
-    private String name;
+    private String productName;
     @Schema(example = "15000")
     private Double price;
     @Schema(example = "DRINK")
@@ -22,6 +22,7 @@ public class GetProductResponseDto {
     @Schema(example = "ksga_image")
     private String imageLink;
     private Float rating;
+    private UUID restaurantId;
     @Schema(example = "Almamater Coffee")
     private String restaurantName;
 }

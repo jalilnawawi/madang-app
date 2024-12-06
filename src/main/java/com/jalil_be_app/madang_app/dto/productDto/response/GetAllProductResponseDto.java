@@ -12,15 +12,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 public class GetAllProductResponseDto {
-    private UUID id;
+    private UUID productId;
     @Schema(example = "Espresso Coffee")
-    private String name;
+    private String productName;
     @Schema(example = "18000")
     private Double price;
     private ProductCategory categoryName;
     @Schema(example = "espresso_image")
     private String imageLink;
     private Float rating;
+    private UUID restaurantId;
     @Schema(example = "Arsa Coffee 2")
     private String restaurantName;
 }

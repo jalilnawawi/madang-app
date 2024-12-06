@@ -10,7 +10,7 @@ public class CreateRestaurantResponseDto {
     private UUID restaurantId;
     private UUID userId;
     @Schema(example = "Ayam Geprek Kumlot")
-    private String name;
+    private String restaurantName;
     @Schema(example = "Ayam Geprek murah + Free refill nasi")
     private String description;
     @Schema(example = "Ngoresan, Jebres, Surakarta")

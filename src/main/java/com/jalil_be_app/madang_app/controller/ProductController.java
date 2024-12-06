@@ -86,6 +86,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-product-by-resto-id/{restaurantId}")
+    @ApiResponseAnnotations.GetProductByRestoIdResponses
     public ResponseEntity<Map<String, Object>> getProduct(@PathVariable("restaurantId") UUID restaurantId){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");

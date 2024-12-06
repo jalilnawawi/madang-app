@@ -86,7 +86,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             CreateRestaurantResponseDto responseDto = new CreateRestaurantResponseDto();
             responseDto.setRestaurantId(restaurant.getId());
             responseDto.setUserId(existingUser.getId());
-            responseDto.setName(createRestaurantRequestDto.getName());
+            responseDto.setRestaurantName(createRestaurantRequestDto.getName());
             responseDto.setDescription(createRestaurantRequestDto.getDescription());
             responseDto.setAddress(createRestaurantRequestDto.getAddress());
             responseDto.setCategory(createRestaurantRequestDto.getCategory());

@@ -17,7 +17,7 @@ public class GetAllProductByRestoIdResponseDto {
     private String restaurantName;
     private UUID productId;
     @Schema(example = "Espresso Coffee")
-    private String name;
+    private String productNname;
     @Schema(example = "18000")
     private Double price;
     private ProductCategory categoryName;

@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
         CreateProductResponseDto responseDto = new CreateProductResponseDto();
         responseDto.setProductId(product.getId());
-        responseDto.setName(createProductRequestDto.getName());
+        responseDto.setProductName(createProductRequestDto.getName());
         responseDto.setPrice(createProductRequestDto.getPrice());
         responseDto.setCategory(createProductRequestDto.getCategory());
         responseDto.setImageLink(createProductRequestDto.getImageLink());
@@ -101,6 +101,7 @@ public class ProductServiceImpl implements ProductService {
                                 product.getCategory(),
                                 product.getImage().getImageLink(),
                                 product.getRating(),
+                                product.getRestaurant().getId(),
                                 product.getRestaurant().getName()
                         )
                 ).collect(Collectors.toList());
@@ -113,12 +114,13 @@ public class ProductServiceImpl implements ProductService {
         );
 
         GetProductResponseDto responseDto = new GetProductResponseDto();
-        responseDto.setId(product.getId());
-        responseDto.setName(product.getName());
+        responseDto.setProductId(product.getId());
+        responseDto.setProductName(product.getName());
         responseDto.setPrice(product.getPrice());
         responseDto.setCategoryName(product.getCategory());
         responseDto.setImageLink(product.getImage().getImageLink());
         responseDto.setRating(product.getRating());
+        responseDto.setRestaurantId(product.getRestaurant().getId());
         responseDto.setRestaurantName(product.getRestaurant().getName());
         return responseDto;
     }
@@ -198,6 +200,7 @@ public class ProductServiceImpl implements ProductService {
                         product.getCategory(),
                         product.getImage().getImageLink(),
                         product.getRating(),
+                        product.getRestaurant().getId(),
                         product.getRestaurant().getName()
                 )
         ).collect(Collectors.toList());

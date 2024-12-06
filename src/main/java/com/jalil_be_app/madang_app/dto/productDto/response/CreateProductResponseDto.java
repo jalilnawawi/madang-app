@@ -9,7 +9,7 @@ import java.util.UUID;
 public class CreateProductResponseDto {
     private UUID productId;
     @Schema(example = "Espresso Coffee")
-    private String name;
+    private String productName;
     @Schema(example = "15000")
     private Double price;
     @Schema(example = "DRINK")
