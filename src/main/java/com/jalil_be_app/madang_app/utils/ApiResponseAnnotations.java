@@ -8,10 +8,7 @@ import com.jalil_be_app.madang_app.dto.schemes.order.GetOrderByIdExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetAllOrderItemExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.orderItem.GetOrderItemByOrderIdExampleSwagger;
 import com.jalil_be_app.madang_app.dto.schemes.product.*;
-import com.jalil_be_app.madang_app.dto.schemes.restaurant.CreateRestaurantExampleSwagger;
-import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetAllRestaurantExampleSwagger;
-import com.jalil_be_app.madang_app.dto.schemes.restaurant.GetRestaurantByIdExampleSwagger;
-import com.jalil_be_app.madang_app.dto.schemes.restaurant.UpdateRestaurantAddressExampleSwagger;
+import com.jalil_be_app.madang_app.dto.schemes.restaurant.*;
 import com.jalil_be_app.madang_app.dto.schemes.user.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -247,6 +244,34 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface GetAllRestaurantResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Restaurant Data",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetAllRestaurantByUserIdExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get all restaurant because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetAllRestaurantByUserIdResponses{
     }
 
     @Target({ElementType.METHOD, ElementType.TYPE})

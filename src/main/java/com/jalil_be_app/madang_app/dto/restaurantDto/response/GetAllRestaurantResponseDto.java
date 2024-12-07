@@ -24,4 +24,5 @@ public class GetAllRestaurantResponseDto {
     @Schema(example = "Indonesian food")
     private RestaurantCategory category;
     private Image image;
+    private UUID userId;
 }

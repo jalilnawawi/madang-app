@@ -26,4 +26,5 @@ public class GetAllRestaurantResponse {
     @Schema(example = "COFFEE_SHOP")
     private RestaurantCategory category;
     private Image image;
+    private UUID userId;
 }

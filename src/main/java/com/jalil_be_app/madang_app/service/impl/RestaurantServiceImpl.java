@@ -134,7 +134,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getDescription(),
                         restaurant.getAddress(),
                         restaurant.getCategory(),
-                        restaurant.getImage()
+                        restaurant.getImage(),
+                        restaurant.getUser().getId()
                 )
         ).collect(Collectors.toList());
     }
@@ -153,5 +154,37 @@ public class RestaurantServiceImpl implements RestaurantService {
         responseDto.setCategory(responseDto.getCategory());
         responseDto.setImage(responseDto.getImage());
         return responseDto;
+    }
+
+    @Override
+    public List<GetAllRestaurantResponseDto> getRestaurantByUserId(UUID userId) {
+        List<Restaurant> getAllRestaurantFromUser = restaurantRepository.getRestaurantByUserId(userId);
+        return getAllRestaurantFromUser.stream().map(
+                restaurant -> new GetAllRestaurantResponseDto(
+                        restaurant.getId(),
+                        restaurant.getName(),
+                        restaurant.getDescription(),
+                        restaurant.getAddress(),
+                        restaurant.getCategory(),
+                        restaurant.getImage(),
+                        restaurant.getUser().getId()
+                )
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GetAllRestaurantResponseDto> getRestaurantBySearch(String searchText) {
+        List<Restaurant> getRestaurantBySearch = restaurantRepository.searchRestaurant(searchText);
+        return getRestaurantBySearch.stream().map(
+                restaurant -> new GetAllRestaurantResponseDto(
+                        restaurant.getId(),
+                        restaurant.getName(),
+                        restaurant.getDescription(),
+                        restaurant.getAddress(),
+                        restaurant.getCategory(),
+                        restaurant.getImage(),
+                        restaurant.getUser().getId()
+                )
+        ).collect(Collectors.toList());
     }
 }

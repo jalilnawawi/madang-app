@@ -71,4 +71,23 @@ public class RestaurantController {
         response.put("data", restaurantService.getRestaurantById(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("get-restaurant-by-userId/{userId}")
+    @PreAuthorize("hasRole('ROLE_MERCHANT')")
+    @ApiResponseAnnotations.GetAllRestaurantByUserIdResponses
+    public ResponseEntity<Map<String, Object>> getByUserId(@PathVariable("userId") UUID userId){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "success");
+        response.put("data", restaurantService.getRestaurantByUserId(userId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+//    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Map<String, Object>> searchRestaurant(@RequestParam String searchText){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Success get product related to " + searchText);
+        response.put("data", restaurantService.getRestaurantBySearch(searchText));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
