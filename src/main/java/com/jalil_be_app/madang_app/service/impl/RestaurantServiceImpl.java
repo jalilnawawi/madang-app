@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -115,13 +114,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Transactional
-    public void delete(String token, UUID restaurantId) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
+    public void delete(UUID restaurantId) {
+//        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
-        restaurantRepository.deleteById(restaurantId);
+        restaurantRepository.deleteById(existingRestaurant.getId());
     }
 
     @Override

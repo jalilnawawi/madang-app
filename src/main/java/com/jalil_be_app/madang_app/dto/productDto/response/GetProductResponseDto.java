@@ -25,4 +25,5 @@ public class GetProductResponseDto {
     private UUID restaurantId;
     @Schema(example = "Almamater Coffee")
     private String restaurantName;
+    private UUID userId;
 }

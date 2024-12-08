@@ -49,8 +49,8 @@ public class RestaurantController {
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.DeleteRestaurantResponses
-    public void delete(@RequestHeader("Authorization") String token, @PathVariable("id") UUID restaurantId){
-        restaurantService.delete(token, restaurantId);
+    public void delete(@PathVariable("id") UUID restaurantId){
+        restaurantService.delete(restaurantId);
     }
 
     @GetMapping("get-all-restaurant")

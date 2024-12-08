@@ -19,4 +19,5 @@ public class CreateProductResponseDto {
     @Schema(example = "Arsa Coffee")
     private String restaurantName;
     private UUID restaurantId;
+    private UUID userId;
 }

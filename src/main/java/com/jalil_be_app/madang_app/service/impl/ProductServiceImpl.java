@@ -85,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setImageLink(createProductRequestDto.getImageLink());
         responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
+        responseDto.setUserId(existingRestaurant.getUser().getId());
 
         return responseDto;
     }
@@ -102,7 +103,8 @@ public class ProductServiceImpl implements ProductService {
                                 product.getImage().getImageLink(),
                                 product.getRating(),
                                 product.getRestaurant().getId(),
-                                product.getRestaurant().getName()
+                                product.getRestaurant().getName(),
+                                product.getRestaurant().getUser().getId()
                         )
                 ).collect(Collectors.toList());
     }
@@ -122,6 +124,7 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setRating(product.getRating());
         responseDto.setRestaurantId(product.getRestaurant().getId());
         responseDto.setRestaurantName(product.getRestaurant().getName());
+        responseDto.setUserId(product.getRestaurant().getUser().getId());
         return responseDto;
     }
 
@@ -137,7 +140,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getPrice(),
                         product.getCategory(),
                         product.getImage().getImageLink(),
-                        product.getRating()
+                        product.getRating(),
+                        product.getRestaurant().getUser().getId()
                 )
         ).collect(Collectors.toList());
     }
@@ -201,7 +205,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getImage().getImageLink(),
                         product.getRating(),
                         product.getRestaurant().getId(),
-                        product.getRestaurant().getName()
+                        product.getRestaurant().getName(),
+                        product.getRestaurant().getUser().getId()
                 )
         ).collect(Collectors.toList());
     }

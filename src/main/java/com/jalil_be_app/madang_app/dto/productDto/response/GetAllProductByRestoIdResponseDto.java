@@ -24,4 +24,5 @@ public class GetAllProductByRestoIdResponseDto {
     @Schema(example = "espresso_image")
     private String imageLink;
     private Float rating;
+    private UUID userId;
 }
