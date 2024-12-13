@@ -3,15 +3,14 @@ package com.jalil_be_app.madang_app.model.entity;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,4 +28,10 @@ public class Image extends BaseModel {
 
     @Enumerated(EnumType.STRING)
     private ImageSize size;
+
+    private String type;
+
+    @Lob
+//    @Type(value = org.hibernate.type.BinaryType.class)
+    private byte[] imageData;
 }
