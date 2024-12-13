@@ -14,8 +14,7 @@ public class CreateProductResponseDto {
     private Double price;
     @Schema(example = "DRINK")
     private String category;
-    @Schema(example = "espresso_image")
-    private String imageLink;
+    private UUID imageId;
     @Schema(example = "Arsa Coffee")
     private String restaurantName;
     private UUID restaurantId;

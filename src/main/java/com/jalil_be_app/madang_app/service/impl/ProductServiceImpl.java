@@ -7,21 +7,20 @@ import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequ
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
-import com.jalil_be_app.madang_app.model.enums.ImageCategory;
-import com.jalil_be_app.madang_app.model.enums.ImageSize;
-import com.jalil_be_app.madang_app.model.enums.ProductCategory;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.ProductRepository;
 import com.jalil_be_app.madang_app.repository.RestaurantRepository;
-import com.jalil_be_app.madang_app.repository.UserRepository;
+import com.jalil_be_app.madang_app.service.ImageService;
 import com.jalil_be_app.madang_app.service.ProductService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,10 +39,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     JwtService jwtService;
 
+    @Autowired
+    ImageService imageService;
 
     @Override
     @Transactional
-    public CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto) {
+    public CreateProductResponseDto create(String token, CreateProductRequestDto createProductRequestDto, MultipartFile file) throws IOException {
         Restaurant existingRestaurant = restaurantRepository.findById(createProductRequestDto.getRestaurantId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
@@ -61,21 +62,10 @@ public class ProductServiceImpl implements ProductService {
             product.setPrice(createProductRequestDto.getPrice());
         }
 
-        Image image = new Image();
-        if (createProductRequestDto.getCategory().equalsIgnoreCase("food")){
-            product.setCategory(ProductCategory.FOOD);
-            image.setCategory(ImageCategory.FOOD);
-        } else if (createProductRequestDto.getCategory().equalsIgnoreCase("drink")) {
-            product.setCategory(ProductCategory.DRINK);
-            image.setCategory(ImageCategory.DRINK);
-        }
-
-        image.setSize(ImageSize.S);
-        image.setImageLink(createProductRequestDto.getImageLink());
-        imageRepository.save(image);
+        Image image = imageService.uploadImage(file);
+        product.setImage(image);
 
         product.setRestaurant(existingRestaurant);
-        product.setImage(image);
         productRepository.save(product);
 
         CreateProductResponseDto responseDto = new CreateProductResponseDto();
@@ -83,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setProductName(createProductRequestDto.getName());
         responseDto.setPrice(createProductRequestDto.getPrice());
         responseDto.setCategory(createProductRequestDto.getCategory());
-        responseDto.setImageLink(createProductRequestDto.getImageLink());
+        responseDto.setImageId(image.getId());
         responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
         responseDto.setUserId(existingRestaurant.getUser().getId());

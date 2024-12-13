@@ -2,8 +2,10 @@ package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.imageDto.request.ImageAddRequestDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
+import com.jalil_be_app.madang_app.model.entity.Product;
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
+import com.jalil_be_app.madang_app.repository.ProductRepository;
 import com.jalil_be_app.madang_app.service.ImageService;
 import com.jalil_be_app.madang_app.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import java.util.zip.DataFormatException;
 
 @Service
 public class ImageServiceImpl implements ImageService {
+    @Autowired
+    ProductRepository productRepository;
+
     @Autowired
     ImageRepository imageRepository;
 
@@ -51,6 +56,17 @@ public class ImageServiceImpl implements ImageService {
         image.setImageData(file.getBytes());
 
         return imageRepository.save(image);
+    }
+
+    @Override
+    public Product uploadProductImage(UUID productId, MultipartFile file) throws IOException {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
+        );
+
+        Image image = imageRepository.save(uploadImage(file));
+        existingProduct.setImage(image);
+        return productRepository.save(existingProduct);
     }
 
 //    @Override
