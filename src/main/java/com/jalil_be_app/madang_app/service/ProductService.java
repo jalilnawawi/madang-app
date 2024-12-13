@@ -1,6 +1,7 @@
 package com.jalil_be_app.madang_app.service;
 
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductRatingRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.*;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
 
@@ -15,4 +16,5 @@ public interface ProductService {
     UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto);
     void delete(String token, UUID productId);
     List<GetAllProductResponseDto> getProductBySearch(String searchText);
+    UpdateProductRatingResponseDto addRating(UUID productId, UpdateProductRatingRequestDto updateProductRatingRequestDto);
 }

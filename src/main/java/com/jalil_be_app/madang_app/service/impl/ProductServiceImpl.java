@@ -1,6 +1,7 @@
 package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.productDto.request.CreateProductRequestDto;
+import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductRatingRequestDto;
 import com.jalil_be_app.madang_app.dto.productDto.response.*;
 import com.jalil_be_app.madang_app.dto.productDto.request.UpdateProductPriceRequestDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
@@ -176,9 +177,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String token, UUID productId) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
-
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findByUserId(productId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -209,5 +208,20 @@ public class ProductServiceImpl implements ProductService {
                         product.getRestaurant().getUser().getId()
                 )
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public UpdateProductRatingResponseDto addRating(UUID productId, UpdateProductRatingRequestDto updateProductRatingRequestDto) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
+        );
+
+        existingProduct.setRating(updateProductRatingRequestDto.getAddRating());
+        productRepository.save(existingProduct);
+
+        UpdateProductRatingResponseDto responseDto = new UpdateProductRatingResponseDto();
+        responseDto.setProductId(existingProduct.getId());
+        responseDto.setRating(existingProduct.getRating());
+        return responseDto;
     }
 }
