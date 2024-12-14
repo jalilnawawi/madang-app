@@ -15,14 +15,17 @@ import com.jalil_be_app.madang_app.model.enums.RestaurantCategory;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.RestaurantRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
+import com.jalil_be_app.madang_app.service.ImageService;
 import com.jalil_be_app.madang_app.service.RestaurantService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,11 +41,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     ImageRepository imageRepository;
 
     @Autowired
+    ImageService imageService;
+
+    @Autowired
     JwtService jwtService;
 
     @Override
     @Transactional
-    public CreateRestaurantResponseDto create(String token, CreateRestaurantRequestDto createRestaurantRequestDto) {
+    public CreateRestaurantResponseDto create(String token, CreateRestaurantRequestDto createRestaurantRequestDto, MultipartFile file) throws IOException {
         UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
         User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
@@ -71,8 +77,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 restaurant.setCategory(RestaurantCategory.WESTERN);
             }
 
-            Image image = new Image();
-            image.setImageName(createRestaurantRequestDto.getImageLink());
+            Image image = imageService.uploadImage(file);
             image.setSize(ImageSize.L);
             image.setCategory(ImageCategory.RESTAURANT);
             imageRepository.save(image);
@@ -89,7 +94,8 @@ public class RestaurantServiceImpl implements RestaurantService {
             responseDto.setDescription(createRestaurantRequestDto.getDescription());
             responseDto.setAddress(createRestaurantRequestDto.getAddress());
             responseDto.setCategory(createRestaurantRequestDto.getCategory());
-            responseDto.setImageLink(createRestaurantRequestDto.getImageLink());
+            responseDto.setImageId(image.getId());
+            responseDto.setImageLink(image.getImageLink());
             return responseDto;
 
 

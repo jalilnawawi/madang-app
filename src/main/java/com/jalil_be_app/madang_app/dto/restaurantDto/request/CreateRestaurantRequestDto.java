@@ -14,6 +14,4 @@ public class CreateRestaurantRequestDto {
     private String address;
     @Schema(example = "Warung Makan")
     private String category;
-    @Schema(example = "geprekKumlot_image")
-    private String imageLink;
 }

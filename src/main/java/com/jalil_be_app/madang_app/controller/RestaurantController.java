@@ -1,15 +1,20 @@
 package com.jalil_be_app.madang_app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
 import com.jalil_be_app.madang_app.service.RestaurantService;
 import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,17 +25,24 @@ public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
 
-    @PostMapping("create")
+    @PostMapping(value = "create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.CreateRestaurantResponses
     public ResponseEntity<Map<String, Object>> create(
             @RequestHeader("Authorization") String token,
-            @RequestBody CreateRestaurantRequestDto createRestaurantRequestDto
-    ){
+            @RequestPart("data") String createRestaurantDto,
+            @RequestPart("file") MultipartFile file
+    ) throws IOException {
+        CreateRestaurantRequestDto createRestaurantRequestDto = convertToString(createRestaurantDto);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
-        response.put("data", restaurantService.create(token, createRestaurantRequestDto));
+        response.put("data", restaurantService.create(token, createRestaurantRequestDto, file));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    private CreateRestaurantRequestDto convertToString(String createRestaurantDto) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(createRestaurantDto, CreateRestaurantRequestDto.class);
     }
 
     @PutMapping("update-address")

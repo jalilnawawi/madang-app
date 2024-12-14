@@ -17,6 +17,7 @@ public class CreateRestaurantResponseDto {
     private String address;
     @Schema(example = "Warung Makan")
     private String category;
+    private UUID imageId;
     @Schema(example = "geprekKumlot_image")
     private String imageLink;
 }
