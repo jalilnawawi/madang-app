@@ -14,5 +14,5 @@ public interface ImageService {
     Image uploadImage(MultipartFile file) throws IOException;
     Product uploadProductImage(UUID productId, MultipartFile file) throws IOException;
 //    byte[] downloadImage(UUID imageId);
-    Image unduhImage(UUID imageId);
+    Image downloadImage(UUID imageId);
 }

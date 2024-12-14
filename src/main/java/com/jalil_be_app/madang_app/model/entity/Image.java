@@ -4,7 +4,6 @@ import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import java.util.UUID;
 
@@ -20,6 +19,9 @@ public class Image extends BaseModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "image_name")
+    private String imageName;
+
     @Column(name = "image_link")
     private String imageLink;
 
@@ -34,4 +36,5 @@ public class Image extends BaseModel {
     @Lob
 //    @Type(value = org.hibernate.type.BinaryType.class)
     private byte[] imageData;
+
 }

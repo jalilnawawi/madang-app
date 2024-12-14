@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
             user.setRoles(roles);
 
             Image image = new Image();
-            image.setImageLink(registerUserRequestDto.getImageLink());
+            image.setImageName(registerUserRequestDto.getImageLink());
             image.setCategory(ImageCategory.USER);
             image.setSize(ImageSize.S);
             imageRepository.save(image);
@@ -207,14 +207,14 @@ public class UserServiceImpl implements UserService {
         );
 
         Image existingImage = imageRepository.findById(existingUser.getImage().getId()).get();
-        existingImage.setImageLink(updateImageRequestDto.getImageLink());
+        existingImage.setImageName(updateImageRequestDto.getImageLink());
         imageRepository.save(existingImage);
 
         userRepository.save(existingUser);
 
         UpdateImageResponseDto responseDto = new UpdateImageResponseDto();
         responseDto.setUsername(existingUser.getUsername());
-        responseDto.setImageLink(existingImage.getImageLink());
+        responseDto.setImageLink(existingImage.getImageName());
         return responseDto;
     }
 
@@ -233,7 +233,7 @@ public class UserServiceImpl implements UserService {
         responseDto.setUsername(getUser.getUsername());
         responseDto.setEmail(getUser.getEmail());
         responseDto.setRole(getUser.getRoles());
-        responseDto.setImageLink(getUser.getImage().getImageLink());
+        responseDto.setImageLink(getUser.getImage().getImageName());
         return responseDto;
     }
 
@@ -250,7 +250,7 @@ public class UserServiceImpl implements UserService {
         responseDto.setUsername(getUser.getUsername());
         responseDto.setEmail(getUser.getEmail());
         responseDto.setRole(getUser.getRoles());
-        responseDto.setImageLink(getUser.getImage().getImageLink());
+        responseDto.setImageLink(getUser.getImage().getImageName());
         return responseDto;
     }
 
@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
                         user.getUsername(),
                         user.getEmail(),
                         user.getRoles(),
-                        user.getImage().getImageLink()
+                        user.getImage().getImageName()
                 )
         ).collect(Collectors.toList());
     }

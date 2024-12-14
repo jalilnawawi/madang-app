@@ -45,12 +45,15 @@ public class ImageController {
     @GetMapping("get-image/{imageId}")
     public ResponseEntity<byte[]> downloadImage(@PathVariable UUID imageId){
 //        byte[] imageData = imageService.downloadImage(imageId);
-        Image image = imageService.unduhImage(imageId);
+        Image image = imageService.downloadImage(imageId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(image.getType()));
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + image.getImageLink() + "\""
-                        )
-                .body(image.getImageData());
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .header(HttpHeaders.CONTENT_DISPOSITION,
+//                        "attachment; filename=\"" + image.getImageName() + "\""
+//                        )
+//                .body(image.getImageData());
+        return new ResponseEntity<>(image.getImageData(), headers, HttpStatus.OK);
     }
 }

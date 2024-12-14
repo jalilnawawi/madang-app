@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
                                 product.getName(),
                                 product.getPrice(),
                                 product.getCategory(),
-                                product.getImage().getImageLink(),
+                                product.getImage().getImageName(),
                                 product.getRating(),
                                 product.getRestaurant().getId(),
                                 product.getRestaurant().getName(),
@@ -111,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setProductName(product.getName());
         responseDto.setPrice(product.getPrice());
         responseDto.setCategoryName(product.getCategory());
-        responseDto.setImageLink(product.getImage().getImageLink());
+        responseDto.setImageLink(product.getImage().getImageName());
         responseDto.setRating(product.getRating());
         responseDto.setRestaurantId(product.getRestaurant().getId());
         responseDto.setRestaurantName(product.getRestaurant().getName());
@@ -130,7 +130,7 @@ public class ProductServiceImpl implements ProductService {
                         product.getName(),
                         product.getPrice(),
                         product.getCategory(),
-                        product.getImage().getImageLink(),
+                        product.getImage().getImageName(),
                         product.getRating(),
                         product.getRestaurant().getUser().getId()
                 )
@@ -191,7 +191,7 @@ public class ProductServiceImpl implements ProductService {
                         product.getName(),
                         product.getPrice(),
                         product.getCategory(),
-                        product.getImage().getImageLink(),
+                        product.getImage().getImageName(),
                         product.getRating(),
                         product.getRestaurant().getId(),
                         product.getRestaurant().getName(),

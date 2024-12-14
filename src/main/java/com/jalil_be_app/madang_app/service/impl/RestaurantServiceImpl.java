@@ -72,7 +72,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             }
 
             Image image = new Image();
-            image.setImageLink(createRestaurantRequestDto.getImageLink());
+            image.setImageName(createRestaurantRequestDto.getImageLink());
             image.setSize(ImageSize.L);
             image.setCategory(ImageCategory.RESTAURANT);
             imageRepository.save(image);
