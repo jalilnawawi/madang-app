@@ -8,7 +8,6 @@ import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequest
 import com.jalil_be_app.madang_app.dto.userDto.login.response.RefreshTokenResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.response.RegisterUserResponseDto;
-import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request.UpdateImageRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.response.UpdateImageResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.response.UpdatePasswordResponseDto;
@@ -23,7 +22,7 @@ public interface UserService {
     LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto);
     RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
     UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto);
-    UpdateImageResponseDto updateImage(String token, UpdateImageRequestDto updateImageRequestDto);
+    UpdateImageResponseDto updateImage(UUID userId, String imageId, MultipartFile file) throws IOException;
     List<GetAllUserResponseDto> getAllUser();
     GetUserResponseDto getUserByToken(String token);
     GetUserResponseDto getUserById(UUID userId);

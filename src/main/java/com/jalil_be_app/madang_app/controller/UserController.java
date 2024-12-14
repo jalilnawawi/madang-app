@@ -3,7 +3,6 @@ package com.jalil_be_app.madang_app.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalil_be_app.madang_app.dto.userDto.GetAllUserResponseDto;
-import com.jalil_be_app.madang_app.dto.userDto.GetUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.LoginUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequestDto;
@@ -11,8 +10,6 @@ import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.service.UserService;
 import com.jalil_be_app.madang_app.utils.ApiResponseAnnotations;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -80,15 +77,16 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/update-profile/image")
+    @PatchMapping(value = "/update-profile/image/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiResponseAnnotations.UpdateUserImageApiResponses
     public ResponseEntity<Map<String, Object>> updateImage(
-            @RequestHeader("Authorization") String token,
-            @RequestBody UpdateImageRequestDto updateImageRequestDto
-            ){
+            @PathVariable("userId") UUID userId,
+            @RequestPart("imageId") String imageId,
+            @RequestPart("file") MultipartFile file
+    ) throws IOException {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Update image is success!");
-        response.put("data", userService.updateImage(token, updateImageRequestDto));
+        response.put("data", userService.updateImage(userId, imageId, file));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

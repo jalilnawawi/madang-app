@@ -8,7 +8,6 @@ import com.jalil_be_app.madang_app.dto.userDto.login.request.RefreshTokenRequest
 import com.jalil_be_app.madang_app.dto.userDto.login.response.RefreshTokenResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.request.RegisterUserRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.register.response.RegisterUserResponseDto;
-import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request.UpdateImageRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.response.UpdateImageResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.response.UpdatePasswordResponseDto;
@@ -37,6 +36,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -206,21 +206,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UpdateImageResponseDto updateImage(String token, UpdateImageRequestDto updateImageRequestDto) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
-        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
+    public UpdateImageResponseDto updateImage(UUID userId, String imageId, MultipartFile file) throws IOException {
+        User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
-        Image existingImage = imageRepository.findById(existingUser.getImage().getId()).get();
-        existingImage.setImageName(updateImageRequestDto.getImageLink());
+        UUID imageIdFromString = UUID.fromString(imageId);
+        Image existingImage = imageRepository.findById(imageIdFromString).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not found")
+        );
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        existingImage.setImageName(fileName);
+        existingImage.setType(file.getContentType());
+        existingImage.setImageData(file.getBytes());
         imageRepository.save(existingImage);
 
+        existingUser.setImage(existingImage);
         userRepository.save(existingUser);
 
         UpdateImageResponseDto responseDto = new UpdateImageResponseDto();
+        responseDto.setUserId(existingUser.getId());
         responseDto.setUsername(existingUser.getUsername());
-        responseDto.setImageLink(existingImage.getImageName());
+        responseDto.setImageId(existingUser.getImage().getId());
+        responseDto.setImageLink(existingUser.getImage().getImageLink());
         return responseDto;
     }
 
