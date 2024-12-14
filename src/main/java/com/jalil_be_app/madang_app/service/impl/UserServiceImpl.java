@@ -23,6 +23,7 @@ import com.jalil_be_app.madang_app.model.enums.UserStatus;
 import com.jalil_be_app.madang_app.repository.ImageRepository;
 import com.jalil_be_app.madang_app.repository.RoleRepository;
 import com.jalil_be_app.madang_app.repository.UserRepository;
+import com.jalil_be_app.madang_app.service.ImageService;
 import com.jalil_be_app.madang_app.service.UserService;
 import com.jalil_be_app.madang_app.service.jwt.JwtService;
 import com.jalil_be_app.madang_app.service.jwt.MyUserDetails;
@@ -36,8 +37,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,9 +64,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     JwtService jwtService;
 
+    @Autowired
+    ImageService imageService;
+
     @Override
     @Transactional
-    public RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto) {
+    public RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto, MultipartFile file) throws IOException {
         Optional<User> existingUserCheck = userRepository.findByUsername(registerUserRequestDto.getUsername());
         if (existingUserCheck.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your email has registered");
@@ -101,8 +107,7 @@ public class UserServiceImpl implements UserService {
             }
             user.setRoles(roles);
 
-            Image image = new Image();
-            image.setImageName(registerUserRequestDto.getImageLink());
+            Image image = imageService.uploadImage(file);
             image.setCategory(ImageCategory.USER);
             image.setSize(ImageSize.S);
             imageRepository.save(image);
@@ -117,7 +122,8 @@ public class UserServiceImpl implements UserService {
             responseDto.setUsername(registerUserRequestDto.getUsername());
             responseDto.setEmail(registerUserRequestDto.getEmail());
             responseDto.setRole(roles);
-            responseDto.setImageLink(registerUserRequestDto.getImageLink());
+            responseDto.setImageId(image.getId());
+            responseDto.setImageLink(image.getImageLink());
             return responseDto;
         }
     }

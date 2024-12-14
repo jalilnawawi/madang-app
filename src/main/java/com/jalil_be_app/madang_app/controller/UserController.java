@@ -1,5 +1,7 @@
 package com.jalil_be_app.madang_app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jalil_be_app.madang_app.dto.userDto.GetAllUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.GetUserResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.login.request.LoginUserRequestDto;
@@ -13,10 +15,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +33,22 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/auth/register")
+    @PostMapping(value = "/auth/register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponseAnnotations.RegisterUserApiResponses
-    public ResponseEntity<Map<String, Object>> register(@RequestBody RegisterUserRequestDto registerUserRequestDto){
+    public ResponseEntity<Map<String, Object>> register(
+            @RequestPart("data") String registerUserDto,
+            @RequestPart("file") MultipartFile file
+    ) throws IOException {
+        RegisterUserRequestDto registerUserRequestDto = convertToString(registerUserDto);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
-        response.put("data", userService.register(registerUserRequestDto));
+        response.put("data", userService.register(registerUserRequestDto, file));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    private RegisterUserRequestDto convertToString(String registerUserDto) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(registerUserDto, RegisterUserRequestDto.class);
     }
 
     @PostMapping("/auth/login")

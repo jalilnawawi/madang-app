@@ -12,12 +12,14 @@ import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.request
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updateImage.response.UpdateImageResponseDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.request.UpdatePasswordRequestDto;
 import com.jalil_be_app.madang_app.dto.userDto.updateProfile.updatePassword.response.UpdatePasswordResponseDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-    RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto);
+    RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto, MultipartFile file) throws IOException;
     LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto);
     RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
     UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto);

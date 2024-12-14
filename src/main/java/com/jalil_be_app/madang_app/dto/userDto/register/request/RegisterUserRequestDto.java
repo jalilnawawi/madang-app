@@ -20,6 +20,4 @@ public class RegisterUserRequestDto {
     private String password;
     @ArraySchema(schema = @Schema(example = "user"))
     private Set<String> role;
-    @Schema(name = "imageLink", example = "gibran_image")
-    private String imageLink;
 }
