@@ -206,13 +206,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UpdateImageResponseDto updateImage(UUID userId, String imageId, MultipartFile file) throws IOException {
+    public UpdateImageResponseDto updateImage(UUID userId, MultipartFile file) throws IOException {
         User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 
-        UUID imageIdFromString = UUID.fromString(imageId);
-        Image existingImage = imageRepository.findById(imageIdFromString).orElseThrow(
+        Image existingImage = imageRepository.findById(existingUser.getImage().getId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not found")
         );
 

@@ -81,12 +81,11 @@ public class UserController {
     @ApiResponseAnnotations.UpdateUserImageApiResponses
     public ResponseEntity<Map<String, Object>> updateImage(
             @PathVariable("userId") UUID userId,
-            @RequestPart("imageId") String imageId,
             @RequestPart("file") MultipartFile file
     ) throws IOException {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Update image is success!");
-        response.put("data", userService.updateImage(userId, imageId, file));
+        response.put("data", userService.updateImage(userId, file));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

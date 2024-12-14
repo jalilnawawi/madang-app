@@ -22,7 +22,7 @@ public interface UserService {
     LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto);
     RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
     UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto);
-    UpdateImageResponseDto updateImage(UUID userId, String imageId, MultipartFile file) throws IOException;
+    UpdateImageResponseDto updateImage(UUID userId, MultipartFile file) throws IOException;
     List<GetAllUserResponseDto> getAllUser();
     GetUserResponseDto getUserByToken(String token);
     GetUserResponseDto getUserById(UUID userId);
