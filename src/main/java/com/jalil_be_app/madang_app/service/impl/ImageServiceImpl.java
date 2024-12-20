@@ -34,6 +34,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     ImageRepository imageRepository;
 
+    @Transactional
     @Override
     public Image add(ImageAddRequestDto imageAddRequestDto) {
         Image image = new Image();
@@ -72,6 +73,7 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.save(image);
     }
 
+    @Transactional
     @Override
     public Product uploadProductImage(UUID productId, MultipartFile file) throws IOException {
         Product existingProduct = productRepository.findById(productId).orElseThrow(
@@ -102,6 +104,7 @@ public class ImageServiceImpl implements ImageService {
 //
 //    }
 
+    @Transactional
     @Override
     public Image downloadImage(UUID imageId) {
         Image existingImage = imageRepository.findById(imageId).orElseThrow(

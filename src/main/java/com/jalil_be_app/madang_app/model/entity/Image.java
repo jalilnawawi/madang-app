@@ -1,4 +1,5 @@
 package com.jalil_be_app.madang_app.model.entity;
+import org.hibernate.annotations.Type;
 
 import com.jalil_be_app.madang_app.model.enums.ImageCategory;
 import com.jalil_be_app.madang_app.model.enums.ImageSize;
@@ -34,7 +35,6 @@ public class Image extends BaseModel {
     private String type;
 
     @Lob
-//    @Type(value = org.hibernate.type.BinaryType.class)
     private byte[] imageData;
 
 }

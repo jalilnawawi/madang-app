@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
                                 product.getName(),
                                 product.getPrice(),
                                 product.getCategory(),
-                                product.getImage().getImageName(),
+                                product.getImage().getImageLink(),
                                 product.getRating(),
                                 product.getRestaurant().getId(),
                                 product.getRestaurant().getName(),
