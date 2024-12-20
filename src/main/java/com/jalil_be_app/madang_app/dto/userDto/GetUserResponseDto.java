@@ -18,5 +18,6 @@ public class GetUserResponseDto {
     private String username;
     private String email;
     private Set<Role> role;
+    private UUID imageId;
     private String imageLink;
 }

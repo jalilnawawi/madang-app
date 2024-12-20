@@ -139,7 +139,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getDescription(),
                         restaurant.getAddress(),
                         restaurant.getCategory(),
-                        restaurant.getImage(),
+                        restaurant.getImage().getId(),
+                        restaurant.getImage().getImageLink(),
                         restaurant.getUser().getId()
                 )
         ).collect(Collectors.toList());
@@ -157,7 +158,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         responseDto.setAddress(restaurant.getAddress());
         responseDto.setDescription(restaurant.getDescription());
         responseDto.setCategory(responseDto.getCategory());
-        responseDto.setImage(responseDto.getImage());
+        responseDto.setImageId(restaurant.getImage().getId());
+        responseDto.setImageLink(restaurant.getImage().getImageLink());
         return responseDto;
     }
 
@@ -171,7 +173,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getDescription(),
                         restaurant.getAddress(),
                         restaurant.getCategory(),
-                        restaurant.getImage(),
+                        restaurant.getImage().getId(),
+                        restaurant.getImage().getImageLink(),
                         restaurant.getUser().getId()
                 )
         ).collect(Collectors.toList());
@@ -187,7 +190,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getDescription(),
                         restaurant.getAddress(),
                         restaurant.getCategory(),
-                        restaurant.getImage(),
+                        restaurant.getImage().getId(),
+                        restaurant.getImage().getImageLink(),
                         restaurant.getUser().getId()
                 )
         ).collect(Collectors.toList());

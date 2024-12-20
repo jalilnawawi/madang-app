@@ -19,4 +19,6 @@ public class UpdateQtyOrderItemResponseDto {
     private int quantity;
     @Schema(example = "54000")
     private Double totalPrice;
+    private UUID imageId;
+    private String imageLink;
 }

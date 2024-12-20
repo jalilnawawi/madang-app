@@ -17,6 +17,7 @@ public class GetRestaurantResponseDto {
     private String description;
     private String address;
     private RestaurantCategory category;
-    private Image image;
+    private UUID imageId;
+    private String imageLink;
     private UUID userId;
 }

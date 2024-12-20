@@ -3,6 +3,8 @@ package com.jalil_be_app.madang_app.dto.orderItemDto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.UUID;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -19,4 +21,6 @@ public class GetOrderItemResponseDto {
     private int quantity;
     @Schema(example = "36000")
     private double totalPrice;
+    private UUID imageId;
+    private String imageLink;
 }

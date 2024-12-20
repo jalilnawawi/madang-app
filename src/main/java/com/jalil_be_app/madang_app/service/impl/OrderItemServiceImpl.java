@@ -78,6 +78,8 @@ public class OrderItemServiceImpl implements OrderItemService {
         responseDto.setPrice(existingProduct.getPrice());
         responseDto.setQuantity(orderItem.getQuantity());
         responseDto.setTotalPrice(totalPrice);
+        responseDto.setImageId(existingProduct.getImage().getId());
+        responseDto.setImageLink(existingProduct.getImage().getImageLink());
         return responseDto;
     }
 
@@ -101,6 +103,8 @@ public class OrderItemServiceImpl implements OrderItemService {
             responseDto.setPrice(orderItem.getProduct().getPrice());
             responseDto.setQuantity(orderItem.getQuantity());
             responseDto.setTotalPrice(orderItem.getPrice());
+            responseDto.setImageId(orderItem.getProduct().getImage().getId());
+            responseDto.setImageLink(orderItem.getProduct().getImage().getImageLink());
             return responseDto;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order has closed, please create new order!");
@@ -124,7 +128,9 @@ public class OrderItemServiceImpl implements OrderItemService {
                         orderItem.getProduct().getName(),
                         orderItem.getProduct().getPrice(),
                         orderItem.getQuantity(),
-                        orderItem.getPrice() * orderItem.getQuantity()
+                        orderItem.getPrice() * orderItem.getQuantity(),
+                        orderItem.getProduct().getImage().getId(),
+                        orderItem.getProduct().getImage().getImageLink()
                 )
         ).collect(Collectors.toList());
     }
@@ -138,7 +144,9 @@ public class OrderItemServiceImpl implements OrderItemService {
                         orderItem.getProduct().getName(),
                         orderItem.getProduct().getPrice(),
                         orderItem.getQuantity(),
-                        orderItem.getPrice() * orderItem.getQuantity()
+                        orderItem.getPrice() * orderItem.getQuantity(),
+                        orderItem.getProduct().getImage().getId(),
+                        orderItem.getProduct().getImage().getImageLink()
                 )).collect(Collectors.toList());
     }
 }

@@ -247,7 +247,8 @@ public class UserServiceImpl implements UserService {
         responseDto.setUsername(getUser.getUsername());
         responseDto.setEmail(getUser.getEmail());
         responseDto.setRole(getUser.getRoles());
-        responseDto.setImageLink(getUser.getImage().getImageName());
+        responseDto.setImageId(getUser.getImage().getId());
+        responseDto.setImageLink(getUser.getImage().getImageLink());
         return responseDto;
     }
 
@@ -264,7 +265,8 @@ public class UserServiceImpl implements UserService {
         responseDto.setUsername(getUser.getUsername());
         responseDto.setEmail(getUser.getEmail());
         responseDto.setRole(getUser.getRoles());
-        responseDto.setImageLink(getUser.getImage().getImageName());
+        responseDto.setImageId(getUser.getImage().getId());
+        responseDto.setImageLink(getUser.getImage().getImageLink());
         return responseDto;
     }
 
@@ -279,7 +281,7 @@ public class UserServiceImpl implements UserService {
                         user.getUsername(),
                         user.getEmail(),
                         user.getRoles(),
-                        user.getImage().getImageName()
+                        user.getImage().getImageLink()
                 )
         ).collect(Collectors.toList());
     }

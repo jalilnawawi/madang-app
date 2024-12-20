@@ -19,7 +19,7 @@ public class GetProductResponseDto {
     private Double price;
     @Schema(example = "DRINK")
     private ProductCategory categoryName;
-    @Schema(example = "ksga_image")
+    private UUID imageId;
     private String imageLink;
     private Float rating;
     private UUID restaurantId;

@@ -20,4 +20,6 @@ public class CreateOrderItemResponseDto {
     private int quantity;
     @Schema(example = "36000")
     private Double totalPrice;
+    private UUID imageId;
+    private String imageLink;
 }

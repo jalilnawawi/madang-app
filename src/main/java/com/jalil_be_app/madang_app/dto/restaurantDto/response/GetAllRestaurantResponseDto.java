@@ -23,6 +23,7 @@ public class GetAllRestaurantResponseDto {
     private String address;
     @Schema(example = "Indonesian food")
     private RestaurantCategory category;
-    private Image image;
+    private UUID imageId;
+    private String imageLink;
     private UUID userId;
 }

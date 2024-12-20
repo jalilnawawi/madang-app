@@ -74,6 +74,7 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setPrice(createProductRequestDto.getPrice());
         responseDto.setCategory(createProductRequestDto.getCategory());
         responseDto.setImageId(image.getId());
+        responseDto.setImageLink(image.getImageLink());
         responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
         responseDto.setUserId(existingRestaurant.getUser().getId());
@@ -91,6 +92,7 @@ public class ProductServiceImpl implements ProductService {
                                 product.getName(),
                                 product.getPrice(),
                                 product.getCategory(),
+                                product.getImage().getId(),
                                 product.getImage().getImageLink(),
                                 product.getRating(),
                                 product.getRestaurant().getId(),
@@ -111,7 +113,8 @@ public class ProductServiceImpl implements ProductService {
         responseDto.setProductName(product.getName());
         responseDto.setPrice(product.getPrice());
         responseDto.setCategoryName(product.getCategory());
-        responseDto.setImageLink(product.getImage().getImageName());
+        responseDto.setImageId(product.getImage().getId());
+        responseDto.setImageLink(product.getImage().getImageLink());
         responseDto.setRating(product.getRating());
         responseDto.setRestaurantId(product.getRestaurant().getId());
         responseDto.setRestaurantName(product.getRestaurant().getName());
@@ -132,7 +135,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getName(),
                         product.getPrice(),
                         product.getCategory(),
-                        product.getImage().getImageName(),
+                        product.getImage().getId(),
+                        product.getImage().getImageLink(),
                         product.getRating(),
                         product.getRestaurant().getUser().getId()
                 )
@@ -169,19 +173,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(String token, UUID productId) {
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(productId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
-        );
+//        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+//
+//        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
+//                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
+//        );
 
         Product existingProduct = productRepository.findById(productId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product not found")
         );
 
-        if (!existingProduct.getRestaurant().getId().equals(existingRestaurant.getId())){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorize to action");
-        }
+//        if (!existingProduct.getRestaurant().getId().equals(existingRestaurant.getId())){
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorize to action");
+//        }
 
-        productRepository.deleteById(productId);
+        productRepository.deleteById(existingProduct.getId());
     }
 
     @Override
@@ -193,7 +199,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getName(),
                         product.getPrice(),
                         product.getCategory(),
-                        product.getImage().getImageName(),
+                        product.getImage().getId(),
+                        product.getImage().getImageLink(),
                         product.getRating(),
                         product.getRestaurant().getId(),
                         product.getRestaurant().getName(),
