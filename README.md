@@ -23,9 +23,10 @@ This endpoint is to register a new user to Madang-App
   "role" : [
     "string"
   ],
-  "imageLink" : "string"
+  "image" : "image_file"
 }
 ````
+
 
 **Response Body** :
 
@@ -33,17 +34,18 @@ This endpoint is to register a new user to Madang-App
 ````json
 {
   "data": {
-    "fullname": "kaesang pangarep",
-    "gender": "laki laki",
-    "username": "kaesangp",
-    "email": "kaesangp@gmail.com",
+    "fullname": "string",
+    "gender": "string",
+    "username": "string",
+    "email": "string",
     "role": [
       {
-        "id": "d1f8abe2-f886-468d-91e1-1f3f5139a5c5",
-        "name": "ROLE_MERCHANT"
+        "id": "UUID",
+        "name": "enum"
       }
     ],
-    "imageLink": "kaesangp_image"
+    "imageId" : "UUID",
+    "imageLink" : "string"
   },
   "message": "success"
 }
@@ -98,13 +100,13 @@ This endpoint is to existing user login to the Madang-App
 ````
 ---
 ## 📌 Restaurant Service
-### 1. Create Restaurant Endpoint
+### 1. Create Restaurant
 
-| Metrics   | Value               |
-|-----------|---------------------|
-| Method    | `POST`              |
-| URL       | `api/v1/restaurant` |
-| Auth Required | Yes                 |
+| Metrics   | Value                      |
+|-----------|----------------------------|
+| Method    | `POST`                     |
+| URL       | `api/v1/restaurant/create` |
+| Auth Required | Yes                        |
 
 * Description : Create a new Restaurant
 * URL : api/v1/restaurant
@@ -116,9 +118,9 @@ This endpoint is to existing user login to the Madang-App
 {
   "name": "string",
   "description": "string",
-  "imageId": "UUID",
   "address": "string",
-  "category": "enum"
+  "category": "enum",
+  "image" : "image_file"
 }
 ````
 
@@ -131,8 +133,10 @@ This endpoint is to existing user login to the Madang-App
     "restaurantId": "UUID",
     "name": "string",
     "description": "string",
+    "address": "string",
     "imageId": "UUID",
-    "address": "string"
+    "imageLink" : "string",
+    "userId" : "UUID"
   },
   "message": "success"
 }
@@ -148,9 +152,11 @@ This endpoint is to existing user login to the Madang-App
 
 ### `GET` All Restaurant
 
-* Description : Get list of restaurant
-* URL : api/v1/restaurant
-* Auth Required : Yes
+| Metrics   | Value                                  |
+|-----------|----------------------------------------|
+| Method    | `GET`                                  |
+| URL       | `api/v1/restaurant/get-all-restaurant` |
+| Auth Required | No                                     |
 
 **Response Body : ✅ 200 OK**
 
@@ -161,29 +167,35 @@ This endpoint is to existing user login to the Madang-App
       "restaurantId": "UUID",
       "name": "string",
       "description": "string",
-      "imageLink": "string",
       "address": "string",
       "category": "enum",
-      "rating": "float"
+      "rating": "float",
+      "imageId" : "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
     },
     {
       "restaurantId": "UUID",
       "name": "string",
       "description": "string",
-      "imageLink": "string",
       "address": "string",
       "category": "enum",
-      "rating": "float"
+      "rating": "float",
+      "imageId" : "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
     }
   ],
   "message": "success"
 }
 ````
-### `GET` Get Detail Restaurant by Id
+### `GET` Get Restaurant by Id
 
-* Description : Get Detail of Restaurant
-* URL  : api/v1/restaurant/{restaurantId}
-* Auth Required : Yes
+| Metrics   | Value                                         |
+|-----------|-----------------------------------------------|
+| Method    | `POST`                                        |
+| URL       | `api/v1/restaurant/get-restaurant-by-id/{id}` |
+| Auth Required | Yes                                           |
 
 **Response Body** :
 * **✅ 200 OK**
@@ -194,27 +206,12 @@ This endpoint is to existing user login to the Madang-App
     "restaurantId" : "UUID",
     "name" : "string",
     "description" : "string",
-    "imageLink" : "string",
     "address" : "string",
     "category" : "enum",
-    "product" : {
-      "name" : "string",
-      "price" : "double",
-      "type" : "enum"
-    },
     "restaurantRating": "float",
-    "customerReviews": [
-      {
-        "name" : "string",
-        "review" : "string",
-        "date" : "timestamp"
-      },
-      {
-        "name" : "string",
-        "review" : "string",
-        "date" : "timestamp"
-      }
-    ]
+    "imageId" : "UUID",
+    "imageLink": "string",
+    "userId": "UUID"
   }
 }
 ````
@@ -225,6 +222,132 @@ This endpoint is to existing user login to the Madang-App
   "message" : "restaurantId not found"
 }
 ````
+### `GET` Get Restaurant by UserId
+
+| Metrics   | Value                                                 |
+|-----------|-------------------------------------------------------|
+| Method    | `GET`                                                 |
+| URL       | `api/v1/restaurant/get-restaurant-by-userId/{userId}` |
+| Auth Required | Yes                                                   |
+**Response Body** :
+* **✅ 200 OK**
+
+````json
+{
+  "data": [
+    {
+      "restaurantId" : "UUID",
+      "name" : "string",
+      "description" : "string",
+      "address" : "string",
+      "category" : "enum",
+      "restaurantRating": "float",
+      "imageId" : "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
+    },
+    {
+      "restaurantId" : "UUID",
+      "name" : "string",
+      "description" : "string",
+      "address" : "string",
+      "category" : "enum",
+      "restaurantRating": "float",
+      "imageId" : "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
+    }
+  ]
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "userId not found"
+}
+````
+### `GET` Get Restaurant by Search
+
+| Metrics   | Value                      |
+|-----------|----------------------------|
+| Method    | `GET`                      |
+| URL       | `api/v1/restaurant/search` |
+| Auth Required | Yes                        |
+**Response Body** :
+* **✅ 200 OK**
+
+````json
+{
+  "data": [
+    {
+      "restaurantId": "UUID",
+      "name": "string",
+      "description": "string",
+      "address": "string",
+      "category": "enum",
+      "restaurantRating": "float",
+      "imageId": "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
+    },
+    {
+      "restaurantId": "UUID",
+      "name": "string",
+      "description": "string",
+      "address": "string",
+      "category": "enum",
+      "restaurantRating": "float",
+      "imageId": "UUID",
+      "imageLink": "string",
+      "userId": "UUID"
+    }
+  ],
+  "message": "success"
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "Restaurant not found"
+}
+````
+
+### `PUT` Update Address Restaurant
+
+| Metrics   | Value                              |
+|-----------|------------------------------------|
+| Method    | `PUT`                              |
+| URL       | `api/v1/restaurant/update-address` |
+| Auth Required | Yes                                |
+
+**Request Body**
+```json
+{
+  "address" : "string"
+}
+```
+
+**Response Body** :
+* **✅ 200 OK**
+
+````json
+{
+  "data" : {
+    "address" : "string"
+  },
+  "message" : "success"
+}
+````
+* **❌ 400 Bad Request**
+````json
+{
+  "data" : null,
+  "message" : "userId not found"
+}
+````
+
 ---
 ## Product Service
 ### `POST` Create Product
@@ -236,11 +359,11 @@ This endpoint is to existing user login to the Madang-App
 **Request Body** :
 ````json
 {
+  "restaurantId" : "UUID",
   "productName" : "string",
   "price" : "double",
   "category" : "enum",
-  "productImageLink" : "string",
-  "restaurantId" : "UUID"
+  "image" : "image_file"
 }
 ````
 **Response Body** :
@@ -252,8 +375,11 @@ This endpoint is to existing user login to the Madang-App
     "productName" : "string",
     "price" : "double",
     "category" : "enum",
-    "productImageLink" : "string",
-    "restaurantId" : "UUID"
+    "imageId" : "UUID",
+    "imageLink" : "string",
+    "restaurantName" : "string",
+    "restaurantId" : "UUID",
+    "userId" : "UUID"
   },
   "message" : "success"
 }
@@ -268,9 +394,11 @@ This endpoint is to existing user login to the Madang-App
 
 ### `GET` Get All Product
 
-* Description : Get list of product
-* URL : api/v1/product
-* Auth Required : Yes
+| Metrics   | Value                            |
+|-----------|----------------------------------|
+| Method    | `POST`                           |
+| URL       | `api/v1/product/get-all-product` |
+| Auth Required | No                               |
 
 **Response Body : ✅ 200 OK**
 ````json
@@ -281,8 +409,9 @@ This endpoint is to existing user login to the Madang-App
       "productName" : "string",
       "price" : "double",
       "category" : "enum",
-      "productImageLink" : "string",
-      "restaurantId" : "UUID"
+      "restaurantId" : "UUID",
+      "imageId" : "UUID",
+      "imageLink" : "string"
     },
     {
       "productId" : "UUID",
@@ -311,8 +440,9 @@ This endpoint is to existing user login to the Madang-App
     "productName" : "string",
     "price" : "double",
     "category" : "enum",
-    "productImageLink" : "string",
     "productRating" : "float",
+    "imageId" : "UUID",
+    "imageLink" : "string",
     "restaurantId" : "UUID"
   },
   "message" : "success"
@@ -365,9 +495,9 @@ This endpoint is to existing user login to the Madang-App
 **Request Body** : 
 ````json
 {
-  "imageLink" : "string",
   "imageSize" : "enum",
-  "category" : "enum"
+  "category" : "enum",
+  "image" : "image_file"
 }
 ````
 
@@ -425,37 +555,6 @@ This endpoint is to existing user login to the Madang-App
 }
 ````
 ---
-## Transaction Service
-### `POST` Create Transaction
-* Description : Create transaction user to app
-* URL : api/v1/transaction
-* Auth Required : Yes
-
-**Request Body** :
-````json
-{
-  "productName" : "string",
-  "seatName" : "string",
-  "price" : "double",
-  "paymentMethod" : "enum"
-}
-````
-
-**Response Body : ✅ 200 OK**
-````json
-{
-  "data" : {
-    "transactionId" : "UUID",
-    "transactionNum" : "string",
-    "transactionDate" : "timestamp",
-    "productName" : "string",
-    "seatName" : "string",
-    "price" : "double",
-    "paymentMethod" : "enum"
-  },
-  "message" : "success"
-}
+//TODO CREATE ORDER DOCS
 ````
 ---
-## Order Service
-### Coming soon
