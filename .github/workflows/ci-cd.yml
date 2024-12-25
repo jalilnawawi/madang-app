@@ -26,6 +26,7 @@ jobs:
         run: mvn clean package -DskipTests
 
   dockerize:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -56,6 +57,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /www/server/panel/data/compose/madang-app-compose/
-            docker-compose pull
-            docker-compose up -d
+            docker pull ${{ secrets.DOCKER_USERNAME }}/madang-app
+            docker stop madang-app || true
+            docker rm madang-app || true
+            docker run -d --name madang-app -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/madang-app
+            docker ps
