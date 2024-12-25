@@ -26,7 +26,6 @@ jobs:
         run: mvn clean package -DskipTests
 
   dockerize:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -41,6 +40,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          ecr: auto
+          logout: false
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
