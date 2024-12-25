@@ -88,27 +88,20 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/hello")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public String hello(){
-        return "hello world";
-    }
-
-
     @GetMapping("/get-all-user")
     @ApiResponseAnnotations.GetAllUserApiResponses
     public List<GetAllUserResponseDto> getAllUser(){
         return userService.getAllUser();
     }
 
-    @GetMapping("/get-user-by-token")
-//    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Map<String, Object>> getUserByToken(@RequestHeader("Authorization") String token){
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "success");
-        response.put("data", userService.getUserByToken(token));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @GetMapping("/get-user-by-token")
+////    @PreAuthorize("hasRole('ROLE_USER')")
+//    public ResponseEntity<Map<String, Object>> getUserByToken(@RequestHeader("Authorization") String token){
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("message", "success");
+//        response.put("data", userService.getUserByToken(token));
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @GetMapping("/get-user-by-id/{id}")
 //    @PreAuthorize("hasRole('ROLE_USER')")
