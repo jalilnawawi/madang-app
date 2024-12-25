@@ -62,3 +62,4 @@ jobs:
             docker rm madang-app || true
             docker run -d --name madang-app -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/madang-app
             docker ps
+          debug: true
