@@ -66,14 +66,14 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update-profile/password")
+    @PatchMapping("/update-profile/password/{userId}")
     @ApiResponseAnnotations.UpdatePasswordApiResponses
     public ResponseEntity<Map<String, Object>> updatePassword(
-            @RequestHeader("Authorization") String token,
+            @PathVariable("userId") UUID userId,
             @RequestBody UpdatePasswordRequestDto updatePasswordRequestDto){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Update password is success!");
-        response.put("data", userService.updatePassword(token, updatePasswordRequestDto));
+        response.put("data", userService.updatePassword(userId, updatePasswordRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

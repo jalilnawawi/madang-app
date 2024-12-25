@@ -189,10 +189,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
-
-        User existingUser = userRepository.findById(userIdFromToken).orElseThrow(
+    public UpdatePasswordResponseDto updatePassword(UUID userId, UpdatePasswordRequestDto updatePasswordRequestDto) {
+        User existingUser = userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found")
         );
 

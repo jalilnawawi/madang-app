@@ -21,7 +21,7 @@ public interface UserService {
     RegisterUserResponseDto register(RegisterUserRequestDto registerUserRequestDto, MultipartFile file) throws IOException;
     LoginUserResponseDto login(LoginUserRequestDto loginUserRequestDto);
     RefreshTokenResponseDto refreshToken(RefreshTokenRequestDto refreshTokenRequestDto);
-    UpdatePasswordResponseDto updatePassword(String token, UpdatePasswordRequestDto updatePasswordRequestDto);
+    UpdatePasswordResponseDto updatePassword(UUID userId, UpdatePasswordRequestDto updatePasswordRequestDto);
     UpdateImageResponseDto updateImage(UUID userId, MultipartFile file) throws IOException;
     List<GetAllUserResponseDto> getAllUser();
     GetUserResponseDto getUserByToken(String token);
