@@ -160,6 +160,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         responseDto.setCategory(responseDto.getCategory());
         responseDto.setImageId(restaurant.getImage().getId());
         responseDto.setImageLink(restaurant.getImage().getImageLink());
+        responseDto.setUserId(restaurant.getUser().getId());
         return responseDto;
     }
 
