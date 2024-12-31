@@ -164,9 +164,11 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(existingProduct);
 
         UpdateProductPriceResponseDto responseDto = new UpdateProductPriceResponseDto();
+        responseDto.setProductId(existingProduct.getId());
         responseDto.setName(existingProduct.getName());
         responseDto.setPrice(existingProduct.getPrice());
         responseDto.setCategory(existingProduct.getCategory().toString());
+        responseDto.setRestaurantId(existingRestaurant.getId());
         responseDto.setRestaurantName(existingRestaurant.getName());
         return responseDto;
     }
@@ -191,10 +193,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<GetAllProductResponseDto> getProductBySearch(String searchText) {
+    public List<GetProductBySearchResponseDto> getProductBySearch(String searchText) {
         List<Product> productList = productRepository.searchProduct(searchText);
         return productList.stream().map(
-                product -> new GetAllProductResponseDto(
+                product -> new GetProductBySearchResponseDto(
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
@@ -204,7 +206,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getRating(),
                         product.getRestaurant().getId(),
                         product.getRestaurant().getName(),
-                        product.getRestaurant().getUser().getId()
+                        product.getRestaurant().getUser().getId(),
+                        searchText
                 )
         ).collect(Collectors.toList());
     }

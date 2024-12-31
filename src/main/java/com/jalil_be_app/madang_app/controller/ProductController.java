@@ -66,7 +66,7 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("update-price/{id}")
+    @PatchMapping("update-price/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.UpdateProductPriceResponses
     public ResponseEntity<Map<String, Object>> update(
@@ -89,6 +89,7 @@ public class ProductController {
 
     @GetMapping("/search")
 //    @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.GetRestaurantBySearchResponses
     public ResponseEntity<Map<String, Object>> searchProduct(@RequestParam String searchText){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Success get product related to " + searchText);
@@ -105,7 +106,7 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PatchMapping("/add-rating/{productId}")
+    @PatchMapping("/update-rating/{productId}")
     public ResponseEntity<Map<String, Object>> addRating(
             @PathVariable("productId") UUID productId,
             @RequestBody UpdateProductRatingRequestDto updateProductRatingRequestDto

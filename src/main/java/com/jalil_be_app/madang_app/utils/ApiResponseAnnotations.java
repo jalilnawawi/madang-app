@@ -570,6 +570,21 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get All Product",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetProductBySearchExampleSwagger.class)
+                            )
+                    }
+            )
+    })
+    public @interface GetProductBySearchResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success Update Product Price",
                     content = {
                             @Content(mediaType = "application/json",
@@ -605,6 +620,34 @@ public class ApiResponseAnnotations {
             )
     })
     public @interface UpdateProductPriceResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Update Product Price",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = UpdateProductRatingExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "400", description = "Product Id Not Found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Product Not Found",
+                                                    value = "{\"data\": null, \"message\" : \"Product not found\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface UpdateProductRatingResponses{
     }
 
     @Target({ElementType.METHOD, ElementType.TYPE})

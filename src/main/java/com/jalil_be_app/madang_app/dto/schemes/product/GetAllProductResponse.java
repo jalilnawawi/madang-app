@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class GetAllProductResponse {
-    private UUID id;
+    private UUID productId;
     @Schema(example = "Americano Coffee")
     private String name;
     @Schema(example = "20000")

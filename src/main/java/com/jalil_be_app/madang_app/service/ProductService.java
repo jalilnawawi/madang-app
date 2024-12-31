@@ -17,6 +17,6 @@ public interface ProductService {
     List<GetAllProductByRestoIdResponseDto> getProductByRestoId(UUID restaurantId);
     UpdateProductPriceResponseDto update(String token, UUID productId, UpdateProductPriceRequestDto updateProductPriceRequestDto);
     void delete(String token, UUID productId);
-    List<GetAllProductResponseDto> getProductBySearch(String searchText);
+    List<GetProductBySearchResponseDto> getProductBySearch(String searchText);
     UpdateProductRatingResponseDto addRating(UUID productId, UpdateProductRatingRequestDto updateProductRatingRequestDto);
 }
