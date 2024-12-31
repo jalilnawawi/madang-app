@@ -45,16 +45,17 @@ public class RestaurantController {
         return objectMapper.readValue(createRestaurantDto, CreateRestaurantRequestDto.class);
     }
 
-    @PutMapping("update-address")
+    @PatchMapping("update-address/{id}")
     @PreAuthorize("hasRole('ROLE_MERCHANT')")
     @ApiResponseAnnotations.UpdateRestaurantAddressResponses
     public ResponseEntity<Map<String, Object>> update(
-            @RequestHeader("Authorization") String token,
+//            @RequestHeader("Authorization") String token,
+            @PathVariable("id") UUID restaurantId,
             @RequestBody UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto
     ){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "success");
-        response.put("data", restaurantService.update(token, updateRestaurantAddressRequestDto));
+        response.put("data", restaurantService.update(restaurantId, updateRestaurantAddressRequestDto));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -96,6 +97,7 @@ public class RestaurantController {
 
     @GetMapping("/search")
 //    @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiResponseAnnotations.GetRestaurantBySearchResponses
     public ResponseEntity<Map<String, Object>> searchRestaurant(@RequestParam String searchText){
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Success get product related to " + searchText);

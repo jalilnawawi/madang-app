@@ -306,6 +306,34 @@ public class ApiResponseAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success Get Restaurant by Search",
+                    content = {
+                            @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = GetRestaurantbySearchExampleSwagger.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "401", description = "User Not Authorized to Access Endpoint",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "Failed get all restaurant because token is invalid",
+                                                    value = "{\"data\": null, \"message\" : \"User is unauthorized\"}"
+                                            )
+                                    }
+                            )
+                    }
+            )
+    })
+    public @interface GetRestaurantBySearchResponses{
+    }
+
+    @Target({ElementType.METHOD, ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Success Create New Restaurant",
                     content = {
                             @Content(mediaType = "application/json",

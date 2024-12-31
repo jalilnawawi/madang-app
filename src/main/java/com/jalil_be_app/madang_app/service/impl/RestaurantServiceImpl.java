@@ -1,11 +1,8 @@
 package com.jalil_be_app.madang_app.service.impl;
 
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.CreateRestaurantRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.response.CreateRestaurantResponseDto;
+import com.jalil_be_app.madang_app.dto.restaurantDto.response.*;
 import com.jalil_be_app.madang_app.dto.restaurantDto.request.UpdateRestaurantAddressRequestDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetAllRestaurantResponseDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.response.GetRestaurantResponseDto;
-import com.jalil_be_app.madang_app.dto.restaurantDto.response.UpdateRestaurantAddressResponseDto;
 import com.jalil_be_app.madang_app.model.entity.Image;
 import com.jalil_be_app.madang_app.model.entity.Restaurant;
 import com.jalil_be_app.madang_app.model.entity.account.User;
@@ -103,10 +100,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Transactional
-    public UpdateRestaurantAddressResponseDto update(String token, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
-        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
+    public UpdateRestaurantAddressResponseDto update(UUID restaurantId, UpdateRestaurantAddressRequestDto updateRestaurantAddressRequestDto) {
+//        UUID userIdFromToken = jwtService.getUserIdfromToken(token);
 
-        Restaurant existingRestaurant = restaurantRepository.findByUserId(userIdFromToken).orElseThrow(
+        Restaurant existingRestaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant not found")
         );
 
@@ -114,6 +111,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantRepository.save(existingRestaurant);
 
         UpdateRestaurantAddressResponseDto responseDto = new UpdateRestaurantAddressResponseDto();
+        responseDto.setRestaurantId(existingRestaurant.getId());
+        responseDto.setUserId(existingRestaurant.getUser().getId());
         responseDto.setAddress(updateRestaurantAddressRequestDto.getAddress());
         return responseDto;
     }
@@ -181,10 +180,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<GetAllRestaurantResponseDto> getRestaurantBySearch(String searchText) {
+    public List<GetRestaurantbySearchResponseDto> getRestaurantBySearch(String searchText) {
         List<Restaurant> getRestaurantBySearch = restaurantRepository.searchRestaurant(searchText);
         return getRestaurantBySearch.stream().map(
-                restaurant -> new GetAllRestaurantResponseDto(
+                restaurant -> new GetRestaurantbySearchResponseDto(
                         restaurant.getId(),
                         restaurant.getName(),
                         restaurant.getDescription(),
@@ -192,7 +191,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                         restaurant.getCategory(),
                         restaurant.getImage().getId(),
                         restaurant.getImage().getImageLink(),
-                        restaurant.getUser().getId()
+                        restaurant.getUser().getId(),
+                        searchText
                 )
         ).collect(Collectors.toList());
     }

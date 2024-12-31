@@ -25,6 +25,7 @@ public class GetAllRestaurantResponse {
     private String address;
     @Schema(example = "COFFEE_SHOP")
     private RestaurantCategory category;
-    private Image image;
+    private UUID imageId;
+    private String imageLink;
     private UUID userId;
 }
