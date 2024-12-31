@@ -341,19 +341,6 @@ public class ApiResponseAnnotations {
                             )
                     }
             ),
-            @ApiResponse(responseCode = "403", description = "User not allowed to have two Restaurant",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    examples = {
-                                            @ExampleObject(
-                                                    name = "Single Restaurant per User",
-                                                    value = "{\"data\": null, \"message\" : \"User only can have 1 Restaurant\"}"
-                                            )
-                                    }
-                            )
-                    }
-            ),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {
                             @Content(
