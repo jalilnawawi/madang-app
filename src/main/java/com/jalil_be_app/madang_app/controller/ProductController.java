@@ -107,6 +107,7 @@ public class ProductController {
     }
 
     @PatchMapping("/update-rating/{productId}")
+    @ApiResponseAnnotations.UpdateProductRatingResponses
     public ResponseEntity<Map<String, Object>> addRating(
             @PathVariable("productId") UUID productId,
             @RequestBody UpdateProductRatingRequestDto updateProductRatingRequestDto
