@@ -20,7 +20,7 @@ public class OrderItemController {
     @Autowired
     OrderItemService orderItemService;
 
-    @PostMapping
+    @PostMapping("/create")
     @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.CreateOrderItemResponses
     public ResponseEntity<Map<String, Object>> createOrderItem(
@@ -46,7 +46,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("get-all-orderItem")
+    @GetMapping("get-all-order-item")
 //    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetAllOrderItemResponses
     public ResponseEntity<Map<String, Object>> getAllOrderItem(){
@@ -56,7 +56,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("get-orderItem-by-orderId/{id}")
+    @GetMapping("get-order-item-by-orderId/{id}")
 //    @PreAuthorize("hasRole('ROLE_USER')")
     @ApiResponseAnnotations.GetOrderItemByOrderIdResponses
     public ResponseEntity<Map<String, Object>> getListOrderItemByOrderId(
@@ -66,5 +66,10 @@ public class OrderItemController {
         response.put("message", "success");
         response.put("data", orderItemService.getAllbyOrderId(orderId));
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-order-item/{id}")
+    public void deleteOrderItem(@PathVariable("id") UUID orderItemId){
+        orderItemService.deleteOrderItem(orderItemId);
     }
 }

@@ -853,7 +853,7 @@ public class ApiResponseAnnotations {
             @ApiResponse(responseCode = "200", description = "Success Update Quantity Order Item",
                     content = {
                             @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = CreateOrderExampleSwagger.class)
+                                    schema = @Schema(implementation = UpdateOrderItemQtyResponses.class)
                             )
                     }
             ),
